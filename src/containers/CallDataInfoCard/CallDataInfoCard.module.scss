@@ -1,0 +1,33 @@
+.titleWrapper {
+    border-bottom: 1px solid var(--c-gray-100);
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 1rem;
+    color: var(--c-text);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+.tableHeadRow {
+    height: 2.5rem;
+    color: var(--c-label);
+    text-align: left;
+}
+
+.tableItem {
+    width: 50%;
+    max-width: 15rem;
+}
+
+.tableItemInner {
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}

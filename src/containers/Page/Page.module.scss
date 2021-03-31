@@ -1,0 +1,11 @@
+@import "../../styles/variables";
+
+.page {
+    height: 100%;
+    min-height: 100vh;
+}
+
+.body {
+    max-width: $container-size;
+    margin: 0 auto;
+}

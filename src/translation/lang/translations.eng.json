@@ -1,0 +1,25 @@
+{
+    "routes.label.home": "Home",
+    "routes.label.dataRequests": "Requests",
+
+    "menu.label.search": "Search request",
+
+    "stakerReportsInfo.title": "Stakers Report",
+
+    "callDataInfo.title": "Calldata",
+    "callDataInfo.label.endPoint": "End point URL",
+    "callDataInfo.label.sourcePath": "Source path",
+    "callDataInfo.outcomes.title": "Possible outcomes",
+
+    "dataRequestsOverview.table.label.id": "Request ID",
+    "dataRequestsOverview.table.label.status": "Status",
+    "dataRequestsOverview.table.label.timestamp": "Created at",
+
+    "requestInfo.title": "Request Info",
+    "requestInfo.label.requestor": "Requestor Account ID",
+    "requestInfo.label.feePercentage": "Fee Percentage",
+    "requestInfo.label.settlementTime": "Settlement time",
+    "requestInfo.label.totalStaked": "Total staked",
+
+    "dataRequestDetail.title": "Request #:id"
+}

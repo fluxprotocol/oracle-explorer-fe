@@ -1,0 +1,43 @@
+@import "./variables";
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--f-primary);
+    font-size: 1rem;
+    color: var(--c-text);
+    background-color: var(--c-background);
+}
+
+html, body {
+    height: 100%;
+}
+
+
+@mixin lightmode-variables {
+    --f-primary: #{$f-primary};
+
+    --c-black: rgb(#{$c-black-rgb});
+    --c-white: rgb(#{$c-white-rgb});
+    --c-white-rgb: #{$c-white-rgb};
+    --c-text: rgb(#{$c-text-rgb});
+    --c-label: rgb(#{$c-black-rgb}, 0.7);
+    --c-gray-100: rgb(#{$c-gray-100});
+
+    --c-background: #FCFCFC;
+    --c-active-link: #5269ff;
+
+    --i-logo: url('../assets/images/flux-logo-black.png');
+}
+
+html {
+    @include lightmode-variables;
+}

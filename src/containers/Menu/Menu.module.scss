@@ -1,0 +1,57 @@
+@import "../../styles/variables";
+
+.root {
+    background-color: var(--c-white);
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px;
+}
+
+.menu {
+    max-width: $container-size;
+    margin: 0 auto;
+}
+
+.topBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.menuItems {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menuItem {
+    margin-right: 1rem;
+}
+
+.menuLink {
+    display: block;
+    color: var(--c-label);
+    padding: 1rem 0;
+    text-decoration: none;
+    border-bottom: 3px solid;
+    border-color: transparent;
+
+    &--active {
+        border-color: var(--c-active-link);
+    }
+}
+
+.logoWrapper {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-bottom: 1rem;
+}
+
+.logo {
+    width: 80px;
+    height: 35px;
+    background-size: 100%;
+    background-image: var(--i-logo);
+    background-repeat: no-repeat;
+}
