@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { DataRequestViewModel } from '../../models/DataRequest';
 import trans from '../../translation/trans';
 import { routePaths } from '../../routes';
+import Pagination from '../Pagination/Pagination';
 
 import s from './DataRequestsOverview.module.scss';
 
@@ -22,33 +23,42 @@ export default function DataRequestsOverview({
     dataRequests,
 }: Props) {
     return (
-        <TableContainer className={s.container} component={Paper}>
-            <Table className={s.table}>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>{trans('dataRequestsOverview.table.label.id')}</TableCell>
-                        <TableCell>{trans('dataRequestsOverview.table.label.status')}</TableCell>
-                        <TableCell>{trans('dataRequestsOverview.table.label.timestamp')}</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {dataRequests.map((request) => (
-                        <TableRow key={request.id}>
-                            <TableCell>
-                                <Link to={routePaths.dataRequestDetail(request.id)}>
-                                    #{request.id}
-                                </Link>
-                            </TableCell>
-                            <TableCell>
-                                {request.id}
-                            </TableCell>
-                            <TableCell>
-                                {request.id}
-                            </TableCell>
+        <div>
+            <TableContainer className={s.container} component={Paper}>
+                <Table className={s.table}>
+                    <TableHead className={s.tableHead}>
+                        <TableRow>
+                            <TableCell>{trans('dataRequestsOverview.table.label.id')}</TableCell>
+                            <TableCell>{trans('dataRequestsOverview.table.label.status')}</TableCell>
+                            <TableCell>{trans('dataRequestsOverview.table.label.timestamp')}</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                        {dataRequests.map((request) => (
+                            <TableRow key={request.id}>
+                                <TableCell className={s.linkCell}>
+                                    <Link to={routePaths.dataRequestDetail(request.id)}>
+                                        #{request.id}
+                                    </Link>
+                                </TableCell>
+                                <TableCell>
+                                    {request.id}
+                                </TableCell>
+                                <TableCell>
+                                    {request.id}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <Pagination
+                className={s.pagination}
+                total={1000}
+                page={0}
+                rowsPerPage={10}
+                onChangePage={() => {}}
+            />
+        </div>
     );
 }

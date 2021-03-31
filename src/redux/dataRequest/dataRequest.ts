@@ -4,6 +4,7 @@ import { DataRequestViewModel } from '../../models/DataRequest';
 
 export type DataRequestsState = Readonly<{
     dataRequests: DataRequestViewModel[];
+    totalDataRequests: number;
     error?: string[];
     detailLoading: boolean;
     loading: boolean;
@@ -14,6 +15,7 @@ const initialState: DataRequestsState = {
     detailLoading: false,
     loading: false,
     dataRequests: [],
+    totalDataRequests: 0,
 };
 
 const dataRequestsSlice = createSlice({
@@ -50,6 +52,12 @@ const dataRequestsSlice = createSlice({
                 dataRequestDetail: action.payload,
             });
         },
+        setTotalDataRequest(state: DataRequestsState, action: PayloadAction<number>): DataRequestsState {
+            return ({
+                ...state,
+                totalDataRequests: action.payload,
+            });
+        },
     },
 });
 
@@ -59,6 +67,7 @@ export const {
     setDataRequestsLoading,
     setDataRequestDetail,
     setDataRequestDetailLoading,
+    setTotalDataRequest,
 } = dataRequestsSlice.actions;
 
 export default dataRequestsSlice.reducer;

@@ -27,7 +27,7 @@ export default function Menu() {
                         }
 
                         return (
-                            <li className={s.menuItem}>
+                            <li className={s.menuItem} key={route.key}>
                                 <NavLink
                                     className={s.menuLink}
                                     activeClassName={s['menuLink--active']}

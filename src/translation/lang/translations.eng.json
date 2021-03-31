@@ -4,6 +4,11 @@
 
     "menu.label.search": "Search request",
 
+    "pagination.pageIndication": "Page :currentPage of :totalPages",
+
+    "dataRequests.title": "All requests",
+    "dataRequest.subtitle": ":total in total",
+
     "stakerReportsInfo.title": "Stakers Report",
 
     "callDataInfo.title": "Calldata",

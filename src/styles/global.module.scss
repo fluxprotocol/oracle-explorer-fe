@@ -25,6 +25,8 @@ html, body {
 @mixin lightmode-variables {
     --f-primary: #{$f-primary};
 
+    --c-primary: rgb(#{$c-primary-rgb});
+    --c-primary-rgb: #{$c-primary-rgb};
     --c-black: rgb(#{$c-black-rgb});
     --c-white: rgb(#{$c-white-rgb});
     --c-white-rgb: #{$c-white-rgb};
@@ -33,7 +35,7 @@ html, body {
     --c-gray-100: rgb(#{$c-gray-100});
 
     --c-background: #FCFCFC;
-    --c-active-link: #5269ff;
+    --c-active-link: rgb(#{$c-primary-rgb});
 
     --i-logo: url('../assets/images/flux-logo-black.png');
 }

@@ -1,5 +1,5 @@
 import { DataRequestViewModel } from '../../models/DataRequest';
-import { setDataRequestDetailLoading, setDataRequestDetail, setDataRequestsLoading, setDataRequests } from './dataRequest';
+import { setDataRequestDetailLoading, setDataRequestDetail, setDataRequestsLoading, setDataRequests, setTotalDataRequest } from './dataRequest';
 
 function createDataRequestMock(options: Partial<DataRequestViewModel> = {}): DataRequestViewModel {
     return {
@@ -33,6 +33,7 @@ export function loadDataRequests() {
             createDataRequestMock({ id: '1' }),
         ]));
 
+        dispatch(setTotalDataRequest(3));
         dispatch(setDataRequestsLoading(false));
     }
 }
