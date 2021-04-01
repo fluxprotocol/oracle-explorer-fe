@@ -25,6 +25,7 @@ export default function DataRequestDetailPage() {
     return (
         <Page>
             <h1>{trans('dataRequestDetail.title', { id })}</h1>
+
             <RequestInfoConnector className={s.card} />
             <CallDataInfoConnector className={s.card} />
             <StakerReportInfoConnector className={s.card} />

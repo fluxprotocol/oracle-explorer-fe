@@ -9,7 +9,7 @@
     "dataRequests.title": "All requests",
     "dataRequest.subtitle": ":total in total",
 
-    "stakerReportsInfo.title": "Stakers Report",
+    "stakerReportsInfo.title": "Resolution windows",
 
     "callDataInfo.title": "Calldata",
     "callDataInfo.label.endPoint": "End point URL",
@@ -25,6 +25,23 @@
     "requestInfo.label.feePercentage": "Fee Percentage",
     "requestInfo.label.settlementTime": "Settlement time",
     "requestInfo.label.totalStaked": "Total staked",
+
+    "stakeReport.table.label.outcome": "Outcome",
+    "stakeReport.table.label.stake": "Staked",
+    "stakerReport.label.invalid": "Invalid",
+    "stakeReport.table.label.accountId": "Account ID",
+
+    "resolutionWindow.round": "Round #:round",
+
+    "resolutionWindowAccordion.label.endTime": "End time",
+    "resolutionWindowAccordion.label.bondSize": "Bond size",
+    "resolutionWindowAccordion.label.totalStaked": "Total staked",
+    "resolutionWindowAccordion.stakerReports.title": "Staker reports",
+    "resolutionWindowAccordion.outcomeStakes.title": "Outcome stakes",
+
+    "outcomeStakeInfo.table.label.outcome": "Outcome",
+    "outcomeStakeInfo.table.label.stake": "Staked",
+    "outcomeStakeInfo.label.invalid": "Invalid",
 
     "dataRequestDetail.title": "Request #:id"
 }

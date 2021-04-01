@@ -1,3 +1,4 @@
+import { Outcome } from "./DataRequestOutcome";
 import { OracleConfig } from "./OracleConfig";
 
 export interface DataRequestSource {
@@ -5,13 +6,19 @@ export interface DataRequestSource {
     sourcePath: string;
 }
 
-export interface DataRequestRound {
+export interface OutcomeStake {
+    outcome: Outcome;
+    stake: string;
+}
+
+export interface DataRequestResolutionWindow {
     round: number;
-    outcomeStakes: {
-        [outcome: string]: string | undefined;
-    };
+    bondedOutcome?: string;
+    outcomeStakes: OutcomeStake[];
+    endTime: Date;
+    bondSize: string;
     userStakes: {
-        [accountId: string]: DataRequestRound['outcomeStakes'];
+        [accountId: string]: OutcomeStake[];
     }
 }
 
@@ -22,5 +29,5 @@ export interface DataRequestViewModel {
     settlementTime: Date;
     sources: DataRequestSource[];
     outcomes?: string[];
-    rounds: DataRequestRound[];
+    resolutionWindows: DataRequestResolutionWindow[];
 }

@@ -7,6 +7,8 @@ import trans from '../../translation/trans';
 import LabeledText from '../../compositions/LabeledText';
 
 import s from './RequestInfoCard.module.scss';
+import InformationRows from '../InformationRows';
+import { prettyFormatDate } from '../../utils/dateUtils';
 
 interface Props {
     dataRequest: DataRequestViewModel;
@@ -23,20 +25,21 @@ export default function RequestInfoCard({
                 <div className={s.titleWrapper}>
                     <h2 className={s.title}>{trans('requestInfo.title')}</h2>
                 </div>
-                <div className={s.requestDetails}>
-                    <LabeledText className={s.item} label={trans('requestInfo.label.requestor')}>
-                        {dataRequest.requestor}
-                    </LabeledText>
-                    <LabeledText className={s.item} label={trans('requestInfo.label.feePercentage')}>
-                        {dataRequest.config.resolutionFeePercentage}%
-                    </LabeledText>
-                    <LabeledText className={s.item} label={trans('requestInfo.label.settlementTime')}>
-                        {dataRequest.settlementTime.toDateString()}
-                    </LabeledText>
-                    <LabeledText className={s.item} label={trans('requestInfo.label.totalStaked')}>
-                        TBD FLX
-                    </LabeledText>
-                </div>
+                <InformationRows
+                    rows={[{
+                        label: trans('requestInfo.label.requestor'),
+                        value: dataRequest.requestor,
+                    }, {
+                        label: trans('requestInfo.label.feePercentage'),
+                        value: `${dataRequest.config.resolutionFeePercentage}%`,
+                    }, {
+                        label: trans('requestInfo.label.settlementTime'),
+                        value: prettyFormatDate(dataRequest.settlementTime),
+                    }, {
+                        label: trans('requestInfo.label.totalStaked'),
+                        value: 'TBD FLX'
+                    }]}
+                />
             </CardContent>
         </Card>
     );
