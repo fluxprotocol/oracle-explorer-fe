@@ -4,11 +4,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Card from '../../components/Card';
 import { DataRequestViewModel } from '../../models/DataRequest';
 import trans from '../../translation/trans';
-import LabeledText from '../../compositions/LabeledText';
 
 import s from './RequestInfoCard.module.scss';
 import InformationRows from '../InformationRows';
 import { prettyFormatDate } from '../../utils/dateUtils';
+import { formatToken } from '../../utils/tokenUtils';
 
 interface Props {
     dataRequest: DataRequestViewModel;
@@ -33,11 +33,8 @@ export default function RequestInfoCard({
                         label: trans('requestInfo.label.feePercentage'),
                         value: `${dataRequest.config.resolutionFeePercentage}%`,
                     }, {
-                        label: trans('requestInfo.label.settlementTime'),
-                        value: prettyFormatDate(dataRequest.settlementTime),
-                    }, {
                         label: trans('requestInfo.label.totalStaked'),
-                        value: 'TBD FLX'
+                        value: `${formatToken(dataRequest.totalStaked)} FLX`,
                     }]}
                 />
             </CardContent>

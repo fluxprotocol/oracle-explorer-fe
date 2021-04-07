@@ -6,10 +6,12 @@ import { StylesProvider } from '@material-ui/core/styles';
 
 import { routes } from './routes';
 import configureStore from './redux/store';
+import { initProviders } from './services/providers/ProviderRegistry';
 
 import './styles/global.module.scss';
 
 const store = configureStore({});
+initProviders();
 
 ReactDOM.render(
     <Provider store={store}>

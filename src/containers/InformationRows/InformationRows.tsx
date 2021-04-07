@@ -19,7 +19,7 @@ export default function InformationRows({
         <div className={s.root}>
             {rows.map((row) => {
                 return (
-                    <LabeledText className={s.item} label={row.label}>
+                    <LabeledText key={`${row.label}_${row.value}`} className={s.item} label={row.label}>
                         {row.value}
                     </LabeledText>
                 );

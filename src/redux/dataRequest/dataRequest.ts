@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { DataRequestViewModel } from '../../models/DataRequest';
+import { DataRequestListItem, DataRequestViewModel } from '../../models/DataRequest';
 
 export type DataRequestsState = Readonly<{
-    dataRequests: DataRequestViewModel[];
+    dataRequests: DataRequestListItem[];
     totalDataRequests: number;
     error?: string[];
     detailLoading: boolean;
@@ -40,7 +40,7 @@ const dataRequestsSlice = createSlice({
                 detailLoading: action.payload,
             });
         },
-        setDataRequests(state: DataRequestsState, action: PayloadAction<DataRequestViewModel[]>): DataRequestsState {
+        setDataRequests(state: DataRequestsState, action: PayloadAction<DataRequestListItem[]>): DataRequestsState {
             return ({
                 ...state,
                 dataRequests: action.payload,

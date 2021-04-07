@@ -6,7 +6,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { DataRequestResolutionWindow } from '../../../../models/DataRequest';
+import { ResolutionWindow } from '../../../../models/ResolutionWindow';
 import trans from '../../../../translation/trans';
 import { formatToken } from '../../../../utils/tokenUtils';
 
@@ -14,7 +14,7 @@ import s from './StakerReport.module.scss';
 import { OutcomeType } from '../../../../models/DataRequestOutcome';
 
 export interface Props {
-    userStakes: DataRequestResolutionWindow['userStakes'];
+    userStakes: ResolutionWindow['userStakes'];
 }
 
 export default function StakerReport({

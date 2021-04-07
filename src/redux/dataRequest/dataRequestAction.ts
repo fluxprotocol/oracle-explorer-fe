@@ -1,100 +1,24 @@
-import { DataRequestViewModel } from '../../models/DataRequest';
-import { OutcomeType } from '../../models/DataRequestOutcome';
-import { setDataRequestDetailLoading, setDataRequestDetail, setDataRequestsLoading, setDataRequests, setTotalDataRequest } from './dataRequest';
+import { DEFAULT_PAGINATION_LIMIT } from '../../config';
+import { getAllDataRequests, getDataRequestById } from '../../services/DataRequestService';
+import { Reducers } from '../reducers';
+import { setDataRequestDetailLoading, setDataRequestDetail, setDataRequestsLoading, setDataRequests, setTotalDataRequest, setDataRequestsErrors } from './dataRequest';
 
-function createDataRequestMock(options: Partial<DataRequestViewModel> = {}): DataRequestViewModel {
-    return {
-        id: 'dahsuohdsaui',
-        requestor: 'huasdhdasuihdasiuhdasi.near',
-        settlementTime: new Date(),
-        config: {
-            resolutionFeePercentage: 2,
-        },
-        sources: [{
-            endPoint: 'http://google.com',
-            sourcePath: 'a.b[0].s',
-        }],
-        outcomes: ['Yes', 'No'],
-        resolutionWindows: [{
-            round: 0,
-            outcomeStakes: [],
-            userStakes: {},
-            bondSize: '100000000000000',
-            endTime: new Date(),
-        }, {
-            round: 1,
-            outcomeStakes: [],
-            userStakes: {},
-            bondedOutcome: 'Tarzan',
-            bondSize: '100000000000000',
-            endTime: new Date(),
-        }, {
-            round: 2,
-            outcomeStakes: [
-                {
-                    outcome: {
-                        answer: 'Jane',
-                        type: OutcomeType.Answer,
-                    },
-                    stake: '2000000000000000000',
-                },
-                {
-                    outcome: {
-                        type: OutcomeType.Invalid,
-                    },
-                    stake: '2000000000000000000',
-                }
-            ],
-            bondSize: '100000000000000',
-            endTime: new Date(),
-            userStakes: {
-                "franklin.near": [
-                    {
-                        outcome: {
-                            answer: 'Jane',
-                            type: OutcomeType.Answer,
-                        },
-                        stake: '1000000000000000000',
-                    },
-                    {
-                        outcome: {
-                            type: OutcomeType.Invalid,
-                        },
-                        stake: '1000000000000000000',
-                    }
-                ],
-                "sa.near": [
-                    {
-                        outcome: {
-                            answer: 'Jane',
-                            type: OutcomeType.Answer,
-                        },
-                        stake: '1000000000000000000',
-                    },
-                    {
-                        outcome: {
-                            type: OutcomeType.Invalid,
-                        },
-                        stake: '1000000000000000000',
-                    }
-                ],
-            },
-        }],
-        ...options,
-    };
-}
-
-export function loadDataRequests() {
-    return async (dispatch: Function) => {
+export function loadDataRequests(page: number, reset = false) {
+    return async (dispatch: Function, getState: () => Reducers) => {
         dispatch(setDataRequestsLoading(true));
 
-        dispatch(setDataRequests([
-            createDataRequestMock({ id: '3' }),
-            createDataRequestMock({ id: '2' }),
-            createDataRequestMock({ id: '1' }),
-        ]));
+        if (reset) {
+            dispatch(setDataRequests([]));
+        }
 
-        dispatch(setTotalDataRequest(3));
+        const offset = DEFAULT_PAGINATION_LIMIT * page;
+        const result = await getAllDataRequests({
+            limit: DEFAULT_PAGINATION_LIMIT,
+            offset,
+        });
+
+        dispatch(setDataRequests(result.items));
+        dispatch(setTotalDataRequest(result.total));
         dispatch(setDataRequestsLoading(false));
     }
 }
@@ -103,7 +27,14 @@ export function loadDataRequests() {
 export function loadDataRequestById(id: string) {
     return async (dispatch: Function) => {
         dispatch(setDataRequestDetailLoading(true));
-        dispatch(setDataRequestDetail(createDataRequestMock({ id })));
+        const dataRequest = await getDataRequestById(id);
+
+        if (!dataRequest) {
+            setDataRequestsErrors(['404']);
+            return;
+        }
+
+        dispatch(setDataRequestDetail(dataRequest));
         dispatch(setDataRequestDetailLoading(false));
     }
 }

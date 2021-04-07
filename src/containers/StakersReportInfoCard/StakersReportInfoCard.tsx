@@ -31,6 +31,7 @@ export default function StakersReportInfoCard({
                             <ResolutionWindowAccordion
                                 resolutionWindow={resolutionWindow}
                                 defaultExpanded={index === 0}
+                                key={resolutionWindow.round}
                             />
                         );
                     })}

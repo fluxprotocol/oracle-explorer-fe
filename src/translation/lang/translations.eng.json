@@ -3,6 +3,8 @@
     "routes.label.dataRequests": "Requests",
 
     "menu.label.search": "Search request",
+    "menu.label.login": "Login",
+    "menu.label.logout": "Logout",
 
     "pagination.pageIndication": "Page :currentPage of :totalPages",
 

@@ -7,7 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import { OutcomeStake } from '../../../../models/DataRequest';
+import { OutcomeStake } from '../../../../models/ResolutionWindow';
 
 import s from './OutcomeStakeInfo.module.scss';
 import trans from '../../../../translation/trans';

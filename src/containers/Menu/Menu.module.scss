@@ -18,8 +18,15 @@
     justify-content: space-between;
 }
 
-.menuItems {
+.bottomBar {
     display: flex;
+    justify-content: space-between;
+    color: var(--c-label);
+}
+
+.menuItems, .accountLinks {
+    display: flex;
+    align-items: center;
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -27,6 +34,10 @@
 
 .menuItem {
     margin-right: 1rem;
+
+    &:last-child {
+        margin-right: 0;
+    }
 }
 
 .menuLink {

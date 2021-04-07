@@ -31,7 +31,7 @@ export default function CallDataInfoCard({
                     </thead>
                     <tbody>
                         {dataRequest.sources.map(source => (
-                            <tr>
+                            <tr key={`${source.endPoint}_${source.sourcePath}`}>
                                 <td className={s.tableItem}>
                                     <span className={s.tableItemInner}>{source.endPoint}</span>
                                 </td>

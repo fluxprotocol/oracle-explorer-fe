@@ -8,19 +8,24 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Link } from 'react-router-dom';
 
-import { DataRequestViewModel } from '../../models/DataRequest';
+import { DataRequestListItem } from '../../models/DataRequest';
 import trans from '../../translation/trans';
 import { routePaths } from '../../routes';
 import Pagination from '../Pagination/Pagination';
 
 import s from './DataRequestsOverview.module.scss';
+import { DEFAULT_PAGINATION_LIMIT } from '../../config';
 
 interface Props {
-    dataRequests: DataRequestViewModel[];
+    dataRequests: DataRequestListItem[];
+    page: number;
+    totalItems: number;
 }
 
 export default function DataRequestsOverview({
     dataRequests,
+    page,
+    totalItems,
 }: Props) {
     return (
         <div>
@@ -54,9 +59,9 @@ export default function DataRequestsOverview({
             </TableContainer>
             <Pagination
                 className={s.pagination}
-                total={1000}
-                page={0}
-                rowsPerPage={10}
+                total={totalItems}
+                page={page}
+                rowsPerPage={DEFAULT_PAGINATION_LIMIT}
                 onChangePage={() => {}}
             />
         </div>

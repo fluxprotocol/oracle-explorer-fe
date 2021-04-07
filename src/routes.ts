@@ -8,6 +8,7 @@ interface RouteProps {
     component: ComponentType;
     exact: boolean;
     path: string;
+    navPath: string;
     inNavigation: boolean;
     key: string;
     label: string;
@@ -16,7 +17,7 @@ interface RouteProps {
 
 export const routePaths = {
     root: () => '/',
-    dataRequests: () => '/requests',
+    dataRequests: (page = ':page') => `/requests/${page}`,
     dataRequestDetail: (id = ':id') => `/request/${id}`,
 }
 
@@ -28,6 +29,7 @@ export const routes: RouteProps[] = [
         key: 'home',
         label: trans('routes.label.home'),
         path: routePaths.root(),
+        navPath: routePaths.root(),
     },
     {
         component: DataRequestDetailPage,
@@ -36,13 +38,15 @@ export const routes: RouteProps[] = [
         key: 'data-request-detail',
         label: 'Data request detail',
         path: routePaths.dataRequestDetail(),
+        navPath: routePaths.dataRequestDetail(),
     },
     {
         component: DataRequestsPage,
-        exact: false,
+        exact: true,
         inNavigation: true,
         key: 'data-requests',
         label: trans('routes.label.dataRequests'),
         path: routePaths.dataRequests(),
+        navPath: routePaths.dataRequests('0'),
     },
 ];

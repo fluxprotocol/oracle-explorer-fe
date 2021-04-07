@@ -4,7 +4,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 
-import { DataRequestResolutionWindow } from '../../models/DataRequest';
+import { ResolutionWindow } from '../../models/ResolutionWindow';
 import trans from '../../translation/trans';
 
 import s from './ResolutionWindowAccordion.module.scss';
@@ -15,7 +15,7 @@ import { formatToken } from '../../utils/tokenUtils';
 import OutcomeStakeInfo from './components/OutcomeStakeInfo/OutcomeStakeInfo';
 
 interface Props {
-    resolutionWindow: DataRequestResolutionWindow;
+    resolutionWindow: ResolutionWindow;
     defaultExpanded?: boolean;
 }
 
@@ -42,7 +42,7 @@ export default function ResolutionWindowAccordion({
                         },
                         {
                             label: trans('resolutionWindowAccordion.label.totalStaked'),
-                            value: `TBD FLX`,
+                            value: `${formatToken(resolutionWindow.totalStaked)} FLX`,
                         }
                     ]}
                 />
