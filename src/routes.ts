@@ -18,7 +18,7 @@ interface RouteProps {
 export const routePaths = {
     root: () => '/',
     dataRequests: (page = ':page') => `/requests/${page}`,
-    dataRequestDetail: (id = ':id') => `/request/${id}`,
+    dataRequestDetail: (provider = ':provider', id = ':id') => `/request/${provider}/${id}`,
 }
 
 export const routes: RouteProps[] = [

@@ -1,1 +1,1 @@
-export { default } from './StakersReportInfoCard';
+export { default } from './ResolutionWindowInfoCard';

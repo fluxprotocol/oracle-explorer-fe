@@ -7,8 +7,8 @@ import trans from '../../translation/trans';
 
 import s from './RequestInfoCard.module.scss';
 import InformationRows from '../InformationRows';
-import { prettyFormatDate } from '../../utils/dateUtils';
 import { formatToken } from '../../utils/tokenUtils';
+import { transfromOutcomeToString } from '../../models/DataRequestOutcome';
 
 interface Props {
     dataRequest: DataRequestViewModel;
@@ -35,6 +35,9 @@ export default function RequestInfoCard({
                     }, {
                         label: trans('requestInfo.label.totalStaked'),
                         value: `${formatToken(dataRequest.totalStaked)} FLX`,
+                    }, {
+                        label: trans('requestInfo.label.finalizedOutcome'),
+                        value: dataRequest.finalized_outcome ? transfromOutcomeToString(dataRequest.finalized_outcome) : 'null',
                     }]}
                 />
             </CardContent>

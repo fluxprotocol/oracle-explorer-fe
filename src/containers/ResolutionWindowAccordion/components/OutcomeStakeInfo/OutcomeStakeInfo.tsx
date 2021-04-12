@@ -7,7 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import { OutcomeStake } from '../../../../models/ResolutionWindow';
+import { OutcomeStake } from '../../../../models/OutcomeStake';
 
 import s from './OutcomeStakeInfo.module.scss';
 import trans from '../../../../translation/trans';
@@ -16,14 +16,16 @@ import { OutcomeType } from '../../../../models/DataRequestOutcome';
 
 export interface Props {
     outcomeStakes: OutcomeStake[];
+    tableComponent?: any;
 }
 
 export default function OutcomeStakeInfo({
     outcomeStakes,
+    tableComponent = Paper,
 }: Props) {
     return (
         <div>
-            <TableContainer className={s.container} component={Paper}>
+            <TableContainer className={s.container} component={tableComponent}>
                 <Table className={s.table}>
                     <TableHead className={s.tableHead}>
                         <TableRow>

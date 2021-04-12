@@ -1,22 +1,17 @@
 import Big from "big.js";
 import { Outcome, transformToOutcome } from "./DataRequestOutcome";
-
-export interface OutcomeStake {
-    outcome: Outcome;
-    stake: string;
-}
+import { OutcomeStake } from "./OutcomeStake";
+import { transformToUserStakes, UserStakeGraphData, UserStakes } from "./UserStakes";
 
 
 export interface ResolutionWindow {
     round: number;
-    bondedOutcome?: string;
+    bondedOutcome?: Outcome;
     outcomeStakes: OutcomeStake[];
     endTime: Date;
     bondSize: string;
     totalStaked: string;
-    userStakes: {
-        [accountId: string]: OutcomeStake[];
-    }
+    userStakes: UserStakes;
 }
 
 export interface ResolutionWindowGraphData {
@@ -27,6 +22,7 @@ export interface ResolutionWindowGraphData {
     end_time: string;
     id: string;
     round: number;
+    bonded_outcome: null | string;
     outcome_stakes: {
         data_request_id: string;
         id: string;
@@ -34,37 +30,20 @@ export interface ResolutionWindowGraphData {
         total_stake: string;
         outcome: string;
     }[];
-    user_stakes: {
-        account_id: string;
-        data_request_id: string;
-        id: string;
-        outcome: string;
-        round: string;
-        total_stake: string;
-    }[];
+    user_stakes: UserStakeGraphData[];
 }
 
 export function transformToResolutionWindow(data: ResolutionWindowGraphData): ResolutionWindow {
-    const userStakes: ResolutionWindow['userStakes'] = {};
     let totalStaked = new Big(0);
 
-    data.user_stakes.forEach((userStake) => {
-        const currentOutcomeStakes = userStakes[userStake.account_id] ?? [];
-
-        currentOutcomeStakes.push({
-            outcome: transformToOutcome(userStake.outcome),
-            stake: userStake.total_stake,
-        });
-
-        userStakes[userStake.account_id] = currentOutcomeStakes;
-    });
-
-    const outcomeStakes = data.outcome_stakes.map((os) => {
+    const outcomeStakes: OutcomeStake[] = data.outcome_stakes.map((os) => {
         totalStaked = totalStaked.add(os.total_stake);
 
         return {
             outcome: transformToOutcome(os.outcome),
             stake: os.total_stake,
+            dataRequestId: os.data_request_id,
+            round: os.round,
         }
     });
 
@@ -74,6 +53,7 @@ export function transformToResolutionWindow(data: ResolutionWindowGraphData): Re
         outcomeStakes,
         totalStaked: totalStaked.toString(),
         round: data.round,
-        userStakes
+        userStakes: transformToUserStakes(data.user_stakes),
+        bondedOutcome: data.bonded_outcome ? transformToOutcome(data.bonded_outcome) : undefined,
     };
 }

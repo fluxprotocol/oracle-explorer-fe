@@ -15,17 +15,20 @@ import Pagination from '../Pagination/Pagination';
 
 import s from './DataRequestsOverview.module.scss';
 import { DEFAULT_PAGINATION_LIMIT } from '../../config';
+import { prettyFormatDate } from '../../utils/dateUtils';
 
 interface Props {
     dataRequests: DataRequestListItem[];
     page: number;
     totalItems: number;
+    onRequestPageChange: (page: number) => void;
 }
 
 export default function DataRequestsOverview({
     dataRequests,
     page,
     totalItems,
+    onRequestPageChange,
 }: Props) {
     return (
         <div>
@@ -42,15 +45,21 @@ export default function DataRequestsOverview({
                         {dataRequests.map((request) => (
                             <TableRow key={request.id}>
                                 <TableCell className={s.linkCell}>
-                                    <Link to={routePaths.dataRequestDetail(request.id)}>
+                                    <Link to={routePaths.dataRequestDetail('near', request.id)}>
                                         #{request.id}
                                     </Link>
                                 </TableCell>
                                 <TableCell>
-                                    {request.id}
+                                    {request.finalized_outcome && (
+                                        <span>{trans('global.status.completed')}</span>
+                                    )}
+
+                                    {!request.finalized_outcome && (
+                                        <span>{trans('global.status.ongoing')}</span>
+                                    )}
                                 </TableCell>
                                 <TableCell>
-                                    {request.id}
+                                    {prettyFormatDate(request.date)}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -59,10 +68,10 @@ export default function DataRequestsOverview({
             </TableContainer>
             <Pagination
                 className={s.pagination}
-                total={totalItems}
+                total={Math.ceil(totalItems / DEFAULT_PAGINATION_LIMIT) - 1}
                 page={page}
                 rowsPerPage={DEFAULT_PAGINATION_LIMIT}
-                onChangePage={() => {}}
+                onChangePage={onRequestPageChange}
             />
         </div>
     );

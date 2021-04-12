@@ -1,3 +1,5 @@
+import trans from "../translation/trans";
+
 export enum OutcomeType {
     Answer,
     Invalid
@@ -27,4 +29,12 @@ export function transformToOutcome(outcome: string): Outcome {
         answer: answer.slice(0, -1),
         type: OutcomeType.Answer,
     };
+}
+
+export function transfromOutcomeToString(outcome: Outcome): string {
+    if (outcome.type === OutcomeType.Invalid) {
+        return trans('outcome.invalid');
+    }
+
+    return `"${outcome.answer}"`;
 }

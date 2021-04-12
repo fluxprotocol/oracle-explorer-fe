@@ -37,7 +37,7 @@ export default function Pagination({
     };
 
     const handleLastPageButtonClick = () => {
-        onChangePage(Math.max(0, Math.ceil(total / rowsPerPage) - 1));
+        onChangePage(total);
     };
 
     return (
@@ -60,14 +60,14 @@ export default function Pagination({
             </span>
             <IconButton
                 onClick={handleNextButtonClick}
-                disabled={page >= Math.ceil(total / rowsPerPage) - 1}
+                disabled={page === total}
                 aria-label="next page"
             >
                 <KeyboardArrowRight />
             </IconButton>
             <IconButton
                 onClick={handleLastPageButtonClick}
-                disabled={page >= Math.ceil(total / rowsPerPage) - 1}
+                disabled={page === total}
                 aria-label="last page"
             >
                 <LastPageIcon />

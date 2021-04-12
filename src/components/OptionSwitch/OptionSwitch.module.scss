@@ -1,0 +1,22 @@
+.root {
+    color: var(--c-text);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    :global(.MuiSwitch-colorSecondary.Mui-checked) + :global(.MuiSwitch-track) {
+        background-color: var(--c-link);
+    }
+}
+
+.options {
+    color: var(--c-label);
+}
+
+.thumb {
+    color: var(--c-link);
+}
+
+.track {
+    background-color: var(--c-link);
+}

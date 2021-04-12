@@ -1,4 +1,11 @@
 {
+    "global.action.close": "Close",
+    "global.action.cancel": "Cancel",
+    "global.action.submit": "Submit",
+
+    "global.status.ongoing": "On going",
+    "global.status.completed": "Completed",
+
     "routes.label.home": "Home",
     "routes.label.dataRequests": "Requests",
 
@@ -11,7 +18,10 @@
     "dataRequests.title": "All requests",
     "dataRequest.subtitle": ":total in total",
 
+    "outcome.invalid": "Invalid",
+
     "stakerReportsInfo.title": "Resolution windows",
+    "stakerReportsInfo.noWindows": "No resolution windows, stake to start one.",
 
     "callDataInfo.title": "Calldata",
     "callDataInfo.label.endPoint": "End point URL",
@@ -27,6 +37,7 @@
     "requestInfo.label.feePercentage": "Fee Percentage",
     "requestInfo.label.settlementTime": "Settlement time",
     "requestInfo.label.totalStaked": "Total staked",
+    "requestInfo.label.finalizedOutcome": "Finalized outcome",
 
     "stakeReport.table.label.outcome": "Outcome",
     "stakeReport.table.label.stake": "Staked",
@@ -40,10 +51,29 @@
     "resolutionWindowAccordion.label.totalStaked": "Total staked",
     "resolutionWindowAccordion.stakerReports.title": "Staker reports",
     "resolutionWindowAccordion.outcomeStakes.title": "Outcome stakes",
+    "resolutionWindowAccordion.label.percentageFilled": "Filled %",
+    "resolutionWindowAccordion.label.bondedOutcome": "Bonded outcome",
 
     "outcomeStakeInfo.table.label.outcome": "Outcome",
     "outcomeStakeInfo.table.label.stake": "Staked",
     "outcomeStakeInfo.label.invalid": "Invalid",
 
-    "dataRequestDetail.title": "Request #:id"
+    "stakeDialog.title": "Stake",
+    "stakeDialog.label.answer": "Answer",
+    "stakeDialog.label.stakeAmount": "Stake amount in FLX",
+    "stakeDialog.label.valid": "Valid",
+    "stakeDialog.label.invalid": "Invalid",
+    "stakeDialog.label.validity": "Is data request valid?",
+    "stakeDialog.label.outcomes": "Possible answers",
+    "stakeDialog.errors.notEnoughBalance": "Not enough balance",
+    "stakeDialog.errors.noAnswer": "Answer is required for valid data requests",
+    "stakeDialog.errors.mustBeAnOutcome": "The answer must be one of the outcomes",
+
+    "accountStakesInfoCard.title": "Your stakes",
+    "accountStakesInfoCard.noStakes": "No stakes done by you",
+
+    "dataRequestDetail.title": "Request #:id",
+    "dataRequestDetail.label.stake": "Stake",
+    "dataRequestDetail.label.claim": "Claim earnings",
+    "dataRequestDetail.label.finalize": "Finalize"
 }

@@ -1,0 +1,19 @@
+.paper {
+    border-radius: 0.625rem;
+    background-color: var(--c-white);
+    margin: 0.625rem;
+    width: 100%;
+}
+
+.title {
+    color: var(--c-text);
+}
+
+.content {
+    color: var(--c-text);
+}
+
+.cancelButton {
+    background: transparent;
+    color: var(--c-text);
+}

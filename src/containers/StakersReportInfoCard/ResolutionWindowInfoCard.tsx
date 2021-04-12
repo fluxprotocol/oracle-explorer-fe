@@ -5,7 +5,7 @@ import { DataRequestViewModel } from '../../models/DataRequest';
 import Card from '../../components/Card';
 import trans from '../../translation/trans';
 
-import s from './StakersReportInfoCard.module.scss';
+import s from './ResolutionWindowInfoCard.module.scss';
 import ResolutionWindowAccordion from '../ResolutionWindowAccordion';
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
     className?: string;
 }
 
-export default function StakersReportInfoCard({
+export default function ResolutionWindowInfoCard({
     dataRequest,
     className,
 }: Props) {
@@ -36,6 +36,11 @@ export default function StakersReportInfoCard({
                         );
                     })}
                 </div>
+                {resolutionWindows.length === 0 && (
+                    <div className={s.noWindows}>
+                        {trans('stakerReportsInfo.noWindows')}
+                    </div>
+                )}
             </CardContent>
         </Card>
     );

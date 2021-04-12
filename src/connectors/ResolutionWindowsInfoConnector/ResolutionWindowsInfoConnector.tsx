@@ -7,7 +7,7 @@ interface Props {
     className?: string;
 }
 
-export default function StakersReportInfoConnector({
+export default function ResolutionWindowsInfoConnector({
     className,
 }: Props) {
     const dataRequest = useSelector((store: Reducers) => store.dataRequest.dataRequestDetail);

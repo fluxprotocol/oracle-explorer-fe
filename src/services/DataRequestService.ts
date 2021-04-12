@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { DataRequestListItem, transformToDataRequestViewModel } from "../models/DataRequest";
+import { DataRequestListItem, transformToDataRequestListItem, transformToDataRequestViewModel } from "../models/DataRequest";
 import { Pagination } from "../models/Pagination";
 import { graphqlClient } from "./GraphQLService";
 
@@ -22,6 +22,7 @@ export async function getAllDataRequests({
                             id
                             date
                             requestor
+                            finalized_outcome
                         }
                     }
                 }
@@ -32,11 +33,11 @@ export async function getAllDataRequests({
             }
         });
 
-        const paginatedDataRequests = response.data.dataRequests;
+        const paginatedDataRequests = response.data.dataRequests.items.map((dr: any) => transformToDataRequestListItem(dr));
 
         return {
-            total: paginatedDataRequests.total,
-            items: paginatedDataRequests.items,
+            total: response.data.dataRequests.total,
+            items: paginatedDataRequests,
         };
     } catch (error) {
         console.error('[getAllDataRequests]', error);
@@ -63,6 +64,7 @@ export async function getDataRequestById(id: string) {
                         outcomes
                         requestor
                         target_contract
+                        finalized_outcome
                         sources {
                             end_point
                             source_path
@@ -85,6 +87,7 @@ export async function getDataRequestById(id: string) {
                         resolution_windows {
                             block_height
                             bond_size
+                            bonded_outcome
                             date
                             dr_id
                             end_time

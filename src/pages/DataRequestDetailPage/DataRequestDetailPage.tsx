@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import AccountStakesInfoCardConnector from '../../connectors/AccountStakesInfoCardConnector';
 import CallDataInfoConnector from '../../connectors/CallDataInfoConnector';
+import DataRequestDetailHeaderConnector from '../../connectors/DataRequestDetailHeaderConnector';
 import RequestInfoConnector from '../../connectors/RequestInfoConnector';
-import StakerReportInfoConnector from '../../connectors/StakersReportInfoConnector';
+import StakeDialogConnector from '../../connectors/StakeDialogConnector';
+import ResolutionWindowsInfoConnector from '../../connectors/ResolutionWindowsInfoConnector';
 import Page from '../../containers/Page';
-import { loadDataRequestById } from '../../redux/dataRequest/dataRequestAction';
-import trans from '../../translation/trans';
+import { loadDataRequestById, unloadDataRequest } from '../../redux/dataRequest/dataRequestAction';
+import { Reducers } from '../../redux/reducers';
 
 import s from './DataRequestDetailPage.module.scss';
 
@@ -17,18 +20,24 @@ interface RouterParams {
 export default function DataRequestDetailPage() {
     const dispatch = useDispatch();
     const { id } = useParams<RouterParams>();
+    const account = useSelector((store: Reducers) => store.account.account);
 
     useEffect(() => {
         dispatch(loadDataRequestById(id));
+
+        return () => {
+            dispatch(unloadDataRequest());
+        }
     }, [dispatch, id]);
 
     return (
         <Page>
-            <h1>{trans('dataRequestDetail.title', { id })}</h1>
-
+            <DataRequestDetailHeaderConnector />
+            <StakeDialogConnector />
             <RequestInfoConnector className={s.card} />
+            {account && <AccountStakesInfoCardConnector />}
             <CallDataInfoConnector className={s.card} />
-            <StakerReportInfoConnector className={s.card} />
+            <ResolutionWindowsInfoConnector className={s.card} />
         </Page>
     );
 }

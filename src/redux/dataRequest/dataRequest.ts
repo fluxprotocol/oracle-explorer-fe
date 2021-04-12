@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { DataRequestListItem, DataRequestViewModel } from '../../models/DataRequest';
+import { OutcomeStake } from '../../models/OutcomeStake';
 
 export type DataRequestsState = Readonly<{
     dataRequests: DataRequestListItem[];
@@ -9,6 +10,7 @@ export type DataRequestsState = Readonly<{
     detailLoading: boolean;
     loading: boolean;
     dataRequestDetail?: DataRequestViewModel;
+    accountStakes: OutcomeStake[];
 }>;
 
 const initialState: DataRequestsState = {
@@ -16,6 +18,7 @@ const initialState: DataRequestsState = {
     loading: false,
     dataRequests: [],
     totalDataRequests: 0,
+    accountStakes: [],
 };
 
 const dataRequestsSlice = createSlice({
@@ -46,7 +49,7 @@ const dataRequestsSlice = createSlice({
                 dataRequests: action.payload,
             });
         },
-        setDataRequestDetail(state: DataRequestsState, action: PayloadAction<DataRequestViewModel>): DataRequestsState {
+        setDataRequestDetail(state: DataRequestsState, action: PayloadAction<DataRequestViewModel | undefined>): DataRequestsState {
             return ({
                 ...state,
                 dataRequestDetail: action.payload,
@@ -56,6 +59,12 @@ const dataRequestsSlice = createSlice({
             return ({
                 ...state,
                 totalDataRequests: action.payload,
+            });
+        },
+        setDataRequestAccountStakes(state: DataRequestsState, action: PayloadAction<OutcomeStake[]>): DataRequestsState {
+            return ({
+                ...state,
+                accountStakes: action.payload,
             });
         },
     },
@@ -68,6 +77,7 @@ export const {
     setDataRequestDetail,
     setDataRequestDetailLoading,
     setTotalDataRequest,
+    setDataRequestAccountStakes,
 } = dataRequestsSlice.actions;
 
 export default dataRequestsSlice.reducer;
