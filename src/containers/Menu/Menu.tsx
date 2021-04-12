@@ -81,7 +81,7 @@ export default function Menu({
                         {account && (
                             <>
                                 <li className={s.menuItem}>
-                                    {account.accountId}
+                                    <Link className={s.link} to={routePaths.account(account.providerId, account.accountId)}>{account.accountId}</Link>
                                 </li>
                                 <li className={s.menuItem}>
                                     {formatToken(account.balance)} FLX

@@ -53,6 +53,11 @@
     }
 }
 
+.link {
+    color: var(--c-link);
+    text-decoration: none;
+}
+
 .logoWrapper {
     display: flex;
     align-items: center;

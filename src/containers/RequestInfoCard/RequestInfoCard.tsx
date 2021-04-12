@@ -9,6 +9,8 @@ import s from './RequestInfoCard.module.scss';
 import InformationRows from '../InformationRows';
 import { formatToken } from '../../utils/tokenUtils';
 import { transfromOutcomeToString } from '../../models/DataRequestOutcome';
+import { Link } from 'react-router-dom';
+import { routePaths } from '../../routes';
 
 interface Props {
     dataRequest: DataRequestViewModel;
@@ -28,16 +30,16 @@ export default function RequestInfoCard({
                 <InformationRows
                     rows={[{
                         label: trans('requestInfo.label.requestor'),
-                        value: dataRequest.requestor,
+                        value: <Link className={s.link} to={routePaths.account('near', dataRequest.requestor)}>{dataRequest.requestor}</Link>,
                     }, {
                         label: trans('requestInfo.label.feePercentage'),
-                        value: `${dataRequest.config.resolutionFeePercentage}%`,
+                        value: <span>{`${dataRequest.config.resolutionFeePercentage}%`}</span>,
                     }, {
                         label: trans('requestInfo.label.totalStaked'),
-                        value: `${formatToken(dataRequest.totalStaked)} FLX`,
+                        value: <span>{`${formatToken(dataRequest.totalStaked)} FLX`}</span>,
                     }, {
                         label: trans('requestInfo.label.finalizedOutcome'),
-                        value: dataRequest.finalized_outcome ? transfromOutcomeToString(dataRequest.finalized_outcome) : 'null',
+                        value: <span>{dataRequest.finalized_outcome ? transfromOutcomeToString(dataRequest.finalized_outcome) : 'null'}</span>,
                     }]}
                 />
             </CardContent>

@@ -12,6 +12,8 @@ import { formatToken } from '../../../../utils/tokenUtils';
 
 import s from './StakerReport.module.scss';
 import { OutcomeType } from '../../../../models/DataRequestOutcome';
+import { Link } from 'react-router-dom';
+import { routePaths } from '../../../../routes';
 
 export interface Props {
     userStakes: ResolutionWindow['userStakes'];
@@ -38,7 +40,7 @@ export default function StakerReport({
                             return (
                                 <TableRow key={index}>
                                     <TableCell>
-                                        {accountId}
+                                        <Link className={s.link} to={routePaths.account('near', accountId)}>{accountId}</Link>
                                     </TableCell>
                                     <TableCell>
                                         {outcomeInfo.outcome.type === OutcomeType.Answer && (

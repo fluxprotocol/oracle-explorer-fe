@@ -44,6 +44,18 @@ export function getLoggedInAccountId(): string | undefined {
     return provider ? provider.getLoggedInAccountId() : undefined;
 }
 
+export async function getAccountInfoWithProvider(providerId: string, accountId: string): Promise<Account | undefined> {
+    const provider = getProviderById(providerId);
+    const account = await provider?.getAccountInfo(accountId);
+    if (!account || !provider) return undefined;
+
+    return {
+        accountId: account.accountId,
+        balance: account.balance,
+        providerId: provider.id,
+    };
+}
+
 export async function getLoggedInAccount(): Promise<Account | undefined> {
     const provider = getLoggedInProvider();
 
@@ -51,13 +63,13 @@ export async function getLoggedInAccount(): Promise<Account | undefined> {
         return undefined;
     }
 
-    const accountInfo = await provider.getAccountInfo();
+    const loggedInAccountId = provider.getLoggedInAccountId();
 
-    return {
-        providerId: provider.id,
-        accountId: accountInfo.accountId,
-        balance: accountInfo.balance,
-    };
+    if (!loggedInAccountId) {
+        return undefined;
+    }
+
+    return getAccountInfoWithProvider(provider.id, loggedInAccountId);
 }
 
 export async function stakeWithProvider(providerId: string, amount: string, dataRequest: DataRequestViewModel, outcome: Outcome): Promise<boolean> {

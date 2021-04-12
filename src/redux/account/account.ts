@@ -3,6 +3,9 @@ import { Account } from '../../models/Account';
 
 export type AccountState = Readonly<{
     account?: Account;
+    accountDetail?: {
+        account: Account;
+    };
     error?: string[];
     loading: boolean;
 }>;
@@ -33,6 +36,12 @@ const accountSlice = createSlice({
                 account: action.payload,
             });
         },
+        setAccountDetail(state: AccountState, action: PayloadAction<AccountState['accountDetail']>): AccountState {
+            return ({
+                ...state,
+                accountDetail: action.payload,
+            });
+        },
     },
 });
 
@@ -40,6 +49,7 @@ export const {
     setAccount,
     setAccountErrors,
     setAccountLoading,
+    setAccountDetail,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Menu from '../../containers/Menu';
-import { loadAccount, loginAccount, logoutAccount } from '../../redux/account/accountActions';
+import { loadLoggedInAccount, loginAccount, logoutAccount } from '../../redux/account/accountActions';
 import { Reducers } from '../../redux/reducers';
 import { routePaths } from '../../routes';
 import { search } from '../../services/SearchService';
@@ -33,7 +33,7 @@ export default function MenuConnector() {
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch(loadAccount());
+        dispatch(loadLoggedInAccount());
     }, [dispatch]);
 
     return (

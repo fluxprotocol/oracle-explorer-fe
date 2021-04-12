@@ -1,0 +1,25 @@
+@import "../../styles/variables";
+
+.footer {
+    background-color: var(--c-white);
+    box-shadow: rgba(0, 0, 0, 0.08) 2px 2px 4px 4px;
+    height: 10rem;
+    margin-top: 3rem;
+}
+
+.footerWrapper {
+    max-width: $container-size;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.logo {
+    background-size: 100%;
+    background-image: var(--i-logo);
+    width: 80px;
+    height: 35px;
+}

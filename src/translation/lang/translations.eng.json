@@ -35,6 +35,12 @@
     "dataRequestsOverview.table.label.status": "Status",
     "dataRequestsOverview.table.label.timestamp": "Created at",
 
+    "accountDetailsInfoCard.title": "Account details",
+    "accountDetailsInfoCard.label.balance": "Balance",
+    "accountDetailsInfoCard.label.provider": "Provider",
+    "accountDetailsInfoCard.label.activeStaking": "Active staking",
+    "accountDetailsInfoCard.label.totalStaked": "Total staked",
+
     "requestInfo.title": "Request Info",
     "requestInfo.label.requestor": "Requestor Account ID",
     "requestInfo.label.feePercentage": "Fee Percentage",

@@ -6,7 +6,7 @@ import Page from '../../containers/Page';
 export default function HomePage() {
     return (
         <Page>
-            Hi
+            Search, total requests
         </Page>
     );
 }

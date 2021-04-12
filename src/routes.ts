@@ -1,4 +1,5 @@
 import { ComponentType } from 'react';
+import AccountPage from './pages/AccountPage';
 import DataRequestDetailPage from './pages/DataRequestDetailPage';
 import DataRequestsPage from './pages/DataRequestsPage';
 import HomePage from './pages/HomePage';
@@ -18,6 +19,7 @@ interface RouteProps {
 
 export const routePaths = {
     root: () => '/',
+    account: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}`,
     search: (query = ':query') => `/search/${query}`,
     dataRequests: (page = ':page') => `/requests/${page}`,
     dataRequestDetail: (provider = ':provider', id = ':id') => `/request/${provider}/${id}`,
@@ -37,10 +39,19 @@ export const routes: RouteProps[] = [
         component: SearchResultPage,
         exact: true,
         inNavigation: false,
-        key: 'home',
+        key: 'search',
         label: trans('routes.label.search'),
         path: routePaths.search(),
         navPath: routePaths.search(),
+    },
+    {
+        component: AccountPage,
+        exact: true,
+        inNavigation: false,
+        key: 'account',
+        label: trans('routes.label.account'),
+        path: routePaths.account(),
+        navPath: routePaths.account(),
     },
     {
         component: DataRequestDetailPage,

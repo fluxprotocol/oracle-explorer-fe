@@ -35,10 +35,7 @@ export default class NearProvider implements IProvider {
         return this.sdkInstance.getAccountId();
     }
 
-    async getAccountInfo() {
-        const accountId = this.sdkInstance.getAccountId();
-        if (!accountId) throw new Error('getAccountInfo was called before isLoggedIn()');
-
+    async getAccountInfo(accountId: string) {
         const balance = await this.sdkInstance.getTokenBalance(NEAR_FLUX_TOKEN_ID, accountId);
 
         return {

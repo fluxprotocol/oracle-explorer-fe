@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import MenuConnector from '../../connectors/MenuConnector';
+import Footer from '../Footer';
 
 import s from './Page.module.scss';
 
@@ -20,6 +21,7 @@ export default function Page({
             <main className={s.body}>
                 {children}
             </main>
+            <Footer />
         </div>
     );
 }

@@ -10,7 +10,7 @@ export interface IProvider {
     stake(amount: string, dataRequest: DataRequestViewModel, outcome: Outcome): Promise<boolean>;
     finalize(dataRequest: DataRequestViewModel): Promise<boolean>;
     claim(accountId: string, dataRequest: DataRequestViewModel): Promise<boolean>;
-    getAccountInfo(): Promise<Omit<Account, 'providerId'>>;
+    getAccountInfo(accountId: string): Promise<Omit<Account, 'providerId'>>;
     getLoggedInAccountId(): string | undefined;
     isLoggedIn(): boolean;
 }

@@ -54,8 +54,8 @@ export default function Pagination({
             </IconButton>
             <span>
                 {trans('pagination.pageIndication', {
-                    currentPage: page.toString(),
-                    totalPages: total.toString(),
+                    currentPage: (page + 1).toString(),
+                    totalPages: (total + 1).toString(),
                 })}
             </span>
             <IconButton

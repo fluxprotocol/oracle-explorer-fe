@@ -38,23 +38,23 @@ export default function ResolutionWindowAccordion({
                     rows={[
                         {
                             label: trans('resolutionWindowAccordion.label.endTime'),
-                            value: prettyFormatDate(resolutionWindow.endTime),
+                            value: <span>{prettyFormatDate(resolutionWindow.endTime)}</span>,
                         },
                         {
                             label: trans('resolutionWindowAccordion.label.bondSize'),
-                            value: `${formatToken(resolutionWindow.bondSize)} FLX`,
+                            value: <span>{`${formatToken(resolutionWindow.bondSize)} FLX`}</span>,
                         },
                         {
                             label: trans('resolutionWindowAccordion.label.totalStaked'),
-                            value: `${formatToken(resolutionWindow.totalStaked)} FLX`,
+                            value: <span>{`${formatToken(resolutionWindow.totalStaked)} FLX`}</span>,
                         },
                         {
                             label: trans('resolutionWindowAccordion.label.percentageFilled'),
-                            value: `${percentageFilled}%`,
+                            value: <span>{`${percentageFilled}%`}</span>,
                         },
                         {
                             label: trans('resolutionWindowAccordion.label.bondedOutcome'),
-                            value: resolutionWindow.bondedOutcome ? transfromOutcomeToString(resolutionWindow.bondedOutcome) : '',
+                            value: <span>{resolutionWindow.bondedOutcome ? transfromOutcomeToString(resolutionWindow.bondedOutcome) : ''}</span>,
                         }
                     ]}
                 />
