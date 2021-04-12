@@ -20,6 +20,9 @@
 
     "outcome.invalid": "Invalid",
 
+    "searchResultPage.title": "Results for ':query'",
+    "searchResultPage.noResults": "No results found",
+
     "stakerReportsInfo.title": "Resolution windows",
     "stakerReportsInfo.noWindows": "No resolution windows, stake to start one.",
 

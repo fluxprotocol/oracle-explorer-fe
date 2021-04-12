@@ -2,6 +2,7 @@ import { ComponentType } from 'react';
 import DataRequestDetailPage from './pages/DataRequestDetailPage';
 import DataRequestsPage from './pages/DataRequestsPage';
 import HomePage from './pages/HomePage';
+import SearchResultPage from './pages/SearchResultPage';
 import trans from './translation/trans';
 
 interface RouteProps {
@@ -17,6 +18,7 @@ interface RouteProps {
 
 export const routePaths = {
     root: () => '/',
+    search: (query = ':query') => `/search/${query}`,
     dataRequests: (page = ':page') => `/requests/${page}`,
     dataRequestDetail: (provider = ':provider', id = ':id') => `/request/${provider}/${id}`,
 }
@@ -30,6 +32,15 @@ export const routes: RouteProps[] = [
         label: trans('routes.label.home'),
         path: routePaths.root(),
         navPath: routePaths.root(),
+    },
+    {
+        component: SearchResultPage,
+        exact: true,
+        inNavigation: false,
+        key: 'home',
+        label: trans('routes.label.search'),
+        path: routePaths.search(),
+        navPath: routePaths.search(),
     },
     {
         component: DataRequestDetailPage,

@@ -123,3 +123,29 @@ export async function getDataRequestById(id: string) {
         return null;
     }
 }
+
+export async function doesDataRequestExists(id: string): Promise<boolean> {
+    try {
+        const response = await graphqlClient.query({
+            query: gql`
+                query DataRequestExists($id: String!) {
+                    request: getDataRequest(id: $id) {
+                        id
+                    }
+                }
+            `,
+            variables: {
+                id,
+            }
+        });
+
+        if (!response.data.request || !response.data.request.id) {
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        console.error('[doesDataRequestExists]', error);
+        return false;
+    }
+}
