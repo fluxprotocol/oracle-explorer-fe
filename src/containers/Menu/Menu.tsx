@@ -1,7 +1,7 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import FakeLinkButton from '../../components/FakeLinkButton';
-import SearchInput from '../../components/SearchInput';
+import SearchConnector from '../../connectors/SearchConnector';
 import { Account } from '../../models/Account';
 import { routePaths, routes } from '../../routes';
 import trans from '../../translation/trans';
@@ -11,23 +11,15 @@ import s from './Menu.module.scss';
 
 interface Props {
     account?: Account;
-    onSearch: (query: string) => void;
     onLoginClick: () => void;
     onLogoutClick: () => void;
 }
 
 export default function Menu({
     account,
-    onSearch,
     onLoginClick,
     onLogoutClick
 }: Props) {
-    const [query, setQuery] = useState('');
-    const handleSearchSubmit = useCallback((event: FormEvent) => {
-        event.preventDefault();
-        onSearch(query);
-    }, [query, onSearch]);
-
     return (
         <header className={s.root}>
             <div className={s.menu}>
@@ -38,14 +30,7 @@ export default function Menu({
                         </Link>
                     </div>
                     <div>
-                        <form onSubmit={handleSearchSubmit}>
-                            <SearchInput
-                                label={trans('menu.label.search')}
-                                onChange={v => setQuery(v)}
-                                value={query}
-                            />
-                            <input type="submit" hidden />
-                        </form>
+                        <SearchConnector />
                     </div>
                 </div>
                 <div className={s.bottomBar}>

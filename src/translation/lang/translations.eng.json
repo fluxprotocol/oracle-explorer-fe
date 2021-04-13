@@ -20,6 +20,8 @@
 
     "outcome.invalid": "Invalid",
 
+    "homeHeader.title": "Explore the Flux Oracle",
+
     "searchResultPage.title": "Results for ':query'",
     "searchResultPage.noResults": "No results found",
 
@@ -46,6 +48,7 @@
     "accountDetailsInfoCard.label.provider": "Provider",
     "accountDetailsInfoCard.label.activeStaking": "Active staking",
     "accountDetailsInfoCard.label.totalStaked": "Total staked",
+    "accountDetailsInfoCard.label.totalClaimed": "Total claimed",
 
     "requestInfo.title": "Request Info",
     "requestInfo.label.requestor": "Requestor Account ID",
@@ -53,6 +56,9 @@
     "requestInfo.label.settlementTime": "Settlement time",
     "requestInfo.label.totalStaked": "Total staked",
     "requestInfo.label.finalizedOutcome": "Finalized outcome",
+    "requestInfo.label.dateCreated": "Date created",
+    "requestInfo.label.targetContract": "Target contract",
+    "requestInfo.label.finalArbitratorTriggered": "Final arbitrator triggered?",
 
     "stakeReport.table.label.outcome": "Outcome",
     "stakeReport.table.label.stake": "Staked",

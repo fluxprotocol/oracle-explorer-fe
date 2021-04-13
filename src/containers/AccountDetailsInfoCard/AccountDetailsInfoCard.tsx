@@ -40,6 +40,10 @@ export default function AccountDetailsInfoCard({
                         {
                             label: trans('accountDetailsInfoCard.label.totalStaked'),
                             value: <span>{formatToken(accountInfo.totalStaked)} FLX</span>,
+                        },
+                        {
+                            label: trans('accountDetailsInfoCard.label.totalClaimed'),
+                            value: <span>TBD FLX</span>,
                         }
                     ]}
                 />

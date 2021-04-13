@@ -21,13 +21,15 @@ export interface DataRequestViewModel extends DataRequestListItem {
     resolutionWindows: ResolutionWindow[];
     totalStaked: string;
     finalized_outcome?: Outcome;
+    targetContract: string;
+    finalArbitratorTriggered: boolean;
 }
 
 export interface DataRequestGraphData {
     id: string;
     block_height: string;
     date: string;
-    final_arbitrator_triggered: string;
+    final_arbitrator_triggered: boolean;
     global_config_id: string;
     initial_challenge_period: string;
     outcomes: string[];
@@ -66,5 +68,7 @@ export function transformToDataRequestViewModel(data: DataRequestGraphData): Dat
         outcomes: data.outcomes,
         totalStaked: totalStaked.toString(),
         finalized_outcome: data.finalized_outcome ? transformToOutcome(data.finalized_outcome) : undefined,
+        targetContract: data.target_contract,
+        finalArbitratorTriggered: data.final_arbitrator_triggered,
     };
 }
