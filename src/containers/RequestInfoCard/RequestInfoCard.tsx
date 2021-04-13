@@ -11,6 +11,7 @@ import { formatToken } from '../../utils/tokenUtils';
 import { transfromOutcomeToString } from '../../models/DataRequestOutcome';
 import { Link } from 'react-router-dom';
 import { routePaths } from '../../routes';
+import { prettyFormatDate } from '../../utils/dateUtils';
 
 interface Props {
     dataRequest: DataRequestViewModel;
@@ -32,8 +33,17 @@ export default function RequestInfoCard({
                         label: trans('requestInfo.label.requestor'),
                         value: <Link className={s.link} to={routePaths.account('near', dataRequest.requestor)}>{dataRequest.requestor}</Link>,
                     }, {
+                        label: trans('requestInfo.label.targetContract'),
+                        value: <Link className={s.link} to={routePaths.account('near', dataRequest.targetContract)}>{dataRequest.requestor}</Link>,
+                    }, {
+                        label: trans('requestInfo.label.dateCreated'),
+                        value: <span>{prettyFormatDate(dataRequest.date)}</span>,
+                    }, {
+                        label: trans('requestInfo.label.finalArbitratorTriggered'),
+                        value: <span>{dataRequest.finalArbitratorTriggered + ''}</span>,
+                    }, {
                         label: trans('requestInfo.label.feePercentage'),
-                        value: <span>{`${dataRequest.config.resolutionFeePercentage}%`}</span>,
+                        value: <span>{`${dataRequest.config.resolutionFeePercentage / 100}%`}</span>,
                     }, {
                         label: trans('requestInfo.label.totalStaked'),
                         value: <span>{`${formatToken(dataRequest.totalStaked)} FLX`}</span>,
