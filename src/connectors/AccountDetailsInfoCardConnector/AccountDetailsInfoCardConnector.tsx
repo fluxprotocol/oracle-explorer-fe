@@ -6,11 +6,10 @@ import { Reducers } from '../../redux/reducers';
 export default function AccountDetailsInfoCardConnector() {
     const accountDetail = useSelector((store: Reducers) => store.account.accountDetail);
 
-    if (!accountDetail) {
-        return null;
-    }
-
     return (
-        <AccountDetailsInfoCard account={accountDetail.account} />
+        <AccountDetailsInfoCard
+            account={accountDetail.account}
+            accountInfo={accountDetail.info}
+        />
     );
 }

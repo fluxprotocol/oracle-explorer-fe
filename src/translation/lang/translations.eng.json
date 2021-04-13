@@ -35,6 +35,12 @@
     "dataRequestsOverview.table.label.status": "Status",
     "dataRequestsOverview.table.label.timestamp": "Created at",
 
+    "outcomeStakesOverview.table.label.id": "Request ID",
+    "outcomeStakesOverview.table.label.roud": "Round",
+    "outcomeStakesOverview.table.label.outcome": "Outcome",
+    "outcomeStakesOverview.table.label.stake": "Stake",
+    "outcomeStakesOverview.table.label.finalizedOutcome": "Finalized outcome",
+
     "accountDetailsInfoCard.title": "Account details",
     "accountDetailsInfoCard.label.balance": "Balance",
     "accountDetailsInfoCard.label.provider": "Provider",
@@ -80,6 +86,9 @@
 
     "accountStakesInfoCard.title": "Your stakes",
     "accountStakesInfoCard.noStakes": "No stakes done by you",
+
+    "accountPage.label.stakes": "Stakes",
+    "accountPage.label.transactions": "Transactions",
 
     "dataRequestDetail.title": "Request #:id",
     "dataRequestDetail.label.stake": "Stake",

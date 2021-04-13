@@ -7,6 +7,7 @@ export interface OutcomeStake {
     round: number;
     dataRequestId: string;
     accountId?: string;
+    finalizedOutcome?: Outcome;
 }
 
 export function combineOutcomeStakes(outcomeStakes: OutcomeStake[]): OutcomeStake[] {

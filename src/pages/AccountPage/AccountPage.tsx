@@ -1,9 +1,19 @@
-import React, { useEffect } from 'react';
+import CardContent from '@material-ui/core/CardContent';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
+import { Route, Switch, useHistory, useLocation, useParams } from 'react-router';
+import Card from '../../components/Card';
+import TabBar from '../../compositions/TabBar';
+import { TabBarItem } from '../../compositions/TabBar/TabBar';
 import AccountDetailsInfoCardConnector from '../../connectors/AccountDetailsInfoCardConnector';
 import Page from '../../containers/Page';
 import { loadAccount } from '../../redux/account/accountActions';
+import { routePaths } from '../../routes';
+import trans from '../../translation/trans';
+import AccountStakesPage from './sub-pages/AccountStakesPage';
+import AccountTransactionsPage from './sub-pages/AccountTransactionsPage';
+
+import s from './AccountPage.module.scss';
 
 interface Params {
     provider: string;
@@ -13,10 +23,16 @@ interface Params {
 export default function AccountPage() {
     const params = useParams<Params>();
     const dispatch = useDispatch();
+    const history = useHistory();
+    const location = useLocation();
 
     useEffect(() => {
         dispatch(loadAccount(params.provider, params.accountId));
     }, [dispatch, params]);
+
+    const onTabClick = useCallback((item: TabBarItem) => {
+        history.push(item.id);
+    }, [history]);
 
     return (
         <Page>
@@ -24,6 +40,24 @@ export default function AccountPage() {
                 <h1>{params.accountId}</h1>
             </div>
             <AccountDetailsInfoCardConnector />
+            <Card>
+                <CardContent>
+                    <TabBar
+                        activeId={location.pathname}
+                        className={s.tabBar}
+                        onTabClick={onTabClick}
+                        items={[{
+                            id: routePaths.account(params.provider, params.accountId),
+                            label: trans('accountPage.label.stakes'),
+                            show: true,
+                        }]}
+                    />
+                    <Switch>
+                        <Route exact path={routePaths.account()} component={AccountStakesPage} />
+                        <Route exact path={routePaths.accountTransactions()} component={AccountTransactionsPage} />
+                    </Switch>
+                </CardContent>
+            </Card>
         </Page>
     );
 }

@@ -17,7 +17,6 @@ export default function DataRequestsOverviewConnector({
     const totalItems = useSelector((store: Reducers) => store.dataRequest.totalDataRequests);
 
     const handleRequestPageChange = useCallback((page: number) => {
-        console.log('[] page -> ', page);
         history.push(routePaths.dataRequests(page.toString()));
     }, [history]);
 

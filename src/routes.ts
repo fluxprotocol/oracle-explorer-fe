@@ -20,6 +20,8 @@ interface RouteProps {
 export const routePaths = {
     root: () => '/',
     account: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}`,
+    accountTransactions: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}/transactions`,
+
     search: (query = ':query') => `/search/${query}`,
     dataRequests: (page = ':page') => `/requests/${page}`,
     dataRequestDetail: (provider = ':provider', id = ':id') => `/request/${provider}/${id}`,
@@ -46,7 +48,7 @@ export const routes: RouteProps[] = [
     },
     {
         component: AccountPage,
-        exact: true,
+        exact: false,
         inNavigation: false,
         key: 'account',
         label: trans('routes.label.account'),

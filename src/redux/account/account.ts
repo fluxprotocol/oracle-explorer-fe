@@ -1,10 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Account } from '../../models/Account';
+import { Account, AccountInfo } from '../../models/Account';
+import { OutcomeStake } from '../../models/OutcomeStake';
 
 export type AccountState = Readonly<{
     account?: Account;
-    accountDetail?: {
-        account: Account;
+    accountDetail: {
+        account?: Account;
+        info: AccountInfo;
+        accountStakes: OutcomeStake[];
+        accountStakesTotal: number;
     };
     error?: string[];
     loading: boolean;
@@ -12,6 +16,15 @@ export type AccountState = Readonly<{
 
 const initialState: AccountState = {
     loading: false,
+    accountDetail: {
+        account: undefined,
+        info: {
+            activeStaking: '0',
+            totalStaked: '0',
+        },
+        accountStakes: [],
+        accountStakesTotal: 0,
+    }
 };
 
 const accountSlice = createSlice({
@@ -36,10 +49,40 @@ const accountSlice = createSlice({
                 account: action.payload,
             });
         },
-        setAccountDetail(state: AccountState, action: PayloadAction<AccountState['accountDetail']>): AccountState {
+        setAccountDetail(state: AccountState, action: PayloadAction<Account>): AccountState {
             return ({
                 ...state,
-                accountDetail: action.payload,
+                accountDetail: {
+                    ...state.accountDetail,
+                    account: action.payload,
+                },
+            });
+        },
+        setAccountStakes(state: AccountState, action: PayloadAction<OutcomeStake[]>): AccountState {
+            return ({
+                ...state,
+                accountDetail: {
+                    ...state.accountDetail,
+                    accountStakes: action.payload,
+                },
+            });
+        },
+        setAccountStakesTotal(state: AccountState, action: PayloadAction<number>): AccountState {
+            return ({
+                ...state,
+                accountDetail: {
+                    ...state.accountDetail,
+                    accountStakesTotal: action.payload,
+                },
+            });
+        },
+        setAccountInfo(state: AccountState, action: PayloadAction<AccountInfo>): AccountState {
+            return ({
+                ...state,
+                accountDetail: {
+                    ...state.accountDetail,
+                    info: action.payload,
+                },
             });
         },
     },
@@ -50,6 +93,9 @@ export const {
     setAccountErrors,
     setAccountLoading,
     setAccountDetail,
+    setAccountStakes,
+    setAccountStakesTotal,
+    setAccountInfo,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

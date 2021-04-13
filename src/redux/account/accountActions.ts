@@ -1,5 +1,8 @@
+import { DEFAULT_PAGINATION_LIMIT } from "../../config";
+import { getAccountInfo } from "../../services/AccountService";
 import { getAccountInfoWithProvider, getLoggedInAccount, loginWithProvider, logoutWithProvider } from "../../services/providers/ProviderRegistry";
-import { setAccount, setAccountDetail, setAccountLoading } from "./account";
+import { getUserStakesByAccountId } from "../../services/UserStakeService";
+import { setAccount, setAccountDetail, setAccountInfo, setAccountLoading, setAccountStakes, setAccountStakesTotal } from "./account";
 
 export function loadLoggedInAccount() {
     return async (dispatch: Function) => {
@@ -18,10 +21,24 @@ export function loadAccount(providerId: string, accountId: string) {
             return;
         }
 
-        dispatch(setAccountDetail({
-            account,
-        }));
+        const accountInfo = await getAccountInfo(accountId);
+        dispatch(setAccountDetail(account));
+        dispatch(setAccountInfo(accountInfo));
     };
+}
+
+
+export function loadAccountStakes(page: number, accountId: string, reset = false) {
+    return async (dispatch: Function) => {
+        const offset = DEFAULT_PAGINATION_LIMIT * page;
+        const stakes = await getUserStakesByAccountId(accountId, {
+            limit: DEFAULT_PAGINATION_LIMIT,
+            offset,
+        });
+
+        dispatch(setAccountStakesTotal(stakes.total));
+        dispatch(setAccountStakes(stakes.items));
+    }
 }
 
 export function loginAccount() {
