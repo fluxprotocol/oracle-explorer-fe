@@ -33,6 +33,7 @@
     "callDataInfo.label.sourcePath": "Source path",
     "callDataInfo.outcomes.title": "Possible outcomes",
 
+
     "dataRequestsOverview.table.label.id": "Request ID",
     "dataRequestsOverview.table.label.status": "Status",
     "dataRequestsOverview.table.label.timestamp": "Created at",
@@ -95,8 +96,10 @@
 
     "accountPage.label.stakes": "Stakes",
     "accountPage.label.transactions": "Transactions",
+    "accountPage.label.unclaimed": "Unclaimed",
 
     "dataRequestDetail.title": "Request #:id",
+    "dataRequestDetail.label.claimed": "Claimed :payout FLX",
     "dataRequestDetail.label.stake": "Stake",
     "dataRequestDetail.label.claim": "Claim earnings",
     "dataRequestDetail.label.finalize": "Finalize"

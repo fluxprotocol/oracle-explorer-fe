@@ -10,6 +10,7 @@ export async function getAccountInfo(accountId: string): Promise<AccountInfo> {
                         accountInfo: getAccountInfo(accountId: $accountId) {
                             active_staking
                             total_staked
+                            total_claimed
                         }
                     }
                 `,
@@ -23,6 +24,7 @@ export async function getAccountInfo(accountId: string): Promise<AccountInfo> {
         return {
             activeStaking: data.active_staking,
             totalStaked: data.total_staked,
+            totalClaimed: data.total_claimed,
         }
     } catch (error) {
         console.error('[getAccountInfo]', error);
@@ -30,6 +32,7 @@ export async function getAccountInfo(accountId: string): Promise<AccountInfo> {
         return {
             activeStaking: '0',
             totalStaked: '0',
+            totalClaimed: '0',
         }
     }
 }

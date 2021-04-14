@@ -8,6 +8,7 @@ export interface OutcomeStake {
     dataRequestId: string;
     accountId?: string;
     finalizedOutcome?: Outcome;
+    claimPayout?: string;
 }
 
 export function combineOutcomeStakes(outcomeStakes: OutcomeStake[]): OutcomeStake[] {

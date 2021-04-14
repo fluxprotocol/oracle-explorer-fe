@@ -1,8 +1,8 @@
 import { DEFAULT_PAGINATION_LIMIT } from "../../config";
 import { getAccountInfo } from "../../services/AccountService";
 import { getAccountInfoWithProvider, getLoggedInAccount, loginWithProvider, logoutWithProvider } from "../../services/providers/ProviderRegistry";
-import { getUserStakesByAccountId } from "../../services/UserStakeService";
-import { setAccount, setAccountDetail, setAccountInfo, setAccountLoading, setAccountStakes, setAccountStakesTotal } from "./account";
+import { getUnclaimedStakesByAccountId, getUserStakesByAccountId } from "../../services/UserStakeService";
+import { setAccount, setAccountDetail, setAccountInfo, setAccountLoading, setAccountStakes, setAccountStakesTotal, setAccountUnclaimedStakes } from "./account";
 
 export function loadLoggedInAccount() {
     return async (dispatch: Function) => {
@@ -38,6 +38,13 @@ export function loadAccountStakes(page: number, accountId: string, reset = false
 
         dispatch(setAccountStakesTotal(stakes.total));
         dispatch(setAccountStakes(stakes.items));
+    }
+}
+
+export function loadUnclaimedAccountStakes(accountId: string) {
+    return async (dispatch: Function) => {
+        const stakes = await getUnclaimedStakesByAccountId(accountId);
+        dispatch(setAccountUnclaimedStakes(stakes));
     }
 }
 

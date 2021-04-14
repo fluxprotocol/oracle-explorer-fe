@@ -15,6 +15,9 @@ export interface UserStakeGraphData {
     data_request?: {
         finalized_outcome: string | null;
     }
+    claim?: {
+        payout: string;
+    }
 }
 
 export function transformToUserStakes(userStakes: UserStakeGraphData[]) {
@@ -30,6 +33,7 @@ export function transformToUserStakes(userStakes: UserStakeGraphData[]) {
             dataRequestId: userStake.data_request_id,
             accountId: userStake.account_id,
             finalizedOutcome: userStake.data_request?.finalized_outcome ? transformToOutcome(userStake.data_request.finalized_outcome) : undefined,
+            claimPayout: userStake.claim?.payout,
         });
 
         result[userStake.account_id] = currentOutcomeStakes;

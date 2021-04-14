@@ -14,6 +14,7 @@ import AccountStakesPage from './sub-pages/AccountStakesPage';
 import AccountTransactionsPage from './sub-pages/AccountTransactionsPage';
 
 import s from './AccountPage.module.scss';
+import AccountUnclaimedPage from './sub-pages/AccountUnclaimedPage';
 
 interface Params {
     provider: string;
@@ -50,11 +51,16 @@ export default function AccountPage() {
                             id: routePaths.account(params.provider, params.accountId),
                             label: trans('accountPage.label.stakes'),
                             show: true,
+                        }, {
+                            id: routePaths.accountUnclaimed(params.provider, params.accountId),
+                            label: trans('accountPage.label.unclaimed'),
+                            show: true,
                         }]}
                     />
                     <Switch>
                         <Route exact path={routePaths.account()} component={AccountStakesPage} />
                         <Route exact path={routePaths.accountTransactions()} component={AccountTransactionsPage} />
+                        <Route exact path={routePaths.accountUnclaimed()} component={AccountUnclaimedPage} />
                     </Switch>
                 </CardContent>
             </Card>

@@ -1,15 +1,51 @@
 import gql from "graphql-tag";
-import { OutcomeStake } from "../models/OutcomeStake";
+import { combineOutcomeStakes, OutcomeStake } from "../models/OutcomeStake";
 import { Pagination } from "../models/Pagination";
 import { transformToUserStakes, UserStakes } from "../models/UserStakes";
 import { graphqlClient } from "./GraphQLService";
 
-export async function getUserStakesByRequestId(requestId: string, accountId?: string): Promise<UserStakes> {
+async function getUserStakesByRequestIdAndAccountId(requestId: string, accountId: string) {
     try {
         const response = await graphqlClient.query({
             query: gql`
-                    query GetUserStakes($requestId: String!, $accountId: String) {
+                    query GetUserStakes($requestId: String!, $accountId: String!) {
                         stakes: getUserStakesByRequestId(id: $requestId, accountId: $accountId) {
+                            data_request_id
+                            account_id
+                            id
+                            outcome
+                            round
+                            total_stake
+                            claim {
+                                payout
+                            }
+                        }
+                    }
+                `,
+            variables: {
+                requestId,
+                accountId,
+            }
+        });
+
+        const userStakes = transformToUserStakes(response.data.stakes);
+        return userStakes;
+    } catch (error) {
+        console.error('[getUserStakesByRequestIdAndAccountId]', error);
+        return {};
+    }
+}
+
+export async function getUserStakesByRequestId(requestId: string, accountId?: string): Promise<UserStakes> {
+    try {
+        if (accountId) {
+            return getUserStakesByRequestIdAndAccountId(requestId, accountId);
+        }
+
+        const response = await graphqlClient.query({
+            query: gql`
+                    query GetUserStakes($requestId: String!) {
+                        stakes: getUserStakesByRequestId(id: $requestId) {
                             data_request_id
                             account_id
                             id
@@ -21,7 +57,6 @@ export async function getUserStakesByRequestId(requestId: string, accountId?: st
                 `,
             variables: {
                 requestId,
-                accountId,
             }
         });
 
@@ -81,3 +116,34 @@ export async function getUserStakesByAccountId(accountId: string, filters: UserS
     }
 }
 
+
+export async function getUnclaimedStakesByAccountId(accountId: string): Promise<OutcomeStake[]> {
+    try {
+        const response = await graphqlClient.query({
+            query: gql`
+                    query GetUnclaimedStakesAccount($accountId: String!) {
+                        stakes: getUnclaimedStakes(accountId: $accountId) {
+                            data_request_id
+                            account_id
+                            id
+                            outcome
+                            round
+                            total_stake
+                            data_request {
+                                finalized_outcome
+                            }
+                        }
+                    }
+                `,
+            variables: {
+                accountId,
+            }
+        });
+
+        const items = transformToUserStakes(response.data.stakes);
+        return combineOutcomeStakes(items[accountId]);
+    } catch (error) {
+        console.error('[getUnclaimedStakesByAccountId]', error);
+        return [];
+    }
+}

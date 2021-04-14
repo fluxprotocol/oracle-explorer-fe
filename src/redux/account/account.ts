@@ -9,6 +9,7 @@ export type AccountState = Readonly<{
         info: AccountInfo;
         accountStakes: OutcomeStake[];
         accountStakesTotal: number;
+        unclaimedStakes: OutcomeStake[];
     };
     error?: string[];
     loading: boolean;
@@ -21,9 +22,11 @@ const initialState: AccountState = {
         info: {
             activeStaking: '0',
             totalStaked: '0',
+            totalClaimed: '0',
         },
         accountStakes: [],
         accountStakesTotal: 0,
+        unclaimedStakes: [],
     }
 };
 
@@ -85,6 +88,15 @@ const accountSlice = createSlice({
                 },
             });
         },
+        setAccountUnclaimedStakes(state: AccountState, action: PayloadAction<OutcomeStake[]>): AccountState {
+            return ({
+                ...state,
+                accountDetail: {
+                    ...state.accountDetail,
+                    unclaimedStakes: action.payload,
+                },
+            });
+        },
     },
 });
 
@@ -96,6 +108,7 @@ export const {
     setAccountStakes,
     setAccountStakesTotal,
     setAccountInfo,
+    setAccountUnclaimedStakes,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

@@ -1,6 +1,7 @@
 export interface AccountInfo {
     activeStaking: string;
     totalStaked: string;
+    totalClaimed: string;
 }
 
 export interface Account {

@@ -5,6 +5,7 @@ import { DataRequestViewModel } from '../../models/DataRequest';
 import { OutcomeStake } from '../../models/OutcomeStake';
 import { ResolutionWindow } from '../../models/ResolutionWindow';
 import trans from '../../translation/trans';
+import { formatToken } from '../../utils/tokenUtils';
 
 import s from './DataRequestDetailHeader.module.scss';
 
@@ -29,6 +30,7 @@ export default function DataRequestDetailHeader({
     const now = new Date().getTime();
     const isFinalized = typeof dataRequest.finalized_outcome !== 'undefined';
     const canFinalize = currentResolutionWindow?.endTime.getTime() <= now && !isFinalized;
+    const payout = accountStakes.find(stake => stake.claimPayout)?.claimPayout;
 
     return (
         <header className={s.header}>
@@ -46,10 +48,18 @@ export default function DataRequestDetailHeader({
                     </Button>
                 )}
 
-                {account && accountStakes.length > 0 && isFinalized && (
+                {account && !Boolean(payout) && accountStakes.length > 0 && isFinalized && (
                     <Button className={s.button} onClick={onClaimClick}>
                         {trans('dataRequestDetail.label.claim')}
                     </Button>
+                )}
+
+                {payout && (
+                    <span>
+                        {trans('dataRequestDetail.label.claimed', {
+                            payout: formatToken(payout),
+                        })}
+                    </span>
                 )}
             </div>
         </header>

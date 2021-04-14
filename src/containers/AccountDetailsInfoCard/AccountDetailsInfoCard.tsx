@@ -43,7 +43,7 @@ export default function AccountDetailsInfoCard({
                         },
                         {
                             label: trans('accountDetailsInfoCard.label.totalClaimed'),
-                            value: <span>TBD FLX</span>,
+                            value: <span>{formatToken(accountInfo.totalClaimed)} FLX</span>,
                         }
                     ]}
                 />
