@@ -22,6 +22,7 @@ interface Props {
     page: number;
     totalItems: number;
     onRequestPageChange: (page: number) => void;
+    showPagination?: boolean;
 }
 
 export default function OutcomeStakesOverview({
@@ -29,6 +30,7 @@ export default function OutcomeStakesOverview({
     outcomeStakes,
     page,
     totalItems,
+    showPagination = true,
 }: Props) {
     return (
         <div>
@@ -68,13 +70,16 @@ export default function OutcomeStakesOverview({
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Pagination
-                className={s.pagination}
-                total={Math.ceil(totalItems / DEFAULT_PAGINATION_LIMIT) - 1}
-                page={page}
-                rowsPerPage={DEFAULT_PAGINATION_LIMIT}
-                onChangePage={onRequestPageChange}
-            />
+
+            {showPagination && (
+                <Pagination
+                    className={s.pagination}
+                    total={Math.ceil(totalItems / DEFAULT_PAGINATION_LIMIT) - 1}
+                    page={page}
+                    rowsPerPage={DEFAULT_PAGINATION_LIMIT}
+                    onChangePage={onRequestPageChange}
+                />
+            )}
         </div>
     );
 }

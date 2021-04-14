@@ -21,6 +21,7 @@ export const routePaths = {
     root: () => '/',
     account: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}`,
     accountTransactions: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}/transactions`,
+    accountUnclaimed: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}/unclaimed`,
 
     search: (query = ':query') => `/search/${query}`,
     dataRequests: (page = ':page') => `/requests/${page}`,
