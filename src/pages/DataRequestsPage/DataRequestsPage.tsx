@@ -1,3 +1,4 @@
+import useInterval from '@use-it/interval';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
@@ -6,6 +7,7 @@ import Page from '../../containers/Page';
 import { loadDataRequests } from '../../redux/dataRequest/dataRequestAction';
 import { Reducers } from '../../redux/reducers';
 import trans from '../../translation/trans';
+import { REQUEST_LIST_REFRESH_INTERVAL } from '../../config';
 
 import s from './DataRequestsPage.module.scss';
 
@@ -19,8 +21,12 @@ export default function DataRequestsPage() {
     const params = useParams<Params>();
 
     useEffect(() => {
-        dispatch(loadDataRequests(Number(params.page), true));
+        dispatch(loadDataRequests(Number(params.page)));
     }, [dispatch, params]);
+
+    useInterval(() => {
+        dispatch(loadDataRequests(Number(params.page)));
+    }, REQUEST_LIST_REFRESH_INTERVAL);
 
     return (
         <Page>

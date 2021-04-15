@@ -15,6 +15,11 @@
     "menu.label.login": "Login",
     "menu.label.logout": "Logout",
 
+    "dataRequest.type.arbitrator": "Arbitrator",
+    "dataRequest.type.api": "API",
+
+    "homePage.title.latestRequests": "Latest requests",
+
     "pagination.pageIndication": "Page :currentPage of :totalPages",
 
     "dataRequests.title": "All requests",
@@ -37,6 +42,7 @@
 
 
     "dataRequestsOverview.table.label.id": "Request ID",
+    "dataRequestsOverview.table.label.type": "Request Type",
     "dataRequestsOverview.table.label.status": "Status",
     "dataRequestsOverview.table.label.timestamp": "Created at",
 
@@ -82,6 +88,10 @@
     "outcomeStakeInfo.table.label.outcome": "Outcome",
     "outcomeStakeInfo.table.label.stake": "Staked",
     "outcomeStakeInfo.label.invalid": "Invalid",
+
+    "oracleStats.label.totalRequests": "Total requests",
+    "oracleStats.label.tokenPrice": "FLX price",
+    "oracleStats.label.tokenMarketCap": "FLX Market Cap",
 
     "stakeDialog.title": "Stake",
     "stakeDialog.label.answer": "Answer",

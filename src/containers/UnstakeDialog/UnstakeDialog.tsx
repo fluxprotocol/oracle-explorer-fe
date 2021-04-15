@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import Input from '../../components/Input';
 import Select from '../../components/Select';
 import Dialog from '../../compositions/Dialog';
 import NumberInput from '../../compositions/NumberInput';
-import { Account } from '../../models/Account';
 import { DataRequestViewModel } from '../../models/DataRequest';
 import { transfromOutcomeToString } from '../../models/DataRequestOutcome';
 import { OutcomeStake } from '../../models/OutcomeStake';
