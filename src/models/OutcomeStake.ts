@@ -11,7 +11,7 @@ export interface OutcomeStake {
     claimPayout?: string;
 }
 
-export function combineOutcomeStakes(outcomeStakes: OutcomeStake[]): OutcomeStake[] {
+export function combineOutcomeStakes(outcomeStakes: OutcomeStake[] = []): OutcomeStake[] {
     const result = new Map<string, OutcomeStake>();
 
     outcomeStakes.forEach((outcomeStake) => {
