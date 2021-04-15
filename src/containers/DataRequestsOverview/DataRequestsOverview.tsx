@@ -33,7 +33,7 @@ export default function DataRequestsOverview({
     onRequestPageChange,
 }: Props) {
     return (
-        <div>
+        <div className={s.root}>
             <TableContainer className={s.container} component={Paper}>
                 <Table className={s.table}>
                     <TableHead className={s.tableHead}>

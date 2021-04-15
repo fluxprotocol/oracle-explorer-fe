@@ -41,7 +41,7 @@ export default function AccountPage() {
                 <h1>{params.accountId}</h1>
             </div>
             <AccountDetailsInfoCardConnector />
-            <Card>
+            <Card className={s.card}>
                 <CardContent>
                     <TabBar
                         activeId={location.pathname}
