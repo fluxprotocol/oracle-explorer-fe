@@ -46,7 +46,7 @@ export default function CallDataInfoCard({
                         <div className={s.titleWrapper}>
                             <h2 className={s.title}>{trans('callDataInfo.outcomes.title')}</h2>
                         </div>
-                        <pre>
+                        <pre className={s.possibleOutcomes}>
                             {JSON.stringify(dataRequest.outcomes, null, 4)}
                         </pre>
                     </>

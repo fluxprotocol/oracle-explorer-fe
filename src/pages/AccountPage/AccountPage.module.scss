@@ -5,3 +5,8 @@
 .card {
     margin-bottom: 2rem;
 }
+
+.title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

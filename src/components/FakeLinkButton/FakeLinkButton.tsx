@@ -1,11 +1,11 @@
-import React, { PropsWithChildren } from 'react';
+import React, { FormEvent, PropsWithChildren } from 'react';
 import classnames from 'classnames';
 
 import s from './FakeLinkButton.module.scss';
 
 interface Props {
     className?: string;
-    onClick?: () => void;
+    onClick?: (event: FormEvent) => void;
 }
 
 export default function FakeLinkButton({

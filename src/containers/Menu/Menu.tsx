@@ -1,5 +1,9 @@
-import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import React, { FormEvent, useState } from 'react';
+import MuiMenu from '@material-ui/core/Menu';
+import MuiMenuItem from '@material-ui/core/MenuItem';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import IconButton from '@material-ui/core/IconButton';
+import { NavLink, Link, useHistory } from 'react-router-dom';
 import FakeLinkButton from '../../components/FakeLinkButton';
 import SearchConnector from '../../connectors/SearchConnector';
 import { Account } from '../../models/Account';
@@ -8,7 +12,6 @@ import trans from '../../translation/trans';
 import { formatToken } from '../../utils/tokenUtils';
 
 import s from './Menu.module.scss';
-
 interface Props {
     account?: Account;
     onLoginClick: () => void;
@@ -20,6 +23,29 @@ export default function Menu({
     onLoginClick,
     onLogoutClick
 }: Props) {
+    const [menuAnchorEl, setMenuAnchorEl] = useState<Element | null>(null);
+    const history = useHistory();
+
+    function handleMenuClick(event: FormEvent) {
+        setMenuAnchorEl(event.currentTarget);
+    }
+
+    function handleMenuClose() {
+        setMenuAnchorEl(null);
+    }
+
+    function handleLogoutClick() {
+        handleMenuClose();
+        onLogoutClick();
+    }
+
+    function handleAccountClick() {
+        if (!account) return;
+        handleMenuClose();
+
+        history.push(routePaths.account(account.providerId, account.accountId));
+    }
+
     return (
         <header className={s.root}>
             <div className={s.menu}>
@@ -79,6 +105,26 @@ export default function Menu({
                             </>
                         )}
                     </ul>
+                    <div className={s.mobileMenu}>
+                        {!account && (
+                            <FakeLinkButton onClick={onLoginClick}>
+                                {trans('menu.label.login')}
+                            </FakeLinkButton>
+                        )}
+                        {account && (
+                            <>
+                                <IconButton onClick={handleMenuClick} className={s.iconButton}>
+                                    <MoreVertIcon />
+                                </IconButton>
+                                <MuiMenu anchorEl={menuAnchorEl} keepMounted open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
+                                    <MuiMenuItem onClick={handleAccountClick}>{account.accountId}</MuiMenuItem>
+                                    <MuiMenuItem disabled>{formatToken(account.balance)} FLX</MuiMenuItem>
+                                    <MuiMenuItem onClick={handleLogoutClick}>{trans('menu.label.logout')}</MuiMenuItem>
+                                </MuiMenu>
+                            </>
+                        )}
+                    </div>
+
                 </div>
             </div>
         </header>

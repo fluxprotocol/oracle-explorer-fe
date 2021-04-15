@@ -41,7 +41,7 @@ export default function DataRequestDetailHeader({
     return (
         <header className={s.header}>
             <h1>{trans('dataRequestDetail.title', { id: dataRequest.id })}</h1>
-            <div>
+            <div className={s.actions}>
                 {account && !isFinalized && (
                     <Button className={s.button} onClick={onStakeClick}>
                         {trans('dataRequestDetail.label.stake')}

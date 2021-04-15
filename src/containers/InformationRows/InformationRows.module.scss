@@ -1,6 +1,15 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+
 .root {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
+
+    @include for-size($default-bigger-screen-breakpoint) {
+        flex-direction: row;
+    }
 }
 
 .item {

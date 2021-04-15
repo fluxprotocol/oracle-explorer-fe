@@ -38,7 +38,7 @@ export default function AccountPage() {
     return (
         <Page>
             <div>
-                <h1>{params.accountId}</h1>
+                <h1 className={s.title}>{params.accountId}</h1>
             </div>
             <AccountDetailsInfoCardConnector />
             <Card className={s.card}>
