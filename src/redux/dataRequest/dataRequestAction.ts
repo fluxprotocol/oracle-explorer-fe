@@ -10,13 +10,9 @@ import { getUserStakesByRequestId } from '../../services/UserStakeService';
 import { Reducers } from '../reducers';
 import { setDataRequestDetailLoading, setDataRequestDetail, setDataRequestsLoading, setDataRequests, setTotalDataRequest, setDataRequestsErrors, setDataRequestAccountStakes } from './dataRequest';
 
-export function loadDataRequests(page: number, reset = false) {
+export function loadDataRequests(page: number) {
     return async (dispatch: Function, getState: () => Reducers) => {
         dispatch(setDataRequestsLoading(true));
-
-        if (reset) {
-            dispatch(setDataRequests([]));
-        }
 
         const offset = DEFAULT_PAGINATION_LIMIT * page;
         const result = await getAllDataRequests({

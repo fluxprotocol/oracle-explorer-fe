@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Link } from 'react-router-dom';
 
-import { DataRequestListItem } from '../../models/DataRequest';
+import { DataRequestListItem, getDataRequestTypeTranslation } from '../../models/DataRequest';
 import trans from '../../translation/trans';
 import { routePaths } from '../../routes';
 import Pagination from '../Pagination/Pagination';
@@ -21,6 +21,7 @@ interface Props {
     dataRequests: DataRequestListItem[];
     page: number;
     totalItems: number;
+    showPagination?: boolean;
     onRequestPageChange: (page: number) => void;
 }
 
@@ -28,6 +29,7 @@ export default function DataRequestsOverview({
     dataRequests,
     page,
     totalItems,
+    showPagination = true,
     onRequestPageChange,
 }: Props) {
     return (
@@ -37,6 +39,7 @@ export default function DataRequestsOverview({
                     <TableHead className={s.tableHead}>
                         <TableRow>
                             <TableCell>{trans('dataRequestsOverview.table.label.id')}</TableCell>
+                            <TableCell>{trans('dataRequestsOverview.table.label.type')}</TableCell>
                             <TableCell>{trans('dataRequestsOverview.table.label.status')}</TableCell>
                             <TableCell>{trans('dataRequestsOverview.table.label.timestamp')}</TableCell>
                         </TableRow>
@@ -48,6 +51,9 @@ export default function DataRequestsOverview({
                                     <Link to={routePaths.dataRequestDetail('near', request.id)}>
                                         #{request.id}
                                     </Link>
+                                </TableCell>
+                                <TableCell>
+                                    {getDataRequestTypeTranslation(request.type)}
                                 </TableCell>
                                 <TableCell>
                                     {request.finalized_outcome && (
@@ -66,13 +72,15 @@ export default function DataRequestsOverview({
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Pagination
-                className={s.pagination}
-                total={Math.ceil(totalItems / DEFAULT_PAGINATION_LIMIT) - 1}
-                page={page}
-                rowsPerPage={DEFAULT_PAGINATION_LIMIT}
-                onChangePage={onRequestPageChange}
-            />
+            {showPagination && (
+                <Pagination
+                    className={s.pagination}
+                    total={Math.ceil(totalItems / DEFAULT_PAGINATION_LIMIT) - 1}
+                    page={page}
+                    rowsPerPage={DEFAULT_PAGINATION_LIMIT}
+                    onChangePage={onRequestPageChange}
+                />
+            )}
         </div>
     );
 }

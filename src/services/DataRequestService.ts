@@ -14,6 +14,7 @@ export async function getAllDataRequests({
 }: DataRequestFilters): Promise<Pagination<DataRequestListItem>> {
     try {
         const response = await graphqlClient.query({
+            fetchPolicy: 'network-only',
             query: gql`
                 query GetAllDataRequests($limit: Int, $offset: Int) {
                     dataRequests: getDataRequests(limit: $limit, offset: $offset) {
@@ -23,6 +24,10 @@ export async function getAllDataRequests({
                             date
                             requestor
                             finalized_outcome
+                            sources {
+                                end_point
+                                source_path
+                            }
                         }
                     }
                 }
@@ -52,6 +57,7 @@ export async function getAllDataRequests({
 export async function getDataRequestById(id: string) {
     try {
         const response = await graphqlClient.query({
+            fetchPolicy: 'network-only',
             query: gql`
                 query GetDataRequest($id: String!) {
                     dataRequest: getDataRequest(id: $id) {

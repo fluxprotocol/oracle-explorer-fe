@@ -1,4 +1,5 @@
 import Big from "big.js";
+import trans from "../translation/trans";
 import { Outcome, transformToOutcome } from "./DataRequestOutcome";
 import { OracleConfig, OracleConfigGraphData, transformToOracleConfig } from "./OracleConfig";
 import { ResolutionWindow, ResolutionWindowGraphData, transformToResolutionWindow } from "./ResolutionWindow";
@@ -7,11 +8,17 @@ export interface DataRequestSource {
     endPoint: string;
     sourcePath: string;
 }
+
+export enum DataRequestType {
+    Arbitrator,
+    Api
+}
 export interface DataRequestListItem {
     id: string;
     date: Date;
     requestor: string;
     finalized_outcome?: Outcome;
+    type: DataRequestType;
 }
 
 export interface DataRequestViewModel extends DataRequestListItem {
@@ -50,6 +57,7 @@ export function transformToDataRequestListItem(data: DataRequestGraphData): Data
         date: new Date(Number(data.date)),
         requestor: data.requestor,
         finalized_outcome: data.finalized_outcome ? transformToOutcome(data.finalized_outcome) : undefined,
+        type: data.sources.length ? DataRequestType.Api : DataRequestType.Arbitrator,
     };
 }
 
@@ -101,4 +109,12 @@ export function canDataRequestBeFinalized(dataRequest: DataRequestViewModel): bo
     // Window has been filled, end time is met and we are not the first round
     // Meaning that the previous round was filled and ready to be finalized
     return true;
+}
+
+export function getDataRequestTypeTranslation(type: DataRequestType) {
+    if (type === DataRequestType.Arbitrator) {
+        return trans('dataRequest.type.arbitrator');
+    }
+
+    return trans('dataRequest.type.api');
 }

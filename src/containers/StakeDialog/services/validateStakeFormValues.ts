@@ -46,15 +46,15 @@ export default function validateStakeFormValues(formValues: StakeFormValues, acc
 
     // You cannot stake on the same bonded outcome as the previous outcome
     const currentRound = dataRequest.resolutionWindows[dataRequest.resolutionWindows.length - 1];
-    if (currentRound?.round !== 0) {
+    if (currentRound && currentRound.round !== 0) {
         const previousRound = dataRequest.resolutionWindows[dataRequest.resolutionWindows.length - 2];
 
-        if (previousRound.bondedOutcome?.type === OutcomeType.Invalid && formValues.isInvalid) {
+        if (previousRound?.bondedOutcome?.type === OutcomeType.Invalid && formValues.isInvalid) {
             errors.canSubmit = false;
             errors.message = trans('stakeDialog.errors.sameAnswerAsPreviousRound');
         }
 
-        if (previousRound.bondedOutcome?.type === OutcomeType.Answer && previousRound.bondedOutcome.answer === formValues.answer) {
+        if (previousRound?.bondedOutcome?.type === OutcomeType.Answer && previousRound.bondedOutcome.answer === formValues.answer) {
             errors.canSubmit = false;
             errors.message = trans('stakeDialog.errors.sameAnswerAsPreviousRound');
         }

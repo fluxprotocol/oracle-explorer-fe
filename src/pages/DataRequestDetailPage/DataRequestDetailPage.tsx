@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import useInterval from '@use-it/interval';
+
 import AccountStakesInfoCardConnector from '../../connectors/AccountStakesInfoCardConnector';
 import CallDataInfoConnector from '../../connectors/CallDataInfoConnector';
 import DataRequestDetailHeaderConnector from '../../connectors/DataRequestDetailHeaderConnector';
@@ -10,9 +12,10 @@ import ResolutionWindowsInfoConnector from '../../connectors/ResolutionWindowsIn
 import Page from '../../containers/Page';
 import { loadDataRequestById, unloadDataRequest } from '../../redux/dataRequest/dataRequestAction';
 import { Reducers } from '../../redux/reducers';
+import { REQUEST_DETAIL_REFRESH_INTERVAL } from '../../config';
+import UnstakeDialogConnector from '../../connectors/UnstakeDialogConnector';
 
 import s from './DataRequestDetailPage.module.scss';
-import UnstakeDialogConnector from '../../connectors/UnstakeDialogConnector';
 
 interface RouterParams {
     id: string;
@@ -30,6 +33,10 @@ export default function DataRequestDetailPage() {
             dispatch(unloadDataRequest());
         }
     }, [dispatch, id]);
+
+    useInterval(() => {
+        dispatch(loadDataRequestById(id));
+    }, REQUEST_DETAIL_REFRESH_INTERVAL);
 
     return (
         <Page>
