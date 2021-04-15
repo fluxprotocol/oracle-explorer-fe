@@ -10,8 +10,10 @@ export async function search(query: string): Promise<Pagination<SearchResult>> {
     try {
         if (isNaN(Number(query))) {
             return {
-                items: [],
-                total: 0,
+                items: [{
+                    url: routePaths.account('near', query),
+                }],
+                total: 1,
             };
         }
 
