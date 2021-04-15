@@ -4,7 +4,7 @@ import { setLatestRequestsStat, setTotalRequestsStat } from "./stats";
 export function loadStats() {
     return async (dispatch: Function) => {
         getAllDataRequests({
-            limit: 5,
+            limit: 10,
             offset: 0,
         }).then((result) => {
             dispatch(setTotalRequestsStat(result.total.toString()));
