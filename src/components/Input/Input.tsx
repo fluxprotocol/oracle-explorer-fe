@@ -4,13 +4,14 @@ import TextField from '@material-ui/core/TextField';
 
 import s from './Input.module.scss';
 
-interface Props {
+export interface InputProps {
     label?: string;
     className?: string;
     type?: 'text' | 'number';
     onChange?: (value: string) => void;
     value?: string;
     error?: string;
+    endAdornment?: any;
 }
 
 export default function Input({
@@ -20,7 +21,8 @@ export default function Input({
     onChange = () => {},
     value,
     error,
-}: Props) {
+    endAdornment,
+}: InputProps) {
     return (
         <TextField
             label={label}
@@ -30,6 +32,9 @@ export default function Input({
             value={value}
             error={!!error}
             helperText={error}
+            InputProps={{
+                endAdornment,
+            }}
         />
     );
 }

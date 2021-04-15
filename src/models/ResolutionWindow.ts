@@ -11,7 +11,9 @@ export interface ResolutionWindow {
     endTime: Date;
     bondSize: string;
     totalStaked: string;
+    filled: boolean;
     userStakes: UserStakes;
+    winningOutcomeStake?: OutcomeStake;
 }
 
 export interface ResolutionWindowGraphData {
@@ -35,25 +37,41 @@ export interface ResolutionWindowGraphData {
 
 export function transformToResolutionWindow(data: ResolutionWindowGraphData): ResolutionWindow {
     let totalStaked = new Big(0);
+    let highestOutcomeStake: OutcomeStake | undefined;
 
     const outcomeStakes: OutcomeStake[] = data.outcome_stakes.map((os) => {
         totalStaked = totalStaked.add(os.total_stake);
 
-        return {
+        const outcomeStake: OutcomeStake = {
             outcome: transformToOutcome(os.outcome),
             stake: os.total_stake,
             dataRequestId: os.data_request_id,
             round: os.round,
+        };
+
+        // Find the highest stake
+        if (highestOutcomeStake) {
+            const highestStake = new Big(highestOutcomeStake.stake);
+
+            if (highestStake.lt(outcomeStake.stake)) {
+                highestOutcomeStake = outcomeStake;
+            }
+        } else {
+            highestOutcomeStake = outcomeStake;
         }
+
+        return outcomeStake;
     });
 
     return {
         bondSize: data.bond_size,
         endTime: new Date(Number(data.end_time) / 1000000),
         outcomeStakes,
+        filled: highestOutcomeStake?.stake ? new Big(highestOutcomeStake.stake).eq(data.bond_size) : false,
         totalStaked: totalStaked.toString(),
         round: data.round,
         userStakes: transformToUserStakes(data.user_stakes),
         bondedOutcome: data.bonded_outcome ? transformToOutcome(data.bonded_outcome) : undefined,
+        winningOutcomeStake: highestOutcomeStake,
     };
 }

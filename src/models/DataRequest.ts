@@ -72,3 +72,33 @@ export function transformToDataRequestViewModel(data: DataRequestGraphData): Dat
         finalArbitratorTriggered: data.final_arbitrator_triggered,
     };
 }
+
+export function canDataRequestBeFinalized(dataRequest: DataRequestViewModel): boolean {
+    // Already finalized
+    if (dataRequest.finalized_outcome) {
+        return false;
+    }
+
+    const currentResolutionWindow = dataRequest.resolutionWindows[dataRequest.resolutionWindows.length - 1];
+    if (!currentResolutionWindow) return false;
+
+
+    const now = new Date().getTime();
+
+    // Latest resolution window must end
+    if (currentResolutionWindow.endTime.getTime() >= now) {
+        return false;
+    }
+
+    if (!currentResolutionWindow.filled) {
+        // The window has not been filled
+        // If it's the first round we cannot finalize till it's completely filled
+        if (currentResolutionWindow.round === 0) {
+            return false;
+        }
+    }
+
+    // Window has been filled, end time is met and we are not the first round
+    // Meaning that the previous round was filled and ready to be finalized
+    return true;
+}

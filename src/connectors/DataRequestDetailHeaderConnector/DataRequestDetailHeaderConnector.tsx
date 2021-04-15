@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DataRequestDetailHeader from '../../containers/DataRequestDetailHeader';
 import { claimDataRequest, finalizeDataRequest } from '../../redux/dataRequest/dataRequestAction';
-import { setStakeDialogOpen } from '../../redux/dialogs/dialogs';
+import { setStakeDialogOpen, setUnstakeDialogOpen } from '../../redux/dialogs/dialogs';
 import { Reducers } from '../../redux/reducers';
 
 
@@ -16,6 +16,13 @@ export default function DataRequestDetailHeaderConnector() {
         dispatch(setStakeDialogOpen({
             open: true,
             dataRequest,
+        }));
+    }, [dispatch, dataRequest]);
+
+    const handleUnstakeClick = useCallback(() => {
+        dispatch(setUnstakeDialogOpen({
+            open: true,
+            dataRequest
         }));
     }, [dispatch, dataRequest]);
 
@@ -37,6 +44,7 @@ export default function DataRequestDetailHeaderConnector() {
             onStakeClick={handleStakeClick}
             onFinalizeClick={handleFinalizeClick}
             onClaimClick={handleClaimClick}
+            onUnstakeClick={handleUnstakeClick}
             account={account}
             accountStakes={accountStakes}
         />

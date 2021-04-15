@@ -6,6 +6,8 @@
     "global.status.ongoing": "On going",
     "global.status.completed": "Completed",
 
+    "global.max": "Max",
+
     "routes.label.home": "Home",
     "routes.label.dataRequests": "Requests",
 
@@ -75,6 +77,7 @@
     "resolutionWindowAccordion.outcomeStakes.title": "Outcome stakes",
     "resolutionWindowAccordion.label.percentageFilled": "Filled %",
     "resolutionWindowAccordion.label.bondedOutcome": "Bonded outcome",
+    "resolutionWindowAccordion.label.winningOutcome": "Highest staked outcome",
 
     "outcomeStakeInfo.table.label.outcome": "Outcome",
     "outcomeStakeInfo.table.label.stake": "Staked",
@@ -90,6 +93,13 @@
     "stakeDialog.errors.notEnoughBalance": "Not enough balance",
     "stakeDialog.errors.noAnswer": "Answer is required for valid data requests",
     "stakeDialog.errors.mustBeAnOutcome": "The answer must be one of the outcomes",
+    "stakeDialog.errors.sameAnswerAsPreviousRound": "You cannot stake the same answer as the previous bonded outcome",
+
+    "unstakeDialog.title": "Unstake",
+    "unstakeDialog.errors.notEnoughStaked": "You can't unstake more than you have staked.",
+    "unstakeDialog.label.answer": "Outcome",
+    "unstakeDialog.label.stakeAmount": "Stake amount in FLX",
+    "unstakeDialog.label.staked": "You have staked :stake FLX in this answer",
 
     "accountStakesInfoCard.title": "Your stakes",
     "accountStakesInfoCard.noStakes": "No stakes done by you",
@@ -99,8 +109,9 @@
     "accountPage.label.unclaimed": "Unclaimed",
 
     "dataRequestDetail.title": "Request #:id",
-    "dataRequestDetail.label.claimed": "Claimed :payout FLX",
+    "dataRequestDetail.label.claimed": "Fees earned: :payout FLX",
     "dataRequestDetail.label.stake": "Stake",
+    "dataRequestDetail.label.unstake": "Unstake",
     "dataRequestDetail.label.claim": "Claim earnings",
     "dataRequestDetail.label.finalize": "Finalize"
 }

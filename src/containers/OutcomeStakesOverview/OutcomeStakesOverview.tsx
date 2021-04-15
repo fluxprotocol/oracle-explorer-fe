@@ -27,7 +27,7 @@ interface Props {
 
 export default function OutcomeStakesOverview({
     onRequestPageChange,
-    outcomeStakes,
+    outcomeStakes = [],
     page,
     totalItems,
     showPagination = true,
@@ -47,7 +47,7 @@ export default function OutcomeStakesOverview({
                     </TableHead>
                     <TableBody>
                         {outcomeStakes.map((stake) => (
-                            <TableRow key={`${stake.dataRequestId}_${stake.round}`}>
+                            <TableRow key={`${stake.dataRequestId}_${stake.round}_${transfromOutcomeToString(stake.outcome)}`}>
                                 <TableCell className={s.linkCell}>
                                     <Link to={routePaths.dataRequestDetail('near', stake.dataRequestId)}>
                                         #{stake.dataRequestId}

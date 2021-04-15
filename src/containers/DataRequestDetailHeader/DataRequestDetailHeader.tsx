@@ -1,10 +1,12 @@
+import Big from 'big.js';
 import React from 'react';
 import Button from '../../components/Button';
 import { Account } from '../../models/Account';
-import { DataRequestViewModel } from '../../models/DataRequest';
+import { canDataRequestBeFinalized, DataRequestViewModel } from '../../models/DataRequest';
 import { OutcomeStake } from '../../models/OutcomeStake';
 import { ResolutionWindow } from '../../models/ResolutionWindow';
 import trans from '../../translation/trans';
+import { sumBigs } from '../../utils/bigUtils';
 import { formatToken } from '../../utils/tokenUtils';
 
 import s from './DataRequestDetailHeader.module.scss';
@@ -12,6 +14,7 @@ import s from './DataRequestDetailHeader.module.scss';
 interface Props {
     dataRequest: DataRequestViewModel;
     onStakeClick: () => void;
+    onUnstakeClick: () => void;
     onClaimClick: () => void;
     onFinalizeClick: () => void;
     account?: Account;
@@ -22,15 +25,18 @@ export default function DataRequestDetailHeader({
     dataRequest,
     onStakeClick,
     onClaimClick,
+    onUnstakeClick,
     onFinalizeClick,
     account,
     accountStakes,
 }: Props) {
     const currentResolutionWindow: ResolutionWindow | undefined = dataRequest.resolutionWindows[dataRequest.resolutionWindows.length - 1] ?? undefined;
-    const now = new Date().getTime();
     const isFinalized = typeof dataRequest.finalized_outcome !== 'undefined';
-    const canFinalize = currentResolutionWindow?.endTime.getTime() <= now && !isFinalized;
+    const canFinalize = canDataRequestBeFinalized(dataRequest);
+
     const payout = accountStakes.find(stake => stake.claimPayout)?.claimPayout;
+    const roundStakes = accountStakes.filter(stake => stake.round === currentResolutionWindow?.round);
+    const stakedOnRound = sumBigs(roundStakes.map(roundStake => new Big(roundStake.stake)));
 
     return (
         <header className={s.header}>
@@ -39,6 +45,12 @@ export default function DataRequestDetailHeader({
                 {account && !isFinalized && (
                     <Button className={s.button} onClick={onStakeClick}>
                         {trans('dataRequestDetail.label.stake')}
+                    </Button>
+                )}
+
+                {account && !isFinalized && stakedOnRound.gt(0) && (
+                    <Button className={s.button} onClick={onUnstakeClick}>
+                        {trans('dataRequestDetail.label.unstake')}
                     </Button>
                 )}
 

@@ -3,8 +3,9 @@ import { StakeFormValues } from '../../containers/StakeDialog/services/createDef
 import { DataRequestViewModel } from '../../models/DataRequest';
 import { Outcome, OutcomeType } from '../../models/DataRequestOutcome';
 import { combineOutcomeStakes, OutcomeStake } from '../../models/OutcomeStake';
+import { ResolutionWindow } from '../../models/ResolutionWindow';
 import { getAllDataRequests, getDataRequestById } from '../../services/DataRequestService';
-import { claimWithProvider, finalizeWithProvider, getLoggedInAccountId, stakeWithProvider } from '../../services/providers/ProviderRegistry';
+import { claimWithProvider, finalizeWithProvider, getLoggedInAccountId, stakeWithProvider, unstakeWithProvider } from '../../services/providers/ProviderRegistry';
 import { getUserStakesByRequestId } from '../../services/UserStakeService';
 import { Reducers } from '../reducers';
 import { setDataRequestDetailLoading, setDataRequestDetail, setDataRequestsLoading, setDataRequests, setTotalDataRequest, setDataRequestsErrors, setDataRequestAccountStakes } from './dataRequest';
@@ -87,5 +88,15 @@ export function finalizeDataRequest(dataRequest: DataRequestViewModel) {
 export function claimDataRequest(accountId: string, dataRequest: DataRequestViewModel) {
     return async (dispatch: Function) => {
         await claimWithProvider('near', accountId, dataRequest);
+    }
+}
+
+//request_id: U64, resolution_round: u16, outcome: Outcome, amount: Balance
+export function unstakeDataRequest(amount: string, dataRequest: DataRequestViewModel, outcome: Outcome) {
+    return async (dispatch: Function) => {
+        const currentResolutionWindow: ResolutionWindow | undefined = dataRequest.resolutionWindows[dataRequest.resolutionWindows.length - 1] ?? undefined;
+        if (!currentResolutionWindow) return;
+
+        await unstakeWithProvider('near', amount, currentResolutionWindow.round, dataRequest, outcome);
     }
 }

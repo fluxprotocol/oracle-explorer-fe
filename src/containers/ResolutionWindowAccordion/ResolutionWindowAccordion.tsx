@@ -25,7 +25,7 @@ export default function ResolutionWindowAccordion({
     resolutionWindow,
     defaultExpanded,
 }: Props) {
-    const percentageFilled = new Big(resolutionWindow.totalStaked).div(resolutionWindow.bondSize).mul(100).toString();
+    const percentageFilled = resolutionWindow.winningOutcomeStake ? new Big(resolutionWindow.winningOutcomeStake.stake).div(resolutionWindow.bondSize).mul(100).toString() : '0';
 
     return (
         <Accordion className={s.accordion} defaultExpanded={defaultExpanded}>
@@ -51,6 +51,10 @@ export default function ResolutionWindowAccordion({
                         {
                             label: trans('resolutionWindowAccordion.label.percentageFilled'),
                             value: <span>{`${percentageFilled}%`}</span>,
+                        },
+                        {
+                            label: trans('resolutionWindowAccordion.label.winningOutcome'),
+                            value: <span>{resolutionWindow.winningOutcomeStake ? transfromOutcomeToString(resolutionWindow.winningOutcomeStake.outcome) : ''}</span>,
                         },
                         {
                             label: trans('resolutionWindowAccordion.label.bondedOutcome'),
