@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import useInterval from '@use-it/interval';
+import classnames from 'classnames';
 
 import AccountStakesInfoCardConnector from '../../connectors/AccountStakesInfoCardConnector';
 import CallDataInfoConnector from '../../connectors/CallDataInfoConnector';
@@ -46,7 +47,7 @@ export default function DataRequestDetailPage() {
             <RequestInfoConnector className={s.card} />
             {account && <AccountStakesInfoCardConnector />}
             <CallDataInfoConnector className={s.card} />
-            <ResolutionWindowsInfoConnector className={s.card} />
+            <ResolutionWindowsInfoConnector className={classnames(s.card, s.lastCard)} />
         </Page>
     );
 }
