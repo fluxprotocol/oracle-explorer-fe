@@ -12,6 +12,7 @@ import { loadDataRequestById, unloadDataRequest } from '../../redux/dataRequest/
 import { Reducers } from '../../redux/reducers';
 
 import s from './DataRequestDetailPage.module.scss';
+import UnstakeDialogConnector from '../../connectors/UnstakeDialogConnector';
 
 interface RouterParams {
     id: string;
@@ -34,6 +35,7 @@ export default function DataRequestDetailPage() {
         <Page>
             <DataRequestDetailHeaderConnector />
             <StakeDialogConnector />
+            <UnstakeDialogConnector />
             <RequestInfoConnector className={s.card} />
             {account && <AccountStakesInfoCardConnector />}
             <CallDataInfoConnector className={s.card} />

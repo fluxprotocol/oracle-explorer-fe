@@ -109,6 +109,7 @@ export default function StakeDialog({
                         error={errors.amount}
                     />
                 </div>
+                {errors.message && (<div className={s.error}>{errors.message}</div>)}
             </form>
         </Dialog>
     );

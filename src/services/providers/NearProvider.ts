@@ -66,6 +66,25 @@ export default class NearProvider implements IProvider {
         return true;
     }
 
+    async unstake(amount: string, round: number, dataRequest: DataRequestViewModel, outcome: Outcome): Promise<boolean> {
+        const account = this.sdkInstance.walletConnection?.account();
+        if (!account) return false;
+
+        // Formatting is weird in rust..
+        const stakeOutcome = outcome.type === OutcomeType.Invalid ? 'Invalid' : { 'Answer': outcome.answer };
+
+        await account.functionCall(NEAR_ORACLE_CONTRACT_ID, 'dr_unstake', {
+            request_id: dataRequest.id,
+            resolution_round: round,
+            outcome: stakeOutcome,
+            amount,
+
+            // @ts-ignore
+        }, NEAR_MAX_GAS, STORAGE_BASE);
+
+        return true;
+    }
+
     async finalize(dataRequest: DataRequestViewModel) {
         const account = this.sdkInstance.walletConnection?.account();
         if (!account) return false;

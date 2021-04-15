@@ -86,3 +86,8 @@ export async function claimWithProvider(providerId: string, accountId: string, d
     const provider = getProviderById(providerId);
     return provider?.claim(accountId, dataRequest) ?? false;
 }
+
+export async function unstakeWithProvider(providerId: string, amount: string, round: number, dataRequest: DataRequestViewModel, outcome: Outcome): Promise<boolean> {
+    const provider = getProviderById(providerId);
+    return provider?.unstake(amount, round, dataRequest, outcome) ?? false;
+}
