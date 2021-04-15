@@ -36,12 +36,19 @@ export default class NearProvider implements IProvider {
     }
 
     async getAccountInfo(accountId: string) {
-        const balance = await this.sdkInstance.getTokenBalance(NEAR_FLUX_TOKEN_ID, accountId);
+        try {
+            const balance = await this.sdkInstance.getTokenBalance(NEAR_FLUX_TOKEN_ID, accountId);
 
-        return {
-            accountId,
-            balance,
-        };
+            return {
+                accountId,
+                balance,
+            };
+        } catch (error) {
+            return {
+                accountId,
+                balance: '0',
+            }
+        }
     }
 
     async stake(amount: string, dataRequest: DataRequestViewModel, outcome: Outcome) {
