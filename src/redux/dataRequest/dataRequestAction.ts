@@ -12,13 +12,14 @@ import { setDataRequestDetailLoading, setDataRequestDetail, setDataRequestsLoadi
 
 export function loadDataRequests(page: number) {
     return async (dispatch: Function, getState: () => Reducers) => {
+        const store = getState();
         dispatch(setDataRequestsLoading(true));
 
         const offset = DEFAULT_PAGINATION_LIMIT * page;
         const result = await getAllDataRequests({
             limit: DEFAULT_PAGINATION_LIMIT,
             offset,
-        });
+        }, store.dataRequest.dataRequestFilters);
 
         dispatch(setDataRequests(result.items));
         dispatch(setTotalDataRequest(result.total));

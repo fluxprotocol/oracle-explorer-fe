@@ -18,6 +18,8 @@
     "dataRequest.type.arbitrator": "Arbitrator",
     "dataRequest.type.api": "API",
 
+    "dataRequestFilters.label.arbitrator": "Only arbitrator requests",
+
     "homePage.title.latestRequests": "Latest requests",
 
     "pagination.pageIndication": "Page :currentPage of :totalPages",

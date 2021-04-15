@@ -2,9 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { DataRequestListItem, DataRequestViewModel } from '../../models/DataRequest';
 import { OutcomeStake } from '../../models/OutcomeStake';
+import { DataRequestFilters } from '../../services/DataRequestService';
 
 export type DataRequestsState = Readonly<{
     dataRequests: DataRequestListItem[];
+    dataRequestFilters: DataRequestFilters;
     totalDataRequests: number;
     error?: string[];
     detailLoading: boolean;
@@ -19,6 +21,9 @@ const initialState: DataRequestsState = {
     dataRequests: [],
     totalDataRequests: 0,
     accountStakes: [],
+    dataRequestFilters: {
+        onlyArbitratorRequests: false,
+    }
 };
 
 const dataRequestsSlice = createSlice({
@@ -67,6 +72,12 @@ const dataRequestsSlice = createSlice({
                 accountStakes: action.payload,
             });
         },
+        setDataRequestFilters(state: DataRequestsState, action: PayloadAction<DataRequestFilters>): DataRequestsState {
+            return ({
+                ...state,
+                dataRequestFilters: action.payload,
+            });
+        },
     },
 });
 
@@ -78,6 +89,7 @@ export const {
     setDataRequestDetailLoading,
     setTotalDataRequest,
     setDataRequestAccountStakes,
+    setDataRequestFilters,
 } = dataRequestsSlice.actions;
 
 export default dataRequestsSlice.reducer;

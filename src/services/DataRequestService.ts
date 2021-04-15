@@ -2,8 +2,11 @@ import gql from "graphql-tag";
 import { DataRequestListItem, transformToDataRequestListItem, transformToDataRequestViewModel } from "../models/DataRequest";
 import { Pagination } from "../models/Pagination";
 import { graphqlClient } from "./GraphQLService";
+export interface DataRequestFilters {
+    onlyArbitratorRequests: boolean;
+}
 
-interface DataRequestFilters {
+interface DataRequestPagination {
     limit: number;
     offset: number;
 }
@@ -11,13 +14,15 @@ interface DataRequestFilters {
 export async function getAllDataRequests({
     limit,
     offset,
+}: DataRequestPagination, {
+    onlyArbitratorRequests,
 }: DataRequestFilters): Promise<Pagination<DataRequestListItem>> {
     try {
         const response = await graphqlClient.query({
             fetchPolicy: 'network-only',
             query: gql`
-                query GetAllDataRequests($limit: Int, $offset: Int) {
-                    dataRequests: getDataRequests(limit: $limit, offset: $offset) {
+                query GetAllDataRequests($limit: Int, $offset: Int, $onlyArbitratorRequests: Boolean) {
+                    dataRequests: getDataRequests(limit: $limit, offset: $offset, onlyArbitratorRequests: $onlyArbitratorRequests) {
                         total
                         items {
                             id
@@ -35,6 +40,7 @@ export async function getAllDataRequests({
             variables: {
                 limit,
                 offset,
+                onlyArbitratorRequests,
             }
         });
 

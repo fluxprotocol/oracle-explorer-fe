@@ -6,7 +6,7 @@ export function loadStats() {
         getAllDataRequests({
             limit: 10,
             offset: 0,
-        }).then((result) => {
+        }, { onlyArbitratorRequests: false }).then((result) => {
             dispatch(setTotalRequestsStat(result.total.toString()));
             dispatch(setLatestRequestsStat(result.items));
         });
