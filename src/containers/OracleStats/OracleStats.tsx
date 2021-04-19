@@ -1,4 +1,5 @@
 import React from 'react';
+import millify from 'millify';
 
 import s from './OracleStats.module.scss';
 import trans from '../../translation/trans';
@@ -6,11 +7,17 @@ import StatCard from './components/StatCard/StatCard';
 
 interface Props {
     totalRequests: string;
+    tokenPrice: number;
+    tokenMarketCap: number;
 }
 
 export default function OracleStats({
     totalRequests,
+    tokenMarketCap,
+    tokenPrice,
 }: Props) {
+    const marketCapFormatted = millify(tokenMarketCap);
+
     return (
         <div className={s.root}>
             <StatCard
@@ -19,11 +26,11 @@ export default function OracleStats({
             />
             <StatCard
                 label={trans('oracleStats.label.tokenPrice')}
-                value="$0.30"
+                value={`$${tokenPrice}`}
             />
             <StatCard
                 label={trans('oracleStats.label.tokenMarketCap')}
-                value="$56.8M"
+                value={`$${marketCapFormatted}`}
             />
         </div>
     );

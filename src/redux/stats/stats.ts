@@ -3,15 +3,15 @@ import { DataRequestListItem } from '../../models/DataRequest';
 
 export type StatsState = Readonly<{
     totalRequests: string;
-    tokenPrice: string;
-    tokenMarketCap: string;
+    tokenPrice: number;
+    tokenMarketCap: number;
     latestRequests: DataRequestListItem[];
 }>;
 
 const initialState: StatsState = {
     totalRequests: '0',
-    tokenPrice: '0',
-    tokenMarketCap: '0',
+    tokenPrice: 0,
+    tokenMarketCap: 0,
     latestRequests: [],
 };
 
@@ -26,14 +26,14 @@ const statsSlice = createSlice({
             });
         },
 
-        setTokenPriceStat(state: StatsState, action: PayloadAction<string>): StatsState {
+        setTokenPriceStat(state: StatsState, action: PayloadAction<number>): StatsState {
             return ({
                 ...state,
                 tokenPrice: action.payload,
             });
         },
 
-        setTokenMarketCapStat(state: StatsState, action: PayloadAction<string>): StatsState {
+        setTokenMarketCapStat(state: StatsState, action: PayloadAction<number>): StatsState {
             return ({
                 ...state,
                 tokenMarketCap: action.payload,

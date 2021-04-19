@@ -8,7 +8,7 @@ async function getUserStakesByRequestIdAndAccountId(requestId: string, accountId
     try {
         const response = await graphqlClient.query({
             query: gql`
-                    query GetUserStakes($requestId: String!, $accountId: String!) {
+                    query GetUserStakesRequestAndAccount($requestId: String!, $accountId: String!) {
                         stakes: getUserStakesByRequestId(id: $requestId, accountId: $accountId) {
                             data_request_id
                             account_id
