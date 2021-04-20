@@ -23,17 +23,18 @@ export function combineOutcomeStakes(outcomeStakes: OutcomeStake[] = []): Outcom
             answer = `Answer(${outcomeStake.outcome.answer})`;
         }
 
-        const currentItem = result.get(answer);
+        const internalId = `${answer}_${outcomeStake.dataRequestId}`;
+        const currentItem = result.get(internalId);
 
         if (currentItem) {
             let stake = new Big(currentItem.stake);
             stake = stake.add(outcomeStake.stake);
-            result.set(answer, {
+            result.set(internalId, {
                 ...currentItem,
                 stake: stake.toString(),
             });
         } else {
-            result.set(answer, outcomeStake);
+            result.set(internalId, outcomeStake);
         }
     });
 
