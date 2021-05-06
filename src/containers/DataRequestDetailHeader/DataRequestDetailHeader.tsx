@@ -1,6 +1,7 @@
 import Big from 'big.js';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import Button from '../../components/Button';
+import Countdown from '../../compositions/Countdown';
 import { Account } from '../../models/Account';
 import { canDataRequestBeFinalized, DataRequestViewModel } from '../../models/DataRequest';
 import { OutcomeStake } from '../../models/OutcomeStake';
@@ -30,6 +31,8 @@ export default function DataRequestDetailHeader({
     account,
     accountStakes,
 }: Props) {
+    const now = new Date();
+    const [canInteract, setInteract] = useState(dataRequest.settlementTime.getTime() <= now.getTime());
     const currentResolutionWindow: ResolutionWindow | undefined = dataRequest.resolutionWindows[dataRequest.resolutionWindows.length - 1] ?? undefined;
     const isFinalized = typeof dataRequest.finalized_outcome !== 'undefined';
     const canFinalize = canDataRequestBeFinalized(dataRequest);
@@ -38,29 +41,43 @@ export default function DataRequestDetailHeader({
     const roundStakes = accountStakes.filter(stake => stake.round === currentResolutionWindow?.round);
     const stakedOnRound = sumBigs(roundStakes.map(roundStake => new Big(roundStake.stake)));
 
+    const onCountdownComplete = useCallback(() => {
+        setInteract(true);
+    }, []);
+
     return (
         <header className={s.header}>
             <h1>{trans('dataRequestDetail.title', { id: dataRequest.id })}</h1>
             <div className={s.actions}>
-                {account && !isFinalized && (
+                {!canInteract && (
+                    <span>
+                        {trans('dataRequestDetail.canBeResolvedIn')}
+                        <Countdown
+                            date={dataRequest.settlementTime}
+                            onComplete={onCountdownComplete}
+                        />
+                    </span>
+                )}
+
+                {canInteract && account && !isFinalized && (
                     <Button className={s.button} onClick={onStakeClick}>
                         {trans('dataRequestDetail.label.stake')}
                     </Button>
                 )}
 
-                {account && !isFinalized && stakedOnRound.gt(0) && (
+                {canInteract && account && !isFinalized && stakedOnRound.gt(0) && (
                     <Button className={s.button} onClick={onUnstakeClick}>
                         {trans('dataRequestDetail.label.unstake')}
                     </Button>
                 )}
 
-                {account && canFinalize && (
+                {canInteract && account && canFinalize && (
                     <Button className={s.button} onClick={onFinalizeClick}>
                         {trans('dataRequestDetail.label.finalize')}
                     </Button>
                 )}
 
-                {account && !Boolean(payout) && accountStakes.length > 0 && isFinalized && (
+                {canInteract && account && !Boolean(payout) && accountStakes.length > 0 && isFinalized && (
                     <Button className={s.button} onClick={onClaimClick}>
                         {trans('dataRequestDetail.label.claim')}
                     </Button>

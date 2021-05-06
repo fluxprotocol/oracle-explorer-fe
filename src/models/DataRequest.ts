@@ -30,6 +30,7 @@ export interface DataRequestViewModel extends DataRequestListItem {
     finalized_outcome?: Outcome;
     targetContract: string;
     finalArbitratorTriggered: boolean;
+    settlementTime: Date;
 }
 
 export interface DataRequestGraphData {
@@ -61,6 +62,8 @@ export function transformToDataRequestListItem(data: DataRequestGraphData): Data
     };
 }
 
+const settlementTime = new Date(new Date().getTime() + 10000);
+
 export function transformToDataRequestViewModel(data: DataRequestGraphData): DataRequestViewModel {
     const resolutionWindows = data.resolution_windows.map(rw => transformToResolutionWindow(rw));
     const totalStaked = resolutionWindows.reduce((prev, curr) => prev.add(curr.totalStaked), new Big(0));
@@ -68,6 +71,7 @@ export function transformToDataRequestViewModel(data: DataRequestGraphData): Dat
     return {
         ...transformToDataRequestListItem(data),
         config: transformToOracleConfig(data.config),
+        settlementTime,
         resolutionWindows,
         sources: data.sources.map((s) => ({
             endPoint: s.end_point,

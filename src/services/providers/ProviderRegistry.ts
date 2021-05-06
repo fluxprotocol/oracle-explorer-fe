@@ -2,7 +2,7 @@ import { Account } from "../../models/Account";
 import { DataRequestViewModel } from "../../models/DataRequest";
 import { Outcome } from "../../models/DataRequestOutcome";
 import { IProvider } from "./IProvider";
-import NearProvider from "./NearProvider";
+import NearProvider from "./near/NearProvider";
 
 let providers: IProvider[] = [];
 let providerInitPromise: Promise<boolean[]>;

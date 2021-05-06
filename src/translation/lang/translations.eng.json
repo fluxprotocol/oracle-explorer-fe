@@ -125,5 +125,6 @@
     "dataRequestDetail.label.stake": "Stake",
     "dataRequestDetail.label.unstake": "Unstake",
     "dataRequestDetail.label.claim": "Claim earnings",
+    "dataRequestDetail.canBeResolvedIn": "Can be resolved in: ",
     "dataRequestDetail.label.finalize": "Finalize"
 }
