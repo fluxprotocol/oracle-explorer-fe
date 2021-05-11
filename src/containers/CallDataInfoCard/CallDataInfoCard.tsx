@@ -6,6 +6,7 @@ import { DataRequestViewModel } from '../../models/DataRequest';
 import trans from '../../translation/trans';
 
 import s from './CallDataInfoCard.module.scss';
+import LabeledText from '../../compositions/LabeledText';
 
 interface Props {
     dataRequest: DataRequestViewModel;
@@ -16,19 +17,16 @@ export default function CallDataInfoCard({
     dataRequest,
     className,
 }: Props) {
-    const hasContent = dataRequest.sources.length > 0 || Boolean(dataRequest.outcomes?.length);
-
-    if (!hasContent) {
-        return null;
-    }
 
     return (
         <Card className={className}>
             <CardContent>
-                {dataRequest.sources.length > 0 && (
-                    <div className={s.titleWrapper}>
-                        <h2 className={s.title}>{trans('callDataInfo.title')}</h2>
-                    </div>
+                <div className={s.titleWrapper}>
+                    <h2 className={s.title}>{trans('callDataInfo.title')}</h2>
+                </div>
+
+                {dataRequest.description && (
+                    <LabeledText label={trans('callDataInfo.description')} className={s.label}>{dataRequest.description}</LabeledText>
                 )}
 
                 {dataRequest.sources.length > 0 && (
@@ -54,9 +52,7 @@ export default function CallDataInfoCard({
 
                 {dataRequest.outcomes?.length && (
                     <>
-                        <div className={s.titleWrapper}>
-                            <h2 className={s.title}>{trans('callDataInfo.outcomes.title')}</h2>
-                        </div>
+                        <LabeledText label={trans('callDataInfo.outcomes.title')} />
                         <pre className={s.possibleOutcomes}>
                             {JSON.stringify(dataRequest.outcomes, null, 4)}
                         </pre>

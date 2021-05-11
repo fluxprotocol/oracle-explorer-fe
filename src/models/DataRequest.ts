@@ -1,5 +1,6 @@
 import Big from "big.js";
 import trans from "../translation/trans";
+import { nsToMs } from "../utils/dateUtils";
 import { Outcome, transformToOutcome } from "./DataRequestOutcome";
 import { OracleConfig, OracleConfigGraphData, transformToOracleConfig } from "./OracleConfig";
 import { ResolutionWindow, ResolutionWindowGraphData, transformToResolutionWindow } from "./ResolutionWindow";
@@ -22,6 +23,7 @@ export interface DataRequestListItem {
 }
 
 export interface DataRequestViewModel extends DataRequestListItem {
+    description?: string;
     config: OracleConfig;
     sources: DataRequestSource[];
     outcomes?: string[];
@@ -36,6 +38,8 @@ export interface DataRequestViewModel extends DataRequestListItem {
 export interface DataRequestGraphData {
     id: string;
     block_height: string;
+    description: string | null;
+    settlement_time: string;
     date: string;
     final_arbitrator_triggered: boolean;
     global_config_id: string;
@@ -62,8 +66,6 @@ export function transformToDataRequestListItem(data: DataRequestGraphData): Data
     };
 }
 
-const settlementTime = new Date(new Date().getTime() + 10000);
-
 export function transformToDataRequestViewModel(data: DataRequestGraphData): DataRequestViewModel {
     const resolutionWindows = data.resolution_windows.map(rw => transformToResolutionWindow(rw));
     const totalStaked = resolutionWindows.reduce((prev, curr) => prev.add(curr.totalStaked), new Big(0));
@@ -71,8 +73,9 @@ export function transformToDataRequestViewModel(data: DataRequestGraphData): Dat
     return {
         ...transformToDataRequestListItem(data),
         config: transformToOracleConfig(data.config),
-        settlementTime,
+        settlementTime: new Date(nsToMs(Number(data.settlement_time))),
         resolutionWindows,
+        description: data.description ?? undefined,
         sources: data.sources.map((s) => ({
             endPoint: s.end_point,
             sourcePath: s.source_path,

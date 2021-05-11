@@ -77,6 +77,8 @@ export async function getDataRequestById(id: string) {
                         requestor
                         target_contract
                         finalized_outcome
+                        description
+                        settlement_time
                         sources {
                             end_point
                             source_path

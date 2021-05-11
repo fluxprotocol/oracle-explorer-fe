@@ -38,6 +38,7 @@
     "stakerReportsInfo.noWindows": "No resolution windows, stake to start one.",
 
     "callDataInfo.title": "Calldata",
+    "callDataInfo.description": "Description",
     "callDataInfo.label.endPoint": "End point URL",
     "callDataInfo.label.sourcePath": "Source path",
     "callDataInfo.outcomes.title": "Possible outcomes",
