@@ -48,6 +48,9 @@ export default function RequestInfoCard({
                         label: trans('requestInfo.label.totalStaked'),
                         value: <span>{`${formatToken(dataRequest.totalStaked)} FLX`}</span>,
                     }, {
+                        label: trans('requestInfo.label.tags'),
+                        value: <span>{dataRequest.tags.length ? dataRequest.tags.map(t => `"${t}"`).join(', ') : trans('requestInfo.label.noTags')}</span>
+                    }, {
                         label: trans('requestInfo.label.finalizedOutcome'),
                         value: <span>{dataRequest.finalized_outcome ? transfromOutcomeToString(dataRequest.finalized_outcome) : 'null'}</span>,
                     }]}

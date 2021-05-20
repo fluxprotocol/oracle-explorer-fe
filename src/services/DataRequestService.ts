@@ -79,6 +79,7 @@ export async function getDataRequestById(id: string) {
                         finalized_outcome
                         description
                         settlement_time
+                        tags
                         sources {
                             end_point
                             source_path

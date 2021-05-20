@@ -71,6 +71,8 @@
     "requestInfo.label.dateCreated": "Date created",
     "requestInfo.label.targetContract": "Target contract",
     "requestInfo.label.finalArbitratorTriggered": "Final arbitrator triggered?",
+    "requestInfo.label.tags": "Tags",
+    "requestInfo.label.noTags": "No tags available",
 
     "stakeReport.table.label.outcome": "Outcome",
     "stakeReport.table.label.stake": "Staked",
