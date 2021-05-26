@@ -5,8 +5,9 @@ import { NEAR_FLUX_TOKEN_ID, NEAR_MAX_GAS, NEAR_NETWORK, NEAR_NULL_CONTRACT, NEA
 import { Outcome, OutcomeType } from "../../../models/DataRequestOutcome";
 import { DataRequestViewModel } from "../../../models/DataRequest";
 import Big from "big.js";
-import { batchSendTransactions, getMinimumStorage, getStorageBalance, getTokenBalance, TransactionOption } from "./NearService";
+import { batchSendTransactions, getTokenBalance, TransactionOption } from "./NearService";
 import { connectNear } from "./NearConnectService";
+import { createStorageTransaction } from "./StorageManagerService";
 export default class NearProvider implements IProvider {
     id = 'near';
 
@@ -68,22 +69,11 @@ export default class NearProvider implements IProvider {
         if (!this.walletConnection) return false;
 
         const stakeOutcome = outcome.type === OutcomeType.Invalid ? 'Invalid' : { 'Answer': outcome.answer };
-        const minimumStorageBalance = await getMinimumStorage(this.walletConnection);
-        const currentStorage = await getStorageBalance(this.walletConnection);
+        const storageTransaction = await createStorageTransaction(NEAR_ORACLE_CONTRACT_ID, this.getLoggedInAccountId(), this.walletConnection);
         const transactions: TransactionOption[] = [];
 
-        if (currentStorage.total.lt(minimumStorageBalance)) {
-            transactions.push({
-                receiverId: NEAR_ORACLE_CONTRACT_ID,
-                transactionOptions: [{
-                    amount: minimumStorageBalance.toString(),
-                    gas: NEAR_MAX_GAS,
-                    methodName: 'storage_deposit',
-                    args: {
-                        account_id: this.getLoggedInAccountId(),
-                    }
-                }],
-            });
+        if (storageTransaction) {
+            transactions.push(storageTransaction);
         }
 
         transactions.push({

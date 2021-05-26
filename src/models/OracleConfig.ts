@@ -1,5 +1,17 @@
 export interface OracleConfig {
+    blockHeight: string;
+    bondToken: string;
+    date: Date;
+    defaultChallengeWindowDuration: string;
+    finalArbitrator: string;
+    finalArbitratorInvokeAmount: string;
+    gov: string;
+    id: string;
+    maxOutcomes: number;
+    minInitialChallengeWindowDuration: string;
     resolutionFeePercentage: number;
+    stakeToken: string;
+    validityBond: string;
 }
 
 export interface OracleConfigGraphData {
@@ -20,6 +32,18 @@ export interface OracleConfigGraphData {
 
 export function transformToOracleConfig(data: OracleConfigGraphData): OracleConfig {
     return {
+        blockHeight: data.block_height,
+        bondToken: data.bond_token,
+        date: new Date(Number(data.date)),
+        defaultChallengeWindowDuration: data.default_challenge_window_duration,
+        finalArbitrator: data.final_arbitrator,
+        finalArbitratorInvokeAmount: data.final_arbitrator_invoke_amount,
+        gov: data.gov,
+        id: data.id,
+        maxOutcomes: data.max_outcomes,
+        minInitialChallengeWindowDuration: data.min_initial_challenge_window_duration,
         resolutionFeePercentage: data.resolution_fee_percentage,
+        stakeToken: data.stake_token,
+        validityBond: data.validity_bond,
     };
 }

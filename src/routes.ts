@@ -1,5 +1,6 @@
 import { ComponentType } from 'react';
 import AccountPage from './pages/AccountPage';
+import ConfigPage from './pages/ConfigPage';
 import DataRequestDetailPage from './pages/DataRequestDetailPage';
 import DataRequestsPage from './pages/DataRequestsPage';
 import HomePage from './pages/HomePage';
@@ -22,6 +23,8 @@ export const routePaths = {
     account: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}`,
     accountTransactions: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}/transactions`,
     accountUnclaimed: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}/unclaimed`,
+
+    config: (provider = ':provider', id = ':id') => `/config/${provider}/${id}`,
 
     search: (query = ':query') => `/search/${query}`,
     dataRequests: (page = ':page') => `/requests/${page}`,
@@ -73,5 +76,14 @@ export const routes: RouteProps[] = [
         label: trans('routes.label.dataRequests'),
         path: routePaths.dataRequests(),
         navPath: routePaths.dataRequests('0'),
+    },
+    {
+        component: ConfigPage,
+        exact: true,
+        inNavigation: false,
+        key: 'config-detail',
+        label: trans('routes.label.config'),
+        path: routePaths.config(),
+        navPath: routePaths.config(),
     },
 ];
