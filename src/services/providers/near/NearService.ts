@@ -48,38 +48,3 @@ export async function getTokenBalance(walletConnection: WalletConnection, accoun
         account_id: accountId,
     });
 }
-
-/**
- * Gets the minimum amount storage required for a oracle transaction
- *
- * @export
- * @param {WalletConnection} walletConnection
- * @return {Promise<Big>}
- */
-export async function getMinimumStorage(walletConnection: WalletConnection): Promise<Big> {
-    return cache(`${NEAR_ORACLE_CONTRACT_ID}_minimum_storage_balance`, async () => {
-        const account = walletConnection.account();
-        const minimumBalance = await account.viewFunction(NEAR_ORACLE_CONTRACT_ID, 'storage_minimum_balance', {});
-        return Big(minimumBalance);
-    });
-}
-
-export async function getStorageBalance(walletConnection: WalletConnection): Promise<{ total: Big, available: Big }> {
-    try {
-        const account = walletConnection.account();
-        const storage = await account.viewFunction(NEAR_ORACLE_CONTRACT_ID, 'storage_balance_of', {
-            account_id: account.accountId,
-        });
-
-        return {
-            total: new Big(storage.total),
-            available: new Big(storage.available),
-        };
-    } catch (error) {
-        console.error('[getStorageBalance]', error);
-        return {
-            total: new Big(0),
-            available: new Big(0),
-        };
-    }
-}

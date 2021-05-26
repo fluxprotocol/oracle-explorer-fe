@@ -62,6 +62,20 @@
     "accountDetailsInfoCard.label.totalStaked": "Total staked",
     "accountDetailsInfoCard.label.totalClaimed": "Total claimed",
 
+    "oracleConfig.title": "Config #:id",
+
+    "oracleConfigInfoCard.title": "Config details",
+    "oracleConfigInfoCard.label.createdAt": "Created at",
+    "oracleConfigInfoCard.label.gov": "Oracle governance",
+    "oracleConfigInfoCard.label.bondToken": "Token for creating bonds",
+    "oracleConfigInfoCard.label.stakeToken": "Token for staking on requests",
+    "oracleConfigInfoCard.label.finalArbitrator": "Final arbitrator",
+    "oracleConfigInfoCard.label.finalArbitratorInvokeAmount": "Final arbitrator invoke amount",
+    "oracleConfigInfoCard.label.resolutionFeePercentage": "Resolution fee percentage",
+    "oracleConfigInfoCard.label.maxOutcomes": "Maximum amount of outcomes",
+    "oracleConfigInfoCard.label.minInitialChallengeWindowDuration": "Minimum initial challenge window duration",
+    "oracleConfigInfoCard.label.defaultChallengeWindowDuration": "Default challenge window duration",
+
     "requestInfo.title": "Request Info",
     "requestInfo.label.requestor": "Requestor Account ID",
     "requestInfo.label.feePercentage": "Fee Percentage",
@@ -73,6 +87,7 @@
     "requestInfo.label.finalArbitratorTriggered": "Final arbitrator triggered?",
     "requestInfo.label.tags": "Tags",
     "requestInfo.label.noTags": "No tags available",
+    "requestInfo.label.config": "Config ID",
 
     "stakeReport.table.label.outcome": "Outcome",
     "stakeReport.table.label.stake": "Staked",

@@ -3,7 +3,7 @@ module.exports = {
         service: {
             name: "my-graphql-app",
             // url: process.env.REACT_APP_API_URL
-            url: "http://localhost:1237/graphql"
+            url: "http://localhost:1288/graphql"
         }
     }
 };
