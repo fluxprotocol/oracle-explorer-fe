@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Account, AccountInfo } from '../../models/Account';
+import { DataRequestListItem } from '../../models/DataRequest';
 import { OutcomeStake } from '../../models/OutcomeStake';
 
 export type AccountState = Readonly<{
@@ -7,9 +8,13 @@ export type AccountState = Readonly<{
     accountDetail: {
         account?: Account;
         info: AccountInfo;
+        unclaimedStakes: OutcomeStake[];
+
+        accountRequests: DataRequestListItem[];
+        accountRequestsTotal: number;
+
         accountStakes: OutcomeStake[];
         accountStakesTotal: number;
-        unclaimedStakes: OutcomeStake[];
     };
     error?: string[];
     loading: boolean;
@@ -26,6 +31,8 @@ const initialState: AccountState = {
         },
         accountStakes: [],
         accountStakesTotal: 0,
+        accountRequests: [],
+        accountRequestsTotal: 0,
         unclaimedStakes: [],
     }
 };
@@ -97,6 +104,24 @@ const accountSlice = createSlice({
                 },
             });
         },
+        setAccountRequests(state: AccountState, action: PayloadAction<DataRequestListItem[]>): AccountState {
+            return ({
+                ...state,
+                accountDetail: {
+                    ...state.accountDetail,
+                    accountRequests: action.payload,
+                },
+            });
+        },
+        setAccountRequestsTotal(state: AccountState, action: PayloadAction<number>): AccountState {
+            return ({
+                ...state,
+                accountDetail: {
+                    ...state.accountDetail,
+                    accountRequestsTotal: action.payload,
+                },
+            });
+        },
     },
 });
 
@@ -109,6 +134,8 @@ export const {
     setAccountStakesTotal,
     setAccountInfo,
     setAccountUnclaimedStakes,
+    setAccountRequests,
+    setAccountRequestsTotal,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

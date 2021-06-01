@@ -101,7 +101,7 @@ export default function StakeDialog({
                 )}
                 <div className={s.formItem}>
                     <Input
-                        label={trans('stakeDialog.label.stakeAmount')}
+                        label={trans('stakeDialog.label.stakeAmount', { tokenSymbol: trans('global.token.symbol') })}
                         className={s.formInput}
                         value={formValues.amountFormatted}
                         onChange={handleStakeChange}

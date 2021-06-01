@@ -42,11 +42,11 @@ export default function ResolutionWindowAccordion({
                         },
                         {
                             label: trans('resolutionWindowAccordion.label.bondSize'),
-                            value: <span>{`${formatToken(resolutionWindow.bondSize)} FLX`}</span>,
+                            value: <span>{`${formatToken(resolutionWindow.bondSize)} ${trans('global.token.symbol')}`}</span>,
                         },
                         {
                             label: trans('resolutionWindowAccordion.label.totalStaked'),
-                            value: <span>{`${formatToken(resolutionWindow.totalStaked)} FLX`}</span>,
+                            value: <span>{`${formatToken(resolutionWindow.totalStaked)} ${trans('global.token.symbol')}`}</span>,
                         },
                         {
                             label: trans('resolutionWindowAccordion.label.percentageFilled'),

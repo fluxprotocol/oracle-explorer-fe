@@ -47,7 +47,7 @@ export default function OutcomeStakeInfo({
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {formatToken(outcomeInfo.stake, 18)} FLX
+                                        {formatToken(outcomeInfo.stake, 18)} {trans('global.token.symbol')}
                                     </TableCell>
                                 </TableRow>
                             );

@@ -52,7 +52,7 @@ export default function StakerReport({
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {formatToken(outcomeInfo.stake, 18)} FLX
+                                        {formatToken(outcomeInfo.stake, 18)} {trans('global.token.symbol')}
                                     </TableCell>
                                 </TableRow>
                             );

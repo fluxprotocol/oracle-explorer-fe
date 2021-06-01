@@ -1,8 +1,9 @@
 import { DEFAULT_PAGINATION_LIMIT } from "../../config";
 import { getAccountInfo } from "../../services/AccountService";
+import { getAllDataRequests } from "../../services/DataRequestService";
 import { getAccountInfoWithProvider, getLoggedInAccount, loginWithProvider, logoutWithProvider } from "../../services/providers/ProviderRegistry";
 import { getUnclaimedStakesByAccountId, getUserStakesByAccountId } from "../../services/UserStakeService";
-import { setAccount, setAccountDetail, setAccountInfo, setAccountLoading, setAccountStakes, setAccountStakesTotal, setAccountUnclaimedStakes } from "./account";
+import { setAccount, setAccountDetail, setAccountInfo, setAccountLoading, setAccountRequests, setAccountRequestsTotal, setAccountStakes, setAccountStakesTotal, setAccountUnclaimedStakes } from "./account";
 
 export function loadLoggedInAccount() {
     return async (dispatch: Function) => {
@@ -28,7 +29,7 @@ export function loadAccount(providerId: string, accountId: string) {
 }
 
 
-export function loadAccountStakes(page: number, accountId: string, reset = false) {
+export function loadAccountStakes(page: number, accountId: string) {
     return async (dispatch: Function) => {
         const offset = DEFAULT_PAGINATION_LIMIT * page;
         const stakes = await getUserStakesByAccountId(accountId, {
@@ -38,6 +39,19 @@ export function loadAccountStakes(page: number, accountId: string, reset = false
 
         dispatch(setAccountStakesTotal(stakes.total));
         dispatch(setAccountStakes(stakes.items));
+    }
+}
+
+export function loadAccountRequests(page: number, requestor: string) {
+    return async (dispatch: Function) => {
+        const offset = DEFAULT_PAGINATION_LIMIT * page;
+        const requests = await getAllDataRequests({
+            limit: DEFAULT_PAGINATION_LIMIT,
+            offset,
+        }, { requestor, onlyArbitratorRequests: false });
+
+        dispatch(setAccountRequests(requests.items));
+        dispatch(setAccountRequestsTotal(requests.total));
     }
 }
 

@@ -60,14 +60,14 @@ export default function Pagination({
             </span>
             <IconButton
                 onClick={handleNextButtonClick}
-                disabled={page === total}
+                disabled={page === total || total <= 0}
                 aria-label="next page"
             >
                 <KeyboardArrowRight />
             </IconButton>
             <IconButton
                 onClick={handleLastPageButtonClick}
-                disabled={page === total}
+                disabled={page === total || total <= 0}
                 aria-label="last page"
             >
                 <LastPageIcon />

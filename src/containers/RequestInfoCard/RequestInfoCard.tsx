@@ -49,7 +49,7 @@ export default function RequestInfoCard({
                         value: <span>{`${dataRequest.config.resolutionFeePercentage / 100}%`}</span>,
                     }, {
                         label: trans('requestInfo.label.totalStaked'),
-                        value: <span>{`${formatToken(dataRequest.totalStaked)} FLX`}</span>,
+                        value: <span>{`${formatToken(dataRequest.totalStaked)} ${trans('global.token.symbol')}`}</span>,
                     }, {
                         label: trans('requestInfo.label.tags'),
                         value: <span>{dataRequest.tags.length ? dataRequest.tags.map(t => `"${t}"`).join(', ') : trans('requestInfo.label.noTags')}</span>

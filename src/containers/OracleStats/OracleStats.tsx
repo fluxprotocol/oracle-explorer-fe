@@ -25,7 +25,7 @@ export default function OracleStats({
                 value={totalRequests}
             />
             <StatCard
-                label={trans('oracleStats.label.tokenPrice')}
+                label={trans('oracleStats.label.tokenPrice', { tokenSymbol: trans('global.token.symbol') })}
                 value={`$${tokenPrice}`}
             />
             <StatCard

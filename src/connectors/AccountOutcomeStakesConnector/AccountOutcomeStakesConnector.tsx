@@ -19,7 +19,7 @@ export default function AccountOutcomeStakesConnector() {
     const [page, setPage] = useState(0);
 
     const handleRequestPageChange = useCallback((newPage: number) => {
-        dispatch(loadAccountStakes(newPage, params.accountId, false));
+        dispatch(loadAccountStakes(newPage, params.accountId));
         setPage(newPage);
     }, [dispatch, params]);
 

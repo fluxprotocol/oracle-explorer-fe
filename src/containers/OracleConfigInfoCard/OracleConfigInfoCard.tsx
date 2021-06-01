@@ -7,7 +7,7 @@ import trans from '../../translation/trans';
 import s from './OracleConfigInfoCard.module.scss';
 import InformationRows from '../InformationRows';
 import { OracleConfig } from '../../models/OracleConfig';
-import { prettyFormatDate } from '../../utils/dateUtils';
+import { formatTimeToReadable, prettyFormatDate } from '../../utils/dateUtils';
 import { formatToken } from '../../utils/tokenUtils';
 
 interface Props {
@@ -17,7 +17,9 @@ interface Props {
 export default function OracleConfigInfoCard({
     oracleConfig,
 }: Props) {
-    console.log('[] oracleConfig -> ', oracleConfig);
+    const minInitialChallengeWindowDuration = formatTimeToReadable(Number(oracleConfig.minInitialChallengeWindowDuration), 'ns');
+    const defaultChallengeWindowDuration = formatTimeToReadable(Number(oracleConfig.defaultChallengeWindowDuration), 'ns');
+
     return (
         <Card>
             <CardContent>
@@ -42,7 +44,7 @@ export default function OracleConfigInfoCard({
                         value: <span>{oracleConfig.finalArbitrator}</span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.finalArbitratorInvokeAmount'),
-                        value: <span>{formatToken(oracleConfig.finalArbitratorInvokeAmount, 18, 2)} FLX</span>
+                        value: <span>{formatToken(oracleConfig.finalArbitratorInvokeAmount, 18, 2)} {trans('global.token.symbol')}</span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.resolutionFeePercentage'),
                         value: <span>{oracleConfig.resolutionFeePercentage / 100}%</span>
@@ -51,10 +53,24 @@ export default function OracleConfigInfoCard({
                         value: <span>{oracleConfig.maxOutcomes}</span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.minInitialChallengeWindowDuration'),
-                        value: <span>{oracleConfig.minInitialChallengeWindowDuration} ns</span>
+                        value: <span>
+                            {trans('global.date.smallFormat', {
+                                days: minInitialChallengeWindowDuration.days.toString(),
+                                hours: minInitialChallengeWindowDuration.hours.toString(),
+                                minutes: minInitialChallengeWindowDuration.minutes.toString(),
+                                seconds: minInitialChallengeWindowDuration.seconds.toString(),
+                            })} / {oracleConfig.minInitialChallengeWindowDuration} ns
+                        </span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.defaultChallengeWindowDuration'),
-                        value: <span>{oracleConfig.defaultChallengeWindowDuration} ns</span>
+                        value: <span>{
+                            trans('global.date.smallFormat', {
+                                days: defaultChallengeWindowDuration.days.toString(),
+                                hours: defaultChallengeWindowDuration.hours.toString(),
+                                minutes: defaultChallengeWindowDuration.minutes.toString(),
+                                seconds: defaultChallengeWindowDuration.seconds.toString(),
+                            })} / {oracleConfig.defaultChallengeWindowDuration} ns
+                        </span>
                     }]}
                 />
             </CardContent>

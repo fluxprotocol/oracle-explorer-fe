@@ -88,11 +88,12 @@ export default function UnstakeDialog({
                 <div className={s.formItem}>
                     {trans('unstakeDialog.label.staked', {
                         stake: formatToken(roundStakes[formValues.outcomeIndex].stake),
+                        tokenSymbol: trans('global.token.symbol'),
                     })}
                 </div>
                 <div className={s.formItem}>
                     <NumberInput
-                        label={trans('unstakeDialog.label.stakeAmount')}
+                        label={trans('unstakeDialog.label.stakeAmount', { tokenSymbol: trans('global.token.symbol') })}
                         className={s.formInput}
                         value={formValues.amountFormatted}
                         onChange={handleStakeChange}

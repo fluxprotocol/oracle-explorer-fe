@@ -72,6 +72,9 @@ export default function DataRequestsOverview({
                     </TableBody>
                 </Table>
             </TableContainer>
+            {dataRequests.length === 0 && (
+                <div className={s.noRequests}>{trans('global.empty.noRequests')}</div>
+            )}
             {showPagination && (
                 <Pagination
                     className={s.pagination}

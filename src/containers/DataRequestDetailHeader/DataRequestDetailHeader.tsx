@@ -87,6 +87,7 @@ export default function DataRequestDetailHeader({
                     <span>
                         {trans('dataRequestDetail.label.claimed', {
                             payout: formatToken(payout),
+                            tokenSymbol: trans('global.token.symbol'),
                         })}
                     </span>
                 )}
