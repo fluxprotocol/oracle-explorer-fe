@@ -1,7 +1,6 @@
 import { IProvider } from "../IProvider";
-import FluxSdk from '@fluxprotocol/amm-sdk';
 import { WalletConnection, Near } from 'near-api-js';
-import { NEAR_FLUX_TOKEN_ID, NEAR_MAX_GAS, NEAR_NETWORK, NEAR_NULL_CONTRACT, NEAR_ORACLE_CONTRACT_ID, STORAGE_BASE } from "../../../config";
+import { NEAR_FLUX_TOKEN_ID, NEAR_MAX_GAS, NEAR_NULL_CONTRACT, NEAR_ORACLE_CONTRACT_ID, STORAGE_BASE } from "../../../config";
 import { Outcome, OutcomeType } from "../../../models/DataRequestOutcome";
 import { DataRequestViewModel } from "../../../models/DataRequest";
 import Big from "big.js";
@@ -15,11 +14,6 @@ export default class NearProvider implements IProvider {
 
     near?: Near;
     walletConnection?: WalletConnection;
-
-    sdkInstance = new FluxSdk({
-        network: NEAR_NETWORK,
-        nullContractId: NEAR_NULL_CONTRACT,
-    });
 
     async init() {
         this.near = await connectNear({});
@@ -101,7 +95,7 @@ export default class NearProvider implements IProvider {
     }
 
     async unstake(amount: string, round: number, dataRequest: DataRequestViewModel, outcome: Outcome): Promise<boolean> {
-        const account = this.sdkInstance.walletConnection?.account();
+        const account = this.walletConnection?.account();
         if (!account) return false;
 
         // Formatting is weird in rust..
@@ -120,8 +114,11 @@ export default class NearProvider implements IProvider {
     }
 
     async finalize(dataRequest: DataRequestViewModel) {
-        const account = this.sdkInstance.walletConnection?.account();
+        const account = this.walletConnection?.account();
+        console.log('[] account -> ', account, this.walletConnection);
         if (!account) return false;
+
+        console.log('Wohoo')
 
         await account.functionCall(NEAR_ORACLE_CONTRACT_ID, 'dr_finalize', {
             request_id: dataRequest.id,
@@ -132,7 +129,7 @@ export default class NearProvider implements IProvider {
     }
 
     async claim(accountId: string, dataRequest: DataRequestViewModel) {
-        const account = this.sdkInstance.walletConnection?.account();
+        const account = this.walletConnection?.account();
         if (!account) return false;
 
         await account.functionCall(NEAR_ORACLE_CONTRACT_ID, 'dr_claim', {

@@ -20,13 +20,15 @@ interface RouteProps {
 
 export const routePaths = {
     root: () => '/',
+
     account: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}`,
-    accountTransactions: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}/transactions`,
+    accountRequests: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}/requests`,
     accountUnclaimed: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}/unclaimed`,
 
     config: (provider = ':provider', id = ':id') => `/config/${provider}/${id}`,
 
     search: (query = ':query') => `/search/${query}`,
+
     dataRequests: (page = ':page') => `/requests/${page}`,
     dataRequestDetail: (provider = ':provider', id = ':id') => `/request/${provider}/${id}`,
 }

@@ -95,7 +95,7 @@ export default function Menu({
                                     <Link className={s.link} to={routePaths.account(account.providerId, account.accountId)}>{account.accountId}</Link>
                                 </li>
                                 <li className={s.menuItem}>
-                                    {formatToken(account.balance)} FLX
+                                    {formatToken(account.balance)} {trans('global.token.symbol')}
                                 </li>
                                 <li className={s.menuItem}>
                                     <FakeLinkButton onClick={onLogoutClick}>
@@ -118,7 +118,7 @@ export default function Menu({
                                 </IconButton>
                                 <MuiMenu anchorEl={menuAnchorEl} keepMounted open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
                                     <MuiMenuItem onClick={handleAccountClick}>{account.accountId}</MuiMenuItem>
-                                    <MuiMenuItem disabled>{formatToken(account.balance)} FLX</MuiMenuItem>
+                                    <MuiMenuItem disabled>{formatToken(account.balance)} {trans('global.token.symbol')}</MuiMenuItem>
                                     <MuiMenuItem onClick={handleLogoutClick}>{trans('menu.label.logout')}</MuiMenuItem>
                                 </MuiMenu>
                             </>

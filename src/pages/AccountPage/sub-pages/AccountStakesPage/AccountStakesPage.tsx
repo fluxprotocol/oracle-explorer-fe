@@ -14,7 +14,7 @@ export default function AccountStakesPage() {
     const params = useParams<Params>();
 
     useEffect(() => {
-        dispatch(loadAccountStakes(0, params.accountId, true));
+        dispatch(loadAccountStakes(0, params.accountId));
     }, [dispatch, params]);
 
     return (

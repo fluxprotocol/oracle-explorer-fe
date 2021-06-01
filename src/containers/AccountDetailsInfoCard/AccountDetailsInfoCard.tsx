@@ -27,7 +27,7 @@ export default function AccountDetailsInfoCard({
                     rows={[
                         {
                             label: trans('accountDetailsInfoCard.label.balance'),
-                            value: <span>{formatToken(account?.balance ?? '0')} FLX</span>,
+                            value: <span>{formatToken(account?.balance ?? '0')} {trans('global.token.symbol')}</span>,
                         },
                         {
                             label: trans('accountDetailsInfoCard.label.provider'),
@@ -35,15 +35,15 @@ export default function AccountDetailsInfoCard({
                         },
                         {
                             label: trans('accountDetailsInfoCard.label.activeStaking'),
-                            value: <span>{formatToken(accountInfo.activeStaking)} FLX</span>,
+                            value: <span>{formatToken(accountInfo.activeStaking)} {trans('global.token.symbol')}</span>,
                         },
                         {
                             label: trans('accountDetailsInfoCard.label.totalStaked'),
-                            value: <span>{formatToken(accountInfo.totalStaked)} FLX</span>,
+                            value: <span>{formatToken(accountInfo.totalStaked)} {trans('global.token.symbol')}</span>,
                         },
                         {
                             label: trans('accountDetailsInfoCard.label.totalClaimed'),
-                            value: <span>{formatToken(accountInfo.totalClaimed)} FLX</span>,
+                            value: <span>{formatToken(accountInfo.totalClaimed)} {trans('global.token.symbol')}</span>,
                         }
                     ]}
                 />

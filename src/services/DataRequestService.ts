@@ -1,9 +1,10 @@
 import gql from "graphql-tag";
-import { DataRequestListItem, transformToDataRequestListItem, transformToDataRequestViewModel } from "../models/DataRequest";
+import { DataRequestGraphData, DataRequestListItem, transformToDataRequestListItem, transformToDataRequestViewModel } from "../models/DataRequest";
 import { Pagination } from "../models/Pagination";
 import { graphqlClient } from "./GraphQLService";
 export interface DataRequestFilters {
     onlyArbitratorRequests: boolean;
+    requestor?: string;
 }
 
 interface DataRequestPagination {
@@ -16,13 +17,14 @@ export async function getAllDataRequests({
     offset,
 }: DataRequestPagination, {
     onlyArbitratorRequests,
+    requestor,
 }: DataRequestFilters): Promise<Pagination<DataRequestListItem>> {
     try {
         const response = await graphqlClient.query({
             fetchPolicy: 'network-only',
             query: gql`
-                query GetAllDataRequests($limit: Int, $offset: Int, $onlyArbitratorRequests: Boolean) {
-                    dataRequests: getDataRequests(limit: $limit, offset: $offset, onlyArbitratorRequests: $onlyArbitratorRequests) {
+                query GetAllDataRequests($limit: Int, $offset: Int, $onlyArbitratorRequests: Boolean, $requestor: String) {
+                    dataRequests: getDataRequests(limit: $limit, offset: $offset, onlyArbitratorRequests: $onlyArbitratorRequests, requestor: $requestor) {
                         total
                         items {
                             id
@@ -41,10 +43,11 @@ export async function getAllDataRequests({
                 limit,
                 offset,
                 onlyArbitratorRequests,
+                requestor,
             }
         });
 
-        const paginatedDataRequests = response.data.dataRequests.items.map((dr: any) => transformToDataRequestListItem(dr));
+        const paginatedDataRequests: DataRequestListItem[] = response.data.dataRequests.items.map((dr: DataRequestGraphData) => transformToDataRequestListItem(dr));
 
         return {
             total: response.data.dataRequests.total,

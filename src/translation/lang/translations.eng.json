@@ -1,10 +1,15 @@
 {
+    "global.token.symbol": "FLX",
     "global.action.close": "Close",
     "global.action.cancel": "Cancel",
     "global.action.submit": "Submit",
 
     "global.status.ongoing": "On going",
     "global.status.completed": "Completed",
+
+    "global.empty.noRequests": "No requests found",
+
+    "global.date.smallFormat": ":days d :hours h :minutes m :seconds s",
 
     "global.max": "Max",
 
@@ -42,7 +47,6 @@
     "callDataInfo.label.endPoint": "End point URL",
     "callDataInfo.label.sourcePath": "Source path",
     "callDataInfo.outcomes.title": "Possible outcomes",
-
 
     "dataRequestsOverview.table.label.id": "Request ID",
     "dataRequestsOverview.table.label.type": "Request Type",
@@ -110,12 +114,12 @@
     "outcomeStakeInfo.label.invalid": "Invalid",
 
     "oracleStats.label.totalRequests": "Total requests",
-    "oracleStats.label.tokenPrice": "FLX price",
-    "oracleStats.label.tokenMarketCap": "FLX Market Cap",
+    "oracleStats.label.tokenPrice": ":tokenSymbol price",
+    "oracleStats.label.tokenMarketCap": ":tokenSymbol Market Cap",
 
     "stakeDialog.title": "Stake",
     "stakeDialog.label.answer": "Answer",
-    "stakeDialog.label.stakeAmount": "Stake amount in FLX",
+    "stakeDialog.label.stakeAmount": "Stake amount in :tokenSymbol",
     "stakeDialog.label.valid": "Valid",
     "stakeDialog.label.invalid": "Invalid",
     "stakeDialog.label.validity": "Is data request valid?",
@@ -128,8 +132,8 @@
     "unstakeDialog.title": "Unstake",
     "unstakeDialog.errors.notEnoughStaked": "You can't unstake more than you have staked.",
     "unstakeDialog.label.answer": "Outcome",
-    "unstakeDialog.label.stakeAmount": "Stake amount in FLX",
-    "unstakeDialog.label.staked": "You have staked :stake FLX in this answer",
+    "unstakeDialog.label.stakeAmount": "Stake amount in :tokenSymbol",
+    "unstakeDialog.label.staked": "You have staked :stake :tokenSymbol in this answer",
 
     "accountStakesInfoCard.title": "Your stakes",
     "accountStakesInfoCard.noStakes": "No stakes done by you",
@@ -137,9 +141,10 @@
     "accountPage.label.stakes": "Stakes",
     "accountPage.label.transactions": "Transactions",
     "accountPage.label.unclaimed": "Unclaimed",
+    "accountPage.label.requests": "Requests",
 
     "dataRequestDetail.title": "Request #:id",
-    "dataRequestDetail.label.claimed": "Fees earned: :payout FLX",
+    "dataRequestDetail.label.claimed": "Fees earned: :payout :tokenSymbol",
     "dataRequestDetail.label.stake": "Stake",
     "dataRequestDetail.label.unstake": "Unstake",
     "dataRequestDetail.label.claim": "Claim earnings",

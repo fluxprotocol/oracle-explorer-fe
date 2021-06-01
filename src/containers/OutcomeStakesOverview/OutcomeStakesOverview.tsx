@@ -63,7 +63,7 @@ export default function OutcomeStakesOverview({
                                     {stake.finalizedOutcome ? transfromOutcomeToString(stake.finalizedOutcome) : null}
                                 </TableCell>
                                 <TableCell>
-                                    {formatToken(stake.stake)} FLX
+                                    {formatToken(stake.stake)} {trans('global.token.symbol')}
                                 </TableCell>
                             </TableRow>
                         ))}
