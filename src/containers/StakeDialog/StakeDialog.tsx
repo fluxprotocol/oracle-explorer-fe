@@ -96,6 +96,7 @@ export default function StakeDialog({
                             value={formValues.answer}
                             error={errors.answer}
                             onChange={handleAnswerChange}
+                            type={dataRequest.data_type === 'Number' ? 'number' : 'text'}
                         />
                     </div>
                 )}

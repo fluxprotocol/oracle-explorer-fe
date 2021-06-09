@@ -47,6 +47,7 @@
     "callDataInfo.label.endPoint": "End point URL",
     "callDataInfo.label.sourcePath": "Source path",
     "callDataInfo.outcomes.title": "Possible outcomes",
+    "callDataInfo.dataType": "Expected data type",
 
     "dataRequestsOverview.table.label.id": "Request ID",
     "dataRequestsOverview.table.label.type": "Request Type",

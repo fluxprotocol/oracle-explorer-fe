@@ -58,6 +58,10 @@ export default function CallDataInfoCard({
                         </pre>
                     </>
                 )}
+
+                {dataRequest.data_type && (
+                    <LabeledText label={trans('callDataInfo.dataType')} className={s.label}>{dataRequest.data_type}</LabeledText>
+                )}
             </CardContent>
         </Card>
     );

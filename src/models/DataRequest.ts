@@ -34,6 +34,7 @@ export interface DataRequestViewModel extends DataRequestListItem {
     finalArbitratorTriggered: boolean;
     settlementTime: Date;
     tags: string[];
+    data_type: 'String' | 'Number';
 }
 
 export interface DataRequestGraphData {
@@ -50,6 +51,7 @@ export interface DataRequestGraphData {
     target_contract: string;
     finalized_outcome: string | null;
     tags: string[] | null;
+    data_type: 'String' | 'Number';
     sources: {
         end_point: string;
         source_path: string;
@@ -88,6 +90,7 @@ export function transformToDataRequestViewModel(data: DataRequestGraphData): Dat
         targetContract: data.target_contract,
         finalArbitratorTriggered: data.final_arbitrator_triggered,
         tags: data.tags ?? [],
+        data_type: data.data_type,
     };
 }
 

@@ -83,6 +83,7 @@ export async function getDataRequestById(id: string) {
                         description
                         settlement_time
                         tags
+                        data_type
                         sources {
                             end_point
                             source_path
