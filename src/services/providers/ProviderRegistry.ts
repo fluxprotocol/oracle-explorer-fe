@@ -1,4 +1,5 @@
 import { Account } from "../../models/Account";
+import { AppConfig } from "../../models/AppConfig";
 import { DataRequestViewModel } from "../../models/DataRequest";
 import { Outcome } from "../../models/DataRequestOutcome";
 import { IProvider } from "./IProvider";
@@ -39,7 +40,7 @@ export async function logoutWithProvider(providerId: string) {
     return provider?.logout() ?? false;
 }
 
-export function getLoggedInAccountId(): string | undefined {
+export async function getLoggedInAccountId(): Promise<string | undefined> {
     const provider = getLoggedInProvider();
     return provider ? provider.getLoggedInAccountId() : undefined;
 }
@@ -53,6 +54,9 @@ export async function getAccountInfoWithProvider(providerId: string, accountId: 
         accountId: account.accountId,
         balance: account.balance,
         providerId: provider.id,
+        storageAvailable: account.storageAvailable,
+        storageTotal: account.storageTotal,
+        storageUsed: account.storageUsed,
     };
 }
 
@@ -63,13 +67,22 @@ export async function getLoggedInAccount(): Promise<Account | undefined> {
         return undefined;
     }
 
-    const loggedInAccountId = provider.getLoggedInAccountId();
+    const loggedInAccountId = await provider.getLoggedInAccountId();
 
     if (!loggedInAccountId) {
         return undefined;
     }
 
     return getAccountInfoWithProvider(provider.id, loggedInAccountId);
+}
+
+export async function getAppConfigForProvider(providerId: string): Promise<AppConfig> {
+    const provider = getProviderById(providerId);
+
+    return {
+        nativeTokenDecimals: provider?.nativeTokenDecimals ?? 18,
+        nativeTokenSymbol: provider?.nativeTokenSymbol ?? '?',
+    };
 }
 
 export async function stakeWithProvider(providerId: string, amount: string, dataRequest: DataRequestViewModel, outcome: Outcome): Promise<boolean> {
@@ -90,4 +103,14 @@ export async function claimWithProvider(providerId: string, accountId: string, d
 export async function unstakeWithProvider(providerId: string, amount: string, round: number, dataRequest: DataRequestViewModel, outcome: Outcome): Promise<boolean> {
     const provider = getProviderById(providerId);
     return provider?.unstake(amount, round, dataRequest, outcome) ?? false;
+}
+
+export async function getProviderStorageBalance(providerId: string, accountId: string): Promise<{ total: string, used: string, available: string }> {
+    const provider = getProviderById(providerId);
+    return provider?.getStorageBalance(accountId) ?? { total: '0', available: '0', used: '0' };
+}
+
+export function withdrawStorage(providerId: string, amount: string) {
+    const provider = getProviderById(providerId);
+    provider?.withdrawStorage(amount);
 }

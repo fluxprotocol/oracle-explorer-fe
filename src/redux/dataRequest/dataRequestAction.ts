@@ -37,7 +37,7 @@ export function unloadDataRequest() {
 export function loadDataRequestById(id: string) {
     return async (dispatch: Function) => {
         dispatch(setDataRequestDetailLoading(true));
-        const accountId = getLoggedInAccountId();
+        const accountId = await getLoggedInAccountId();
         const accountStakesRequest = getUserStakesByRequestId(id, accountId);
         const dataRequest = await getDataRequestById(id);
 

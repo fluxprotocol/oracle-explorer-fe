@@ -1,5 +1,5 @@
 import { connect, Near, WalletConnection, keyStores } from "near-api-js";
-import { NEAR_NETWORK } from "../../../config";
+import { NEAR_NETWORK, NEAR_NULL_CONTRACT } from "../../../config";
 
 export interface ConnectConfig {
     accountId?: string;
@@ -35,6 +35,8 @@ export function createNetworkConfig(connectConfig: ConnectConfig): NetworkConfig
     };
 }
 
+let connectedNear: Near | undefined = undefined;
+
 /**
  * Connects with NEAR
  *
@@ -48,12 +50,31 @@ export async function connectNear(connectConfig: ConnectConfig): Promise<Near> {
         return connectConfig.nearInstance;
     }
 
+    if (connectedNear) {
+        return connectedNear;
+    }
+
     const networkConfig = createNetworkConfig(connectConfig);
 
-    return connect({
+    connectedNear = await connect({
         ...networkConfig,
         deps: {
             keyStore: new keyStores.BrowserLocalStorageKeyStore(),
         },
     });
+
+    return connectedNear;
+}
+
+let walletConnection: WalletConnection | undefined = undefined;
+
+export async function connectWallet() {
+    if (walletConnection) {
+        return walletConnection;
+    }
+
+    const near = await connectNear({});
+    walletConnection = new WalletConnection(near, NEAR_NULL_CONTRACT);
+
+    return walletConnection;
 }

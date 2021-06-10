@@ -82,7 +82,15 @@
     }
 }
 
-.mobileMenu {
+.rightMenu {
+    display: flex;
+}
+
+.moreMenu {
+    display: flex;
+}
+
+.mobileOnly {
     display: flex;
 
     @include for-size($default-bigger-screen-breakpoint) {

@@ -19,6 +19,7 @@
     "menu.label.search": "Search request",
     "menu.label.login": "Login",
     "menu.label.logout": "Logout",
+    "menu.label.storageManager": "Storage manager",
 
     "dataRequest.type.arbitrator": "Arbitrator",
     "dataRequest.type.api": "API",
@@ -66,6 +67,10 @@
     "accountDetailsInfoCard.label.activeStaking": "Active staking",
     "accountDetailsInfoCard.label.totalStaked": "Total staked",
     "accountDetailsInfoCard.label.totalClaimed": "Total claimed",
+    "accountDetailsInfoCard.label.storageUsed": "Used storage",
+    "accountDetailsInfoCard.info.storageUsed": "The amount of :nativeToken that is used for storing data inside the oracle contract.",
+    "accountDetailsInfoCard.label.storageUnused": "Unused storage",
+    "accountDetailsInfoCard.info.storageUnused": "The amount of :nativeToken that is unused. This can be withdrawn back into your account. However, when interacting with the oracle it's possible that the explorer ask you to re-deposit :nativeToken in order for the transaction to complete.",
 
     "oracleConfig.title": "Config #:id",
 
@@ -100,6 +105,12 @@
     "stakeReport.table.label.accountId": "Account ID",
 
     "resolutionWindow.round": "Round #:round",
+
+    "storageManagerDialog.title": "Storage withdrawing",
+    "storageManagerDialog.description": "Everytime you stake on a outcome :nativeToken is deposited in order to pay for storage. The amount deposited isn't always the amount you use. This will leave unused :nativeToken in the oracle contract. You can either leave it there to pay for a future transaction or withdraw your unused :nativeToken here.",
+    "storageManagerDialog.label.withdrawAmount": "Withdraw amount in :nativeToken",
+    "storageManagerDialog.errors.withdrawAmount.notEnoughToWithdraw": "You can't withdraw more than available",
+    "storageManagerDialog.label.amountAvailable": "Amount available to withdraw: :amount :nativeToken",
 
     "resolutionWindowAccordion.label.endTime": "End time",
     "resolutionWindowAccordion.label.bondSize": "Bond size",

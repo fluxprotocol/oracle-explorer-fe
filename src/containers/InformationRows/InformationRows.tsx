@@ -6,6 +6,7 @@ import s from './InformationRows.module.scss';
 export interface InformationRow {
     label: string;
     value: ReactElement;
+    info?: string;
 }
 
 interface Props {
@@ -19,7 +20,7 @@ export default function InformationRows({
         <div className={s.root}>
             {rows.map((row) => {
                 return (
-                    <LabeledText key={row.label} className={s.item} label={row.label}>
+                    <LabeledText key={row.label} className={s.item} label={row.label} info={row.info}>
                         {row.value}
                     </LabeledText>
                 );

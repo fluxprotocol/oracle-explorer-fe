@@ -1,6 +1,7 @@
 import { WalletConnection, utils, transactions } from "near-api-js";
 import BN from 'bn.js';
 import { NEAR_FLUX_TOKEN_ID } from "../../../config";
+
 export interface TransactionViewOptions {
     methodName: string;
     args?: object;

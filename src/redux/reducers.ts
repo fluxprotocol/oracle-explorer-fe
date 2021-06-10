@@ -5,6 +5,7 @@ import account, { AccountState } from './account/account';
 import dialogs, { DialogsState } from './dialogs/dialogs';
 import stats, { StatsState } from './stats/stats';
 import oracleConfig, { OracleConfigState } from './oracleConfig/oracleConfig';
+import appconfig, { AppConfigState } from './appconfig/appconfig';
 
 export interface Reducers {
     dataRequest: DataRequestsState;
@@ -12,10 +13,12 @@ export interface Reducers {
     dialogs: DialogsState;
     stats: StatsState;
     oracleConfig: OracleConfigState;
+    appconfig: AppConfigState;
 }
 
 export default combineReducers<Reducers>({
     account,
+    appconfig,
     dataRequest,
     dialogs,
     stats,

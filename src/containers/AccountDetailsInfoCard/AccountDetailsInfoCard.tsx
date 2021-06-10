@@ -7,14 +7,17 @@ import { Account, AccountInfo } from '../../models/Account';
 
 import s from './AccountDetailsInfoCard.module.scss';
 import { formatToken } from '../../utils/tokenUtils';
+import { AppConfig } from '../../models/AppConfig';
 
 export interface Props {
     account?: Account;
+    appConfig: AppConfig;
     accountInfo: AccountInfo;
 }
 
 export default function AccountDetailsInfoCard({
     account,
+    appConfig,
     accountInfo,
 }: Props) {
     return (
@@ -30,10 +33,6 @@ export default function AccountDetailsInfoCard({
                             value: <span>{formatToken(account?.balance ?? '0')} {trans('global.token.symbol')}</span>,
                         },
                         {
-                            label: trans('accountDetailsInfoCard.label.provider'),
-                            value: <span>{account?.providerId}</span>,
-                        },
-                        {
                             label: trans('accountDetailsInfoCard.label.activeStaking'),
                             value: <span>{formatToken(accountInfo.activeStaking)} {trans('global.token.symbol')}</span>,
                         },
@@ -44,7 +43,17 @@ export default function AccountDetailsInfoCard({
                         {
                             label: trans('accountDetailsInfoCard.label.totalClaimed'),
                             value: <span>{formatToken(accountInfo.totalClaimed)} {trans('global.token.symbol')}</span>,
-                        }
+                        },
+                        {
+                            label: trans('accountDetailsInfoCard.label.storageUsed'),
+                            info: trans('accountDetailsInfoCard.info.storageUsed', { nativeToken: appConfig.nativeTokenSymbol }),
+                            value: <span>{formatToken(accountInfo.storageUsed, appConfig.nativeTokenDecimals, 4)} {appConfig.nativeTokenSymbol}</span>,
+                        },
+                        {
+                            label: trans('accountDetailsInfoCard.label.storageUnused'),
+                            info: trans('accountDetailsInfoCard.info.storageUnused', { nativeToken: appConfig.nativeTokenSymbol }),
+                            value: <span>{formatToken(accountInfo.storageAvailable, appConfig.nativeTokenDecimals, 4)} {appConfig.nativeTokenSymbol}</span>,
+                        },
                     ]}
                 />
             </CardContent>

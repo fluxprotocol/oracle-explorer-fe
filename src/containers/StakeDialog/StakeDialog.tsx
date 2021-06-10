@@ -47,7 +47,7 @@ export default function StakeDialog({
         setFormValues({
             ...formValues,
             amount: amount ? toToken(amount) : '0',
-            amountFormatted: amount ? amount : '0',
+            amountFormatted: amount ? amount : '',
         });
     }
 

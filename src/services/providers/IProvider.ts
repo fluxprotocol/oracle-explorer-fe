@@ -4,6 +4,8 @@ import { Outcome } from "../../models/DataRequestOutcome";
 
 export interface IProvider {
     id: string;
+    nativeTokenSymbol: string;
+    nativeTokenDecimals: number;
     init(): Promise<boolean>;
     login(): Promise<boolean>;
     logout(): Promise<boolean>;
@@ -12,6 +14,8 @@ export interface IProvider {
     finalize(dataRequest: DataRequestViewModel): Promise<boolean>;
     claim(accountId: string, dataRequest: DataRequestViewModel): Promise<boolean>;
     getAccountInfo(accountId: string): Promise<Omit<Account, 'providerId'>>;
-    getLoggedInAccountId(): string | undefined;
-    isLoggedIn(): boolean;
+    getLoggedInAccountId(): Promise<string | undefined>;
+    isLoggedIn(): Promise<boolean>;
+    getStorageBalance(accountId: string): Promise<{ total: string, available: string, used: string }>;
+    withdrawStorage(amount: string): Promise<boolean>
 }

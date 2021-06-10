@@ -1,69 +1,73 @@
 import { IProvider } from "../IProvider";
-import { WalletConnection, Near } from 'near-api-js';
 import { NEAR_FLUX_TOKEN_ID, NEAR_MAX_GAS, NEAR_NULL_CONTRACT, NEAR_ORACLE_CONTRACT_ID, STORAGE_BASE } from "../../../config";
 import { Outcome, OutcomeType } from "../../../models/DataRequestOutcome";
 import { DataRequestViewModel } from "../../../models/DataRequest";
 import Big from "big.js";
 import { batchSendTransactions, getTokenBalance, TransactionOption } from "./NearService";
-import { connectNear } from "./NearConnectService";
+import { connectWallet } from "./NearConnectService";
 import { createStorageTransaction } from "./StorageManagerService";
+import { Account } from "../../../models/Account";
 export default class NearProvider implements IProvider {
     id = 'near';
-
-    storageDeposit: Big = new Big(0);
-
-    near?: Near;
-    walletConnection?: WalletConnection;
+    nativeTokenSymbol = 'NEAR';
+    nativeTokenDecimals = 24;
 
     async init() {
-        this.near = await connectNear({});
-        this.walletConnection = new WalletConnection(this.near, NEAR_NULL_CONTRACT);
-
         return true;
     }
 
     async login() {
-        this.walletConnection?.requestSignIn(NEAR_NULL_CONTRACT, 'oracle');
+        const wallet = await connectWallet();
+        wallet.requestSignIn(NEAR_NULL_CONTRACT, 'oracle');
         return true;
     }
 
     async logout() {
-        this.walletConnection?.signOut();
+        const wallet = await connectWallet();
+        wallet.signOut();
         return true;
     }
 
-    isLoggedIn() {
-        return this.walletConnection?.isSignedIn() ?? false;
+    async isLoggedIn() {
+        const wallet = await connectWallet();
+        return wallet.isSignedIn();
     }
 
-    getLoggedInAccountId(): string {
-        return this.walletConnection?.getAccountId();
+    async getLoggedInAccountId(): Promise<string> {
+        const wallet = await connectWallet();
+        return wallet.getAccountId();
     }
 
-    async getAccountInfo(accountId: string) {
+    async getAccountInfo(accountId: string): Promise<Omit<Account, 'providerId'>> {
         try {
-            if (!this.walletConnection) throw new Error('No wallet connection');
-            const balance = await getTokenBalance(this.walletConnection, accountId);
-
-            // TODO: Fetch the storage deposit from the oracle
+            const wallet = await connectWallet();
+            const balance = await getTokenBalance(wallet, accountId);
+            const storageInfo = await this.getStorageBalance(accountId);
 
             return {
                 accountId,
                 balance,
+                storageAvailable: storageInfo.available,
+                storageTotal: storageInfo.total,
+                storageUsed: storageInfo.used,
             };
         } catch (error) {
             return {
                 accountId,
                 balance: '0',
+                storageAvailable: '0',
+                storageTotal: '0',
+                storageUsed: '0',
             }
         }
     }
 
     async stake(amount: string, dataRequest: DataRequestViewModel, outcome: Outcome) {
-        if (!this.walletConnection) return false;
+        const wallet = await connectWallet();
 
         const stakeOutcome = outcome.type === OutcomeType.Invalid ? 'Invalid' : { 'Answer': outcome.answer };
-        const storageTransaction = await createStorageTransaction(NEAR_ORACLE_CONTRACT_ID, this.getLoggedInAccountId(), this.walletConnection);
+        const loggedInAccount = await this.getLoggedInAccountId();
+        const storageTransaction = await createStorageTransaction(NEAR_ORACLE_CONTRACT_ID, loggedInAccount, wallet);
         const transactions: TransactionOption[] = [];
 
         if (storageTransaction) {
@@ -89,16 +93,16 @@ export default class NearProvider implements IProvider {
             }],
         });
 
-        await batchSendTransactions(this.walletConnection, transactions);
+        await batchSendTransactions(wallet, transactions);
 
         return true;
     }
 
     async unstake(amount: string, round: number, dataRequest: DataRequestViewModel, outcome: Outcome): Promise<boolean> {
-        const account = this.walletConnection?.account();
+        const wallet = await connectWallet();
+        const account = wallet.account();
         if (!account) return false;
 
-        // Formatting is weird in rust..
         const stakeOutcome = outcome.type === OutcomeType.Invalid ? 'Invalid' : { 'Answer': outcome.answer };
 
         await account.functionCall(NEAR_ORACLE_CONTRACT_ID, 'dr_unstake', {
@@ -114,11 +118,9 @@ export default class NearProvider implements IProvider {
     }
 
     async finalize(dataRequest: DataRequestViewModel) {
-        const account = this.walletConnection?.account();
-        console.log('[] account -> ', account, this.walletConnection);
+        const wallet = await connectWallet();
+        const account = wallet.account();
         if (!account) return false;
-
-        console.log('Wohoo')
 
         await account.functionCall(NEAR_ORACLE_CONTRACT_ID, 'dr_finalize', {
             request_id: dataRequest.id,
@@ -129,7 +131,8 @@ export default class NearProvider implements IProvider {
     }
 
     async claim(accountId: string, dataRequest: DataRequestViewModel) {
-        const account = this.walletConnection?.account();
+        const wallet = await connectWallet();
+        const account = wallet.account();
         if (!account) return false;
 
         await account.functionCall(NEAR_ORACLE_CONTRACT_ID, 'dr_claim', {
@@ -137,6 +140,51 @@ export default class NearProvider implements IProvider {
             account_id: accountId,
             // @ts-ignore
         }, NEAR_MAX_GAS, STORAGE_BASE);
+
+        return true;
+    }
+
+    async getStorageBalance(accountId: string): Promise<{ total: string, available: string, used: string }> {
+        try {
+            const wallet = await connectWallet();
+            const account = wallet.account();
+            if (!account) {
+                return {
+                    total: '0',
+                    available: '0',
+                    used: '0',
+                };
+            }
+
+            const storageBalance = await account.viewFunction(NEAR_ORACLE_CONTRACT_ID, 'storage_balance_of', {
+                account_id: accountId,
+            });
+
+            const used = new Big(storageBalance.total).sub(storageBalance.available);
+
+            return {
+                total: storageBalance.total,
+                available: storageBalance.available,
+                used: used.toString(),
+            }
+        } catch (error) {
+            console.error('[getStorageBalance -> NEAR]', error);
+            return {
+                total: '0',
+                available: '0',
+                used: '0',
+            }
+        }
+    }
+
+    async withdrawStorage(amount: string): Promise<boolean> {
+        const wallet = await connectWallet();
+        const account = wallet.account();
+
+        await account.functionCall(NEAR_ORACLE_CONTRACT_ID, 'storage_withdraw', {
+            amount,
+            // @ts-ignore
+        }, NEAR_MAX_GAS, '1');
 
         return true;
     }

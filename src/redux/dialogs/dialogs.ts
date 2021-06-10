@@ -10,6 +10,9 @@ export type DialogsState = Readonly<{
         open: boolean;
         dataRequest?: DataRequestViewModel;
     },
+    storageManager: {
+        open: boolean;
+    }
 }>;
 
 const initialState: DialogsState = {
@@ -17,6 +20,9 @@ const initialState: DialogsState = {
         open: false,
     },
     unstakeDialog: {
+        open: false,
+    },
+    storageManager: {
         open: false,
     }
 };
@@ -38,12 +44,20 @@ const dialogsSlice = createSlice({
                 unstakeDialog: action.payload,
             });
         },
+
+        setStorageManagerDialogOpen(state: DialogsState, action: PayloadAction<DialogsState['storageManager']>): DialogsState {
+            return {
+                ...state,
+                storageManager: action.payload,
+            };
+        }
     },
 });
 
 export const {
     setStakeDialogOpen,
     setUnstakeDialogOpen,
+    setStorageManagerDialogOpen,
 } = dialogsSlice.actions;
 
 export default dialogsSlice.reducer;

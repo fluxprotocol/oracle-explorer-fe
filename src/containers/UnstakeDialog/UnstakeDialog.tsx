@@ -37,7 +37,7 @@ export default function UnstakeDialog({
     function handleStakeChange(amount: string) {
         setFormValues({
             ...formValues,
-            amount: amount ? toToken(amount) : '',
+            amount: amount ? toToken(amount) : '0',
             amountFormatted: amount ? amount : '',
         });
     }

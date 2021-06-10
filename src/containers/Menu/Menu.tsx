@@ -12,16 +12,19 @@ import trans from '../../translation/trans';
 import { formatToken } from '../../utils/tokenUtils';
 
 import s from './Menu.module.scss';
+import StorageManagerDialogConnector from '../../connectors/StorageManagerDialogConnector';
 interface Props {
     account?: Account;
     onLoginClick: () => void;
     onLogoutClick: () => void;
+    onStorageManagerClick: () => void;
 }
 
 export default function Menu({
     account,
     onLoginClick,
-    onLogoutClick
+    onLogoutClick,
+    onStorageManagerClick,
 }: Props) {
     const [menuAnchorEl, setMenuAnchorEl] = useState<Element | null>(null);
     const history = useHistory();
@@ -37,6 +40,11 @@ export default function Menu({
     function handleLogoutClick() {
         handleMenuClose();
         onLogoutClick();
+    }
+
+    function handleStorageManagerClick() {
+        handleMenuClose();
+        onStorageManagerClick();
     }
 
     function handleAccountClick() {
@@ -57,6 +65,7 @@ export default function Menu({
                     </div>
                     <div>
                         <SearchConnector />
+                        <StorageManagerDialogConnector />
                     </div>
                 </div>
                 <div className={s.bottomBar}>
@@ -80,51 +89,49 @@ export default function Menu({
                             );
                         })}
                     </ul>
-                    <ul className={s.accountLinks}>
-                        {!account && (
-                            <li>
+                    <div className={s.rightMenu}>
+                        <ul className={s.accountLinks}>
+                            {!account && (
+                                <li>
+                                    <FakeLinkButton onClick={onLoginClick}>
+                                        {trans('menu.label.login')}
+                                    </FakeLinkButton>
+                                </li>
+                            )}
+
+                            {account && (
+                                <>
+                                    <li className={s.menuItem}>
+                                        <Link className={s.link} to={routePaths.account(account.providerId, account.accountId)}>{account.accountId}</Link>
+                                    </li>
+                                    <li className={s.menuItem}>
+                                        {formatToken(account.balance)} {trans('global.token.symbol')}
+                                    </li>
+                                </>
+                            )}
+                        </ul>
+                        <div className={s.moreMenu}>
+                            {!account && (
                                 <FakeLinkButton onClick={onLoginClick}>
                                     {trans('menu.label.login')}
                                 </FakeLinkButton>
-                            </li>
-                        )}
+                            )}
 
-                        {account && (
-                            <>
-                                <li className={s.menuItem}>
-                                    <Link className={s.link} to={routePaths.account(account.providerId, account.accountId)}>{account.accountId}</Link>
-                                </li>
-                                <li className={s.menuItem}>
-                                    {formatToken(account.balance)} {trans('global.token.symbol')}
-                                </li>
-                                <li className={s.menuItem}>
-                                    <FakeLinkButton onClick={onLogoutClick}>
-                                        {trans('menu.label.logout')}
-                                    </FakeLinkButton>
-                                </li>
-                            </>
-                        )}
-                    </ul>
-                    <div className={s.mobileMenu}>
-                        {!account && (
-                            <FakeLinkButton onClick={onLoginClick}>
-                                {trans('menu.label.login')}
-                            </FakeLinkButton>
-                        )}
-                        {account && (
-                            <>
-                                <IconButton onClick={handleMenuClick} className={s.iconButton}>
-                                    <MoreVertIcon />
-                                </IconButton>
-                                <MuiMenu anchorEl={menuAnchorEl} keepMounted open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
-                                    <MuiMenuItem onClick={handleAccountClick}>{account.accountId}</MuiMenuItem>
-                                    <MuiMenuItem disabled>{formatToken(account.balance)} {trans('global.token.symbol')}</MuiMenuItem>
-                                    <MuiMenuItem onClick={handleLogoutClick}>{trans('menu.label.logout')}</MuiMenuItem>
-                                </MuiMenu>
-                            </>
-                        )}
+                            {account && (
+                                <>
+                                    <IconButton onClick={handleMenuClick} className={s.iconButton}>
+                                        <MoreVertIcon />
+                                    </IconButton>
+                                    <MuiMenu anchorEl={menuAnchorEl} keepMounted open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
+                                        <MuiMenuItem className={s.mobileOnly} onClick={handleAccountClick}>{account.accountId}</MuiMenuItem>
+                                        <MuiMenuItem className={s.mobileOnly} disabled>{formatToken(account.balance)} {trans('global.token.symbol')}</MuiMenuItem>
+                                        <MuiMenuItem onClick={handleStorageManagerClick}>{trans('menu.label.storageManager')}</MuiMenuItem>
+                                        <MuiMenuItem onClick={handleLogoutClick}>{trans('menu.label.logout')}</MuiMenuItem>
+                                    </MuiMenu>
+                                </>
+                            )}
+                        </div>
                     </div>
-
                 </div>
             </div>
         </header>
