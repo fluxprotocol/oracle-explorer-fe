@@ -3,7 +3,7 @@ import { NEAR_FLUX_TOKEN_ID, NEAR_MAX_GAS, NEAR_NULL_CONTRACT, NEAR_ORACLE_CONTR
 import { Outcome, OutcomeType } from "../../../models/DataRequestOutcome";
 import { DataRequestViewModel } from "../../../models/DataRequest";
 import Big from "big.js";
-import { batchSendTransactions, getTokenBalance, TransactionOption } from "./NearService";
+import { batchSendTransactions, createNearOutcome, getTokenBalance, TransactionOption } from "./NearService";
 import { connectWallet } from "./NearConnectService";
 import { createStorageTransaction } from "./StorageManagerService";
 import { Account } from "../../../models/Account";
@@ -65,7 +65,7 @@ export default class NearProvider implements IProvider {
     async stake(amount: string, dataRequest: DataRequestViewModel, outcome: Outcome) {
         const wallet = await connectWallet();
 
-        const stakeOutcome = outcome.type === OutcomeType.Invalid ? 'Invalid' : { 'Answer': outcome.answer };
+        const stakeOutcome = outcome.type === OutcomeType.Invalid ? createNearOutcome(dataRequest, outcome.type, '') : createNearOutcome(dataRequest, outcome.type, outcome.answer);
         const loggedInAccount = await this.getLoggedInAccountId();
         const storageTransaction = await createStorageTransaction(NEAR_ORACLE_CONTRACT_ID, loggedInAccount, wallet);
         const transactions: TransactionOption[] = [];
@@ -103,7 +103,7 @@ export default class NearProvider implements IProvider {
         const account = wallet.account();
         if (!account) return false;
 
-        const stakeOutcome = outcome.type === OutcomeType.Invalid ? 'Invalid' : { 'Answer': outcome.answer };
+        const stakeOutcome = outcome.type === OutcomeType.Invalid ? createNearOutcome(dataRequest, outcome.type, '') : createNearOutcome(dataRequest, outcome.type, outcome.answer);
 
         await account.functionCall(NEAR_ORACLE_CONTRACT_ID, 'dr_unstake', {
             request_id: dataRequest.id,

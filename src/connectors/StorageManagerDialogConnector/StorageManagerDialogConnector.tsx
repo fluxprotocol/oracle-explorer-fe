@@ -23,7 +23,6 @@ export default function StorageManagerDialogConnector() {
         withdrawStorage('near', formValues.amount);
     }, []);
 
-
     if (!account) return null;
 
     return (

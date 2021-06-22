@@ -59,8 +59,10 @@ export default function CallDataInfoCard({
                     </>
                 )}
 
-                {dataRequest.data_type && (
-                    <LabeledText label={trans('callDataInfo.dataType')} className={s.label}>{dataRequest.data_type}</LabeledText>
+                <LabeledText label={trans('callDataInfo.dataType')} className={s.label}>{dataRequest.data_type}</LabeledText>
+
+                {dataRequest.data_type === "Number" && (
+                    <LabeledText label={trans('callDataInfo.numberMultiplier')} className={s.label}>{dataRequest.number_multiplier}</LabeledText>
                 )}
             </CardContent>
         </Card>

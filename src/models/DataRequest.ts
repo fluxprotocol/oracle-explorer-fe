@@ -1,6 +1,7 @@
 import Big from "big.js";
 import trans from "../translation/trans";
 import { nsToMs } from "../utils/dateUtils";
+import { parseJson } from "../utils/jsonUtils";
 import { Outcome, transformToOutcome } from "./DataRequestOutcome";
 import { OracleConfig, OracleConfigGraphData, transformToOracleConfig } from "./OracleConfig";
 import { ResolutionWindow, ResolutionWindowGraphData, transformToResolutionWindow } from "./ResolutionWindow";
@@ -34,6 +35,7 @@ export interface DataRequestViewModel extends DataRequestListItem {
     finalArbitratorTriggered: boolean;
     settlementTime: Date;
     tags: string[];
+    number_multiplier?: string;
     data_type: 'String' | 'Number';
 }
 
@@ -51,13 +53,18 @@ export interface DataRequestGraphData {
     target_contract: string;
     finalized_outcome: string | null;
     tags: string[] | null;
-    data_type: 'String' | 'Number';
+    data_type: string;
+
     sources: {
         end_point: string;
         source_path: string;
     }[];
     config: OracleConfigGraphData;
     resolution_windows: ResolutionWindowGraphData[];
+}
+
+interface NumberDataType {
+    Number: string;
 }
 
 export function transformToDataRequestListItem(data: DataRequestGraphData): DataRequestListItem {
@@ -73,6 +80,8 @@ export function transformToDataRequestListItem(data: DataRequestGraphData): Data
 export function transformToDataRequestViewModel(data: DataRequestGraphData): DataRequestViewModel {
     const resolutionWindows = data.resolution_windows.map(rw => transformToResolutionWindow(rw));
     const totalStaked = resolutionWindows.reduce((prev, curr) => prev.add(curr.totalStaked), new Big(0));
+    const parsedDataType = parseJson<NumberDataType>(data.data_type);
+
 
     return {
         ...transformToDataRequestListItem(data),
@@ -90,7 +99,8 @@ export function transformToDataRequestViewModel(data: DataRequestGraphData): Dat
         targetContract: data.target_contract,
         finalArbitratorTriggered: data.final_arbitrator_triggered,
         tags: data.tags ?? [],
-        data_type: data.data_type,
+        data_type: parsedDataType ? "Number" : "String",
+        number_multiplier: parsedDataType ? parsedDataType.Number : undefined,
     };
 }
 

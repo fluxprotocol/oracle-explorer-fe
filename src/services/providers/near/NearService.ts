@@ -1,6 +1,9 @@
 import { WalletConnection, utils, transactions } from "near-api-js";
 import BN from 'bn.js';
 import { NEAR_FLUX_TOKEN_ID } from "../../../config";
+import { OutcomeType } from "../../../models/DataRequestOutcome";
+import { DataRequestViewModel } from "../../../models/DataRequest";
+import Big from "big.js";
 
 export interface TransactionViewOptions {
     methodName: string;
@@ -45,4 +48,38 @@ export async function getTokenBalance(walletConnection: WalletConnection, accoun
     return account.viewFunction(NEAR_FLUX_TOKEN_ID, 'ft_balance_of', {
         account_id: accountId,
     });
+}
+
+export function createNearOutcome(dataRequest: DataRequestViewModel, type: OutcomeType, answer: string): any {
+    if (type === OutcomeType.Invalid) {
+        return 'Invalid';
+    }
+
+    if (dataRequest.data_type === 'String') {
+        return {
+            'Answer': {
+                'String': answer,
+            }
+        }
+    }
+
+    let number = new Big(answer);
+    const isNegative = number.lt(0);
+
+    number = number.mul(dataRequest.number_multiplier!);
+
+    // Convert back to positive to store inside a u128
+    if (isNegative) {
+        number = number.mul(-1);
+    }
+
+    return {
+        'Answer': {
+            'Number': {
+                value: number.toFixed(0),
+                negative: isNegative,
+                multiplier: dataRequest.number_multiplier,
+            }
+        }
+    }
 }

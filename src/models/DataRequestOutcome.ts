@@ -1,3 +1,4 @@
+import Big from "big.js";
 import trans from "../translation/trans";
 
 export enum OutcomeType {
@@ -16,6 +17,23 @@ export interface OutcomeInvalid {
 
 export type Outcome = OutcomeAnswer | OutcomeInvalid;
 
+
+export interface OutcomeNumber {
+    Number: {
+        value: string;
+        multiplier: string;
+        negative: boolean;
+    }
+}
+
+export interface OutcomeString {
+    String: string;
+}
+
+export interface ParsedOutcome {
+    Answer: OutcomeNumber | OutcomeString;
+}
+
 export function transformToOutcome(outcome: string): Outcome {
     if (outcome === 'Invalid') {
         return {
@@ -23,10 +41,23 @@ export function transformToOutcome(outcome: string): Outcome {
         }
     }
 
-    const answer = outcome.replace('Answer(', '');
+    const parsedOutcome: ParsedOutcome = JSON.parse(outcome);
+
+    if ('String' in parsedOutcome.Answer) {
+        return {
+            answer: parsedOutcome.Answer.String,
+            type: OutcomeType.Answer,
+        };
+    }
+
+    const number = new Big(parsedOutcome.Answer.Number.value).div(parsedOutcome.Answer.Number.multiplier);
+
+    if (parsedOutcome.Answer.Number.negative) {
+        number.s = -1;
+    }
 
     return {
-        answer: answer.slice(0, -1),
+        answer: number.toString(),
         type: OutcomeType.Answer,
     };
 }
@@ -38,3 +69,5 @@ export function transfromOutcomeToString(outcome: Outcome): string {
 
     return `"${outcome.answer}"`;
 }
+
+

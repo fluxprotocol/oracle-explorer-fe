@@ -49,6 +49,7 @@
     "callDataInfo.label.sourcePath": "Source path",
     "callDataInfo.outcomes.title": "Possible outcomes",
     "callDataInfo.dataType": "Expected data type",
+    "callDataInfo.numberMultiplier": "Number multiplier",
 
     "dataRequestsOverview.table.label.id": "Request ID",
     "dataRequestsOverview.table.label.type": "Request Type",
