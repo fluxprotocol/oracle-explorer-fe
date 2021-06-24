@@ -86,11 +86,12 @@
     "oracleConfigInfoCard.label.maxOutcomes": "Maximum amount of outcomes",
     "oracleConfigInfoCard.label.minInitialChallengeWindowDuration": "Minimum initial challenge window duration",
     "oracleConfigInfoCard.label.defaultChallengeWindowDuration": "Default challenge window duration",
+    "oracleConfigInfoCard.label.validityBond": "Validity bond",
 
     "requestInfo.title": "Request Info",
     "requestInfo.label.requestor": "Requestor Account ID",
     "requestInfo.label.feePercentage": "Fee Percentage",
-    "requestInfo.label.settlementTime": "Settlement time",
+    "requestInfo.label.settlementTime": "Settlement date",
     "requestInfo.label.totalStaked": "Total staked",
     "requestInfo.label.finalizedOutcome": "Finalized outcome",
     "requestInfo.label.dateCreated": "Date created",

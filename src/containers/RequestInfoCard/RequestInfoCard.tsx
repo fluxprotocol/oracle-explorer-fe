@@ -36,11 +36,14 @@ export default function RequestInfoCard({
                         label: trans('requestInfo.label.targetContract'),
                         value: <Link className={s.link} to={routePaths.account('near', dataRequest.targetContract)}>{dataRequest.requestor}</Link>,
                     }, {
-                        label: trans('requestInfo.label.config'),
-                        value: <Link className={s.link} to={routePaths.config('near', dataRequest.config.id)}>{dataRequest.config.id}</Link>,
-                    }, {
                         label: trans('requestInfo.label.dateCreated'),
                         value: <span>{prettyFormatDate(dataRequest.date)}</span>,
+                    }, {
+                        label: trans('requestInfo.label.settlementTime'),
+                        value: <span>{prettyFormatDate(dataRequest.settlementTime)}</span>,
+                    }, {
+                        label: trans('requestInfo.label.config'),
+                        value: <Link className={s.link} to={routePaths.config('near', dataRequest.config.id)}>{dataRequest.config.id}</Link>,
                     }, {
                         label: trans('requestInfo.label.finalArbitratorTriggered'),
                         value: <span>{dataRequest.finalArbitratorTriggered + ''}</span>,

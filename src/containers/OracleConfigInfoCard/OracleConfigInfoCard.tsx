@@ -71,7 +71,10 @@ export default function OracleConfigInfoCard({
                                 seconds: defaultChallengeWindowDuration.seconds.toString(),
                             })} / {oracleConfig.defaultChallengeWindowDuration} ns
                         </span>
-                    }]}
+                    }, {
+                        label: trans('oracleConfigInfoCard.label.validityBond'),
+                        value: <span>{formatToken(oracleConfig.validityBond, 18, 2)} {trans('global.token.symbol')}</span>
+                    },]}
                 />
             </CardContent>
         </Card>
