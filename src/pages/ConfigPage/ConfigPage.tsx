@@ -15,8 +15,6 @@ export default function ConfigPage() {
     const dispatch = useDispatch();
     const params = useParams<Params>();
 
-    console.log('[] params -> ', params);
-
     useEffect(() => {
         dispatch(loadOracleConfig(params.id));
     }, [dispatch, params.id]);

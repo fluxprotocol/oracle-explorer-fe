@@ -21,7 +21,7 @@ export default function OracleConfigInfoCard({
     const defaultChallengeWindowDuration = formatTimeToReadable(Number(oracleConfig.defaultChallengeWindowDuration), 'ns');
 
     return (
-        <Card>
+        <Card className={s.card}>
             <CardContent>
                 <div className={s.titleWrapper}>
                     <h2 className={s.title}>{trans('oracleConfigInfoCard.title')}</h2>
