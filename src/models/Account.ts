@@ -1,3 +1,5 @@
+import { WhitelistItemViewModel } from "./WhitelistItem";
+
 export interface AccountInfo {
     activeStaking: string;
     totalStaked: string;
@@ -5,6 +7,7 @@ export interface AccountInfo {
     storageAvailable: string;
     storageTotal: string;
     storageUsed: string;
+    whitelistItem?: WhitelistItemViewModel;
 }
 
 export interface Account {

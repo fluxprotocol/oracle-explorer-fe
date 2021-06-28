@@ -15,6 +15,7 @@ import AccountRequestsPage from './sub-pages/AccountRequestsPage';
 
 import s from './AccountPage.module.scss';
 import AccountUnclaimedPage from './sub-pages/AccountUnclaimedPage';
+import WhitelistInfoCardConnector from '../../connectors/WhitelistInfoCardConnector';
 
 interface Params {
     provider: string;
@@ -41,6 +42,7 @@ export default function AccountPage() {
                 <h1 className={s.title}>{params.accountId}</h1>
             </div>
             <AccountDetailsInfoCardConnector />
+            <WhitelistInfoCardConnector />
             <Card className={s.card}>
                 <CardContent>
                     <TabBar

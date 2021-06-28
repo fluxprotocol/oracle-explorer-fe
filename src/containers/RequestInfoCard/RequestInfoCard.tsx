@@ -48,8 +48,8 @@ export default function RequestInfoCard({
                         label: trans('requestInfo.label.finalArbitratorTriggered'),
                         value: <span>{dataRequest.finalArbitratorTriggered + ''}</span>,
                     }, {
-                        label: trans('requestInfo.label.feePercentage'),
-                        value: <span>{`${dataRequest.config.resolutionFeePercentage / 100}%`}</span>,
+                        label: trans('requestInfo.label.feeReward'),
+                        value: <span>{formatToken(dataRequest.fee)} {trans('global.token.symbol')}</span>,
                     }, {
                         label: trans('requestInfo.label.totalStaked'),
                         value: <span>{`${formatToken(dataRequest.totalStaked)} ${trans('global.token.symbol')}`}</span>,

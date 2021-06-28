@@ -30,6 +30,7 @@ export interface DataRequestViewModel extends DataRequestListItem {
     outcomes?: string[];
     resolutionWindows: ResolutionWindow[];
     totalStaked: string;
+    fee: string;
     finalized_outcome?: Outcome;
     targetContract: string;
     finalArbitratorTriggered: boolean;
@@ -41,6 +42,7 @@ export interface DataRequestViewModel extends DataRequestListItem {
 
 export interface DataRequestGraphData {
     id: string;
+    fee: string;
     block_height: string;
     description: string | null;
     settlement_time: string;
@@ -54,7 +56,12 @@ export interface DataRequestGraphData {
     finalized_outcome: string | null;
     tags: string[] | null;
     data_type: string;
-
+    whitelist_item: {
+        active: boolean;
+        code_base_url: string;
+        custom_fee: string;
+        interface_name: string;
+    },
     sources: {
         end_point: string;
         source_path: string;
@@ -93,6 +100,7 @@ export function transformToDataRequestViewModel(data: DataRequestGraphData): Dat
             endPoint: s.end_point,
             sourcePath: s.source_path,
         })),
+        fee: data.fee ?? '0',
         outcomes: data.outcomes,
         totalStaked: totalStaked.toString(),
         finalized_outcome: data.finalized_outcome ? transformToOutcome(data.finalized_outcome) : undefined,

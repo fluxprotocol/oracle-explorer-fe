@@ -3,6 +3,8 @@
     "global.action.close": "Close",
     "global.action.cancel": "Cancel",
     "global.action.submit": "Submit",
+    "global.yes": "Yes",
+    "global.no": "No",
 
     "global.status.ongoing": "On going",
     "global.status.completed": "Completed",
@@ -88,6 +90,13 @@
     "oracleConfigInfoCard.label.defaultChallengeWindowDuration": "Default challenge window duration",
     "oracleConfigInfoCard.label.validityBond": "Validity bond",
 
+    "whitelistInfoCard.title": "Registry info",
+    "whitelistInfoCard.label.interfaceName": "Interface name",
+    "whitelistInfoCard.label.codeBaseUrl": "Code base URL",
+    "whitelistInfoCard.label.active": "Activated",
+    "whitelistInfoCard.label.fixedFee": "Fee per request",
+    "whitelistInfoCard.label.stakeMultiplier": "Stake multiplier",
+
     "requestInfo.title": "Request Info",
     "requestInfo.label.requestor": "Requestor Account ID",
     "requestInfo.label.feePercentage": "Fee Percentage",
@@ -100,6 +109,7 @@
     "requestInfo.label.tags": "Tags",
     "requestInfo.label.noTags": "No tags available",
     "requestInfo.label.config": "Config ID",
+    "requestInfo.label.feeReward": "Reward",
 
     "stakeReport.table.label.outcome": "Outcome",
     "stakeReport.table.label.stake": "Staked",

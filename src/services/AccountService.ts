@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 import { AccountInfo } from "../models/Account";
+import { transformToWhitelistItemViewModel } from "../models/WhitelistItem";
 import { graphqlClient } from "./GraphQLService";
 import { getProviderStorageBalance } from "./providers/ProviderRegistry";
 
@@ -13,6 +14,13 @@ export async function getAccountInfo(accountId: string, providerId: string = 'ne
                             active_staking
                             total_staked
                             total_claimed
+                            whitelist_item {
+                                active
+                                code_base_url
+                                contract_entry
+                                custom_fee
+                                interface_name
+                            }
                         }
                     }
                 `,
@@ -31,6 +39,7 @@ export async function getAccountInfo(accountId: string, providerId: string = 'ne
             storageAvailable: storageBalance.available,
             storageTotal: storageBalance.total,
             storageUsed: storageBalance.used,
+            whitelistItem: data.whitelist_item ? transformToWhitelistItemViewModel(data.whitelist_item) : undefined,
         }
     } catch (error) {
         console.error('[getAccountInfo]', error);

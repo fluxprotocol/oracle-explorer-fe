@@ -84,6 +84,14 @@ export async function getDataRequestById(id: string) {
                         settlement_time
                         tags
                         data_type
+                        fee
+                        whitelist_item {
+                            active
+                            code_base_url
+                            contract_entry
+                            custom_fee
+                            interface_name
+                        }
                         sources {
                             end_point
                             source_path
