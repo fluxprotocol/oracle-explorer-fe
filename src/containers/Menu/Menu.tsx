@@ -91,14 +91,6 @@ export default function Menu({
                     </ul>
                     <div className={s.rightMenu}>
                         <ul className={s.accountLinks}>
-                            {!account && (
-                                <li>
-                                    <FakeLinkButton onClick={onLoginClick}>
-                                        {trans('menu.label.login')}
-                                    </FakeLinkButton>
-                                </li>
-                            )}
-
                             {account && (
                                 <>
                                     <li className={s.menuItem}>
