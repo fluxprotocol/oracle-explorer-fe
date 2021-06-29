@@ -121,6 +121,7 @@
     "stakeReport.table.label.accountId": "Account ID",
 
     "resolutionWindow.round": "Round #:round",
+    "resolutionWindow.label.closesIn": "Ends in: ",
 
     "storageManagerDialog.title": "Storage withdrawing",
     "storageManagerDialog.description": "Everytime you stake on a outcome :nativeToken is deposited in order to pay for storage. The amount deposited isn't always the amount you use. This will leave unused :nativeToken in the oracle contract. You can either leave it there to pay for a future transaction or withdraw your unused :nativeToken here.",

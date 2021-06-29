@@ -15,6 +15,8 @@ import OutcomeStakeInfo from './components/OutcomeStakeInfo/OutcomeStakeInfo';
 
 import s from './ResolutionWindowAccordion.module.scss';
 import { transfromOutcomeToString } from '../../models/DataRequestOutcome';
+import Countdown from '../../compositions/Countdown';
+import { useState } from 'react';
 
 interface Props {
     resolutionWindow: ResolutionWindow;
@@ -25,6 +27,8 @@ export default function ResolutionWindowAccordion({
     resolutionWindow,
     defaultExpanded,
 }: Props) {
+    const now = new Date();
+    const [isWindowClosed, setWindowClosed] = useState(resolutionWindow.endTime.getTime() <= now.getTime());
     const percentageFilled = resolutionWindow.winningOutcomeStake ? new Big(resolutionWindow.winningOutcomeStake.stake).div(resolutionWindow.bondSize).mul(100).toString() : '0';
 
     return (
@@ -32,6 +36,16 @@ export default function ResolutionWindowAccordion({
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <span className={s.roundTitle}>{trans('resolutionWindow.round', { round: resolutionWindow.round.toString() })}</span>
                 <span>{resolutionWindow.bondedOutcome ? transfromOutcomeToString(resolutionWindow.bondedOutcome) : ''}</span>
+
+                {!isWindowClosed && (
+                    <span>
+                        {trans('resolutionWindow.label.closesIn')}
+                        <Countdown
+                            date={resolutionWindow.endTime}
+                            onComplete={() => setWindowClosed(true)}
+                        />
+                    </span>
+                )}
             </AccordionSummary>
             <AccordionDetails className={s.details}>
                 <InformationRows

@@ -8,7 +8,6 @@ import { OutcomeStake } from '../../models/OutcomeStake';
 import { ResolutionWindow } from '../../models/ResolutionWindow';
 import trans from '../../translation/trans';
 import { sumBigs } from '../../utils/bigUtils';
-import { formatToken } from '../../utils/tokenUtils';
 
 import s from './DataRequestDetailHeader.module.scss';
 
