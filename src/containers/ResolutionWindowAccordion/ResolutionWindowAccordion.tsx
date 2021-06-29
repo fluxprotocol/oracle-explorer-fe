@@ -37,7 +37,7 @@ export default function ResolutionWindowAccordion({
                 <span className={s.roundTitle}>{trans('resolutionWindow.round', { round: resolutionWindow.round.toString() })}</span>
                 <span>{resolutionWindow.bondedOutcome ? transfromOutcomeToString(resolutionWindow.bondedOutcome) : ''}</span>
 
-                {!isWindowClosed && (
+                {!isWindowClosed && !resolutionWindow.bondedOutcome && (
                     <span>
                         {trans('resolutionWindow.label.closesIn')}
                         <Countdown
