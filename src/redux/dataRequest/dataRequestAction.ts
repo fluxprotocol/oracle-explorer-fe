@@ -39,7 +39,7 @@ export function loadDataRequestById(id: string) {
         dispatch(setDataRequestDetailLoading(true));
         const accountId = await getLoggedInAccountId();
         const accountStakesRequest = getUserStakesByRequestId(id, accountId);
-        const dataRequest = await getDataRequestById(id);
+        const dataRequest = await getDataRequestById(id, accountId);
 
         if (!dataRequest) {
             setDataRequestsErrors(['404']);

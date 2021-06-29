@@ -16,9 +16,6 @@ async function getUserStakesByRequestIdAndAccountId(requestId: string, accountId
                             outcome
                             round
                             total_stake
-                            claim {
-                                payout
-                            }
                         }
                     }
                 `,

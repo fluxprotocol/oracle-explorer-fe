@@ -37,7 +37,7 @@ export default function DataRequestDetailHeader({
     const isFinalized = typeof dataRequest.finalized_outcome !== 'undefined';
     const canFinalize = canDataRequestBeFinalized(dataRequest);
 
-    const payout = accountStakes.find(stake => stake.claimPayout)?.claimPayout;
+    const hasClaimed = Boolean(dataRequest.claimInfo?.payout);
     const roundStakes = accountStakes.filter(stake => stake.round === currentResolutionWindow?.round);
     const stakedOnRound = sumBigs(roundStakes.map(roundStake => new Big(roundStake.stake)));
 
@@ -65,7 +65,7 @@ export default function DataRequestDetailHeader({
                     </Button>
                 )}
 
-                {canInteract && account && !isFinalized && stakedOnRound.gt(0) && (
+                {canInteract && account && stakedOnRound.gt(0) && (
                     <Button className={s.button} onClick={onUnstakeClick}>
                         {trans('dataRequestDetail.label.unstake')}
                     </Button>
@@ -77,19 +77,10 @@ export default function DataRequestDetailHeader({
                     </Button>
                 )}
 
-                {canInteract && account && !Boolean(payout) && accountStakes.length > 0 && isFinalized && (
+                {canInteract && account && !hasClaimed && accountStakes.length > 0 && isFinalized && (
                     <Button className={s.button} onClick={onClaimClick}>
                         {trans('dataRequestDetail.label.claim')}
                     </Button>
-                )}
-
-                {payout && (
-                    <span>
-                        {trans('dataRequestDetail.label.claimed', {
-                            payout: formatToken(payout),
-                            tokenSymbol: trans('global.token.symbol'),
-                        })}
-                    </span>
                 )}
             </div>
         </header>

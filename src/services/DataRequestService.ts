@@ -63,18 +63,22 @@ export async function getAllDataRequests({
     }
 }
 
-export async function getDataRequestById(id: string) {
+export async function getDataRequestById(id: string, accountId?: string) {
     try {
         const response = await graphqlClient.query({
             fetchPolicy: 'network-only',
             query: gql`
-                query GetDataRequest($id: String!) {
+                query GetDataRequest($id: String!, $accountId: String) {
                     dataRequest: getDataRequest(id: $id) {
                         block_height
                         date
                         final_arbitrator_triggered
                         global_config_id
                         id
+                        claim(accountId: $accountId) {
+                            payout
+                            user_correct_stake
+                        }
                         initial_challenge_period
                         outcomes
                         requestor
@@ -140,7 +144,8 @@ export async function getDataRequestById(id: string) {
                 }
             `,
             variables: {
-                id
+                id,
+                accountId,
             }
         });
 

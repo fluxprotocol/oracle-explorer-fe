@@ -7,9 +7,15 @@ import trans from '../../translation/trans';
 import OutcomeStakeInfo from '../ResolutionWindowAccordion/components/OutcomeStakeInfo/OutcomeStakeInfo';
 
 import s from './AccountStakesInfoCard.module.scss';
+import { ClaimViewModel } from '../../models/Claim';
+import { formatToken } from '../../utils/tokenUtils';
+import { Outcome } from '../../models/DataRequestOutcome';
 
 interface Props {
+    claim?: ClaimViewModel;
     accountStakes: OutcomeStake[];
+    finalizedOutcome?: Outcome;
+    finalizedRound?: number;
 }
 
 function EmptyDiv(props: PropsWithChildren<{}>) {
@@ -17,7 +23,10 @@ function EmptyDiv(props: PropsWithChildren<{}>) {
 }
 
 export default function AccountStakesInfoCard({
+    claim,
     accountStakes,
+    finalizedRound,
+    finalizedOutcome,
 }: Props) {
     return (
         <Card className={s.card}>
@@ -26,10 +35,22 @@ export default function AccountStakesInfoCard({
                     <h2 className={s.title}>{trans('accountStakesInfoCard.title')}</h2>
                 </div>
 
+                {claim && (
+                    <div className={s.claim}>
+                        {trans('dataRequestDetail.label.claimed', {
+                            payout: formatToken(claim.payout),
+                            userCorrectStake: formatToken(claim.userCorrectStake),
+                            tokenSymbol: trans('global.token.symbol'),
+                        })}
+                    </div>
+                )}
+
                 {accountStakes.length > 0 && (
                     <OutcomeStakeInfo
                         outcomeStakes={accountStakes}
                         tableComponent={EmptyDiv}
+                        finalizedOutcome={finalizedOutcome}
+                        finalizedRound={finalizedRound}
                     />
                 )}
 

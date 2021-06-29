@@ -12,16 +12,20 @@ import { OutcomeStake } from '../../../../models/OutcomeStake';
 import s from './OutcomeStakeInfo.module.scss';
 import trans from '../../../../translation/trans';
 import { formatToken } from '../../../../utils/tokenUtils';
-import { OutcomeType } from '../../../../models/DataRequestOutcome';
+import { isSameOutcome, Outcome, OutcomeType } from '../../../../models/DataRequestOutcome';
 
 export interface Props {
     outcomeStakes: OutcomeStake[];
     tableComponent?: any;
+    finalizedOutcome?: Outcome;
+    finalizedRound?: number;
 }
 
 export default function OutcomeStakeInfo({
     outcomeStakes,
     tableComponent = Paper,
+    finalizedOutcome,
+    finalizedRound,
 }: Props) {
     return (
         <div>
@@ -31,6 +35,7 @@ export default function OutcomeStakeInfo({
                         <TableRow>
                             <TableCell>{trans('outcomeStakeInfo.table.label.outcome')}</TableCell>
                             <TableCell>{trans('outcomeStakeInfo.table.label.stake')}</TableCell>
+                            {finalizedOutcome && <TableCell>{trans('outcomeStakeInfo.table.label.correcltyStaked')}</TableCell>}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -49,6 +54,14 @@ export default function OutcomeStakeInfo({
                                     <TableCell>
                                         {formatToken(outcomeInfo.stake, 18)} {trans('global.token.symbol')}
                                     </TableCell>
+
+                                    {finalizedOutcome && typeof finalizedRound !== 'undefined' && (
+                                        <TableCell>
+                                            {outcomeInfo.round <= finalizedRound && isSameOutcome(finalizedOutcome, outcomeInfo.outcome) && trans('outcomeStakeInfo.label.correct')}
+                                            {outcomeInfo.round <= finalizedRound && !isSameOutcome(finalizedOutcome, outcomeInfo.outcome) && trans('outcomeStakeInfo.label.incorrect')}
+                                            {outcomeInfo.round > finalizedRound && trans('outcomeStakeInfo.label.unbonded')}
+                                        </TableCell>
+                                    )}
                                 </TableRow>
                             );
                         })}

@@ -70,4 +70,10 @@ export function transfromOutcomeToString(outcome: Outcome): string {
     return `"${outcome.answer}"`;
 }
 
+export function isSameOutcome(a: Outcome, b: Outcome): boolean {
+    if (a.type === OutcomeType.Invalid && b.type === OutcomeType.Invalid) {
+        return true;
+    }
 
+    return JSON.stringify(a) === JSON.stringify(b);
+}

@@ -2,6 +2,7 @@ import Big from "big.js";
 import trans from "../translation/trans";
 import { nsToMs } from "../utils/dateUtils";
 import { parseJson } from "../utils/jsonUtils";
+import { ClaimGraphData, ClaimViewModel, transformToClaimViewModel } from "./Claim";
 import { Outcome, transformToOutcome } from "./DataRequestOutcome";
 import { OracleConfig, OracleConfigGraphData, transformToOracleConfig } from "./OracleConfig";
 import { ResolutionWindow, ResolutionWindowGraphData, transformToResolutionWindow } from "./ResolutionWindow";
@@ -29,6 +30,7 @@ export interface DataRequestViewModel extends DataRequestListItem {
     sources: DataRequestSource[];
     outcomes?: string[];
     resolutionWindows: ResolutionWindow[];
+    claimInfo?: ClaimViewModel;
     totalStaked: string;
     fee: string;
     finalized_outcome?: Outcome;
@@ -43,6 +45,7 @@ export interface DataRequestViewModel extends DataRequestListItem {
 export interface DataRequestGraphData {
     id: string;
     fee: string;
+    claim: ClaimGraphData | null;
     block_height: string;
     description: string | null;
     settlement_time: string;
@@ -89,9 +92,9 @@ export function transformToDataRequestViewModel(data: DataRequestGraphData): Dat
     const totalStaked = resolutionWindows.reduce((prev, curr) => prev.add(curr.totalStaked), new Big(0));
     const parsedDataType = parseJson<NumberDataType>(data.data_type);
 
-
     return {
         ...transformToDataRequestListItem(data),
+        claimInfo: data.claim ? transformToClaimViewModel(data.claim) : undefined,
         config: transformToOracleConfig(data.config),
         settlementTime: new Date(nsToMs(Number(data.settlement_time))),
         resolutionWindows,
