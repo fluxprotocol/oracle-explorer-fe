@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: false
-      REACT_APP_NEAR_ORACLE_CONTRACT_ID: ${{ secrets.REACT_APP_NEAR_ORACLE_CONTRACT_ID }}
+      REACT_APP_NEAR_ORACLE_CONTRACT_ID: oracleinternal2.franklinwaller2.testnet
 
     strategy:
       matrix:
