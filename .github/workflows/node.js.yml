@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: false
+      REACT_APP_NEAR_ORACLE_CONTRACT_ID: ${{ secrets.REACT_APP_NEAR_ORACLE_CONTRACT_ID }}
 
     strategy:
       matrix:
@@ -27,7 +28,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: cp .env.example .env
-    - run: echo "REACT_APP_NEAR_ORACLE_CONTRACT_ID = ${{ secrets.REACT_APP_NEAR_ORACLE_CONTRACT_ID }}" >> .env
+    - run: echo "REACT_APP_NEAR_ORACLE_CONTRACT_ID = $REACT_APP_NEAR_ORACLE_CONTRACT_ID" >> .env
     - run: npm run build --if-present
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
