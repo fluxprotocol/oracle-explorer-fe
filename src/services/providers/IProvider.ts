@@ -1,6 +1,8 @@
 import { Account } from "../../models/Account";
+import { AppConfig } from "../../models/AppConfig";
 import { DataRequestViewModel } from "../../models/DataRequest";
 import { Outcome } from "../../models/DataRequestOutcome";
+import { TokenViewModel } from "../../models/Token";
 
 export interface IProvider {
     id: string;
@@ -17,5 +19,7 @@ export interface IProvider {
     getLoggedInAccountId(): Promise<string | undefined>;
     isLoggedIn(): Promise<boolean>;
     getStorageBalance(accountId: string): Promise<{ total: string, available: string, used: string }>;
-    withdrawStorage(amount: string): Promise<boolean>
+    withdrawStorage(amount: string): Promise<boolean>;
+    getTokenInfo(contractId: string): Promise<TokenViewModel | undefined>;
+    getAppConfig(): Promise<AppConfig>;
 }

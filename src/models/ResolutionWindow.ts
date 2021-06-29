@@ -1,6 +1,7 @@
 import Big from "big.js";
 import { Outcome, transformToOutcome } from "./DataRequestOutcome";
 import { OutcomeStake } from "./OutcomeStake";
+import { TokenViewModel } from "./Token";
 import { transformToUserStakes, UserStakeGraphData, UserStakes } from "./UserStakes";
 
 
@@ -35,7 +36,7 @@ export interface ResolutionWindowGraphData {
     user_stakes: UserStakeGraphData[];
 }
 
-export function transformToResolutionWindow(data: ResolutionWindowGraphData): ResolutionWindow {
+export async function transformToResolutionWindow(data: ResolutionWindowGraphData, stakeToken?: TokenViewModel): Promise<ResolutionWindow> {
     let totalStaked = new Big(0);
     let highestOutcomeStake: OutcomeStake | undefined;
 
@@ -47,6 +48,12 @@ export function transformToResolutionWindow(data: ResolutionWindowGraphData): Re
             stake: os.total_stake,
             dataRequestId: os.data_request_id,
             round: os.round,
+            stakeToken: stakeToken ?? {
+                contractId: '',
+                decimals: 18,
+                name: '',
+                symbol: '',
+            }
         };
 
         // Find the highest stake
@@ -70,7 +77,7 @@ export function transformToResolutionWindow(data: ResolutionWindowGraphData): Re
         filled: highestOutcomeStake?.stake ? new Big(highestOutcomeStake.stake).eq(data.bond_size) : false,
         totalStaked: totalStaked.toString(),
         round: data.round,
-        userStakes: transformToUserStakes(data.user_stakes),
+        userStakes: await transformToUserStakes(data.user_stakes, stakeToken),
         bondedOutcome: data.bonded_outcome ? transformToOutcome(data.bonded_outcome) : undefined,
         winningOutcomeStake: highestOutcomeStake,
     };

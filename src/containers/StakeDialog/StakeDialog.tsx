@@ -46,7 +46,7 @@ export default function StakeDialog({
     function handleStakeChange(amount: string) {
         setFormValues({
             ...formValues,
-            amount: amount ? toToken(amount) : '0',
+            amount: amount ? toToken(amount, dataRequest.stakeToken.decimals) : '0',
             amountFormatted: amount ? amount : '',
         });
     }
@@ -102,7 +102,7 @@ export default function StakeDialog({
                 )}
                 <div className={s.formItem}>
                     <Input
-                        label={trans('stakeDialog.label.stakeAmount', { tokenSymbol: trans('global.token.symbol') })}
+                        label={trans('stakeDialog.label.stakeAmount', { tokenSymbol: dataRequest.stakeToken.symbol })}
                         className={s.formInput}
                         value={formValues.amountFormatted}
                         onChange={handleStakeChange}

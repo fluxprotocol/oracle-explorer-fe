@@ -2,6 +2,8 @@ import { Account } from "../../models/Account";
 import { AppConfig } from "../../models/AppConfig";
 import { DataRequestViewModel } from "../../models/DataRequest";
 import { Outcome } from "../../models/DataRequestOutcome";
+import { TokenViewModel } from "../../models/Token";
+import cache from "../../utils/cache";
 import { IProvider } from "./IProvider";
 import NearProvider from "./near/NearProvider";
 
@@ -78,10 +80,13 @@ export async function getLoggedInAccount(): Promise<Account | undefined> {
 
 export async function getAppConfigForProvider(providerId: string): Promise<AppConfig> {
     const provider = getProviderById(providerId);
+    const config = await provider?.getAppConfig();
 
     return {
-        nativeTokenDecimals: provider?.nativeTokenDecimals ?? 18,
-        nativeTokenSymbol: provider?.nativeTokenSymbol ?? '?',
+        nativeTokenDecimals: config?.nativeTokenDecimals ?? 18,
+        nativeTokenSymbol: config?.nativeTokenSymbol ?? '?',
+        stakeTokenDecimals: config?.stakeTokenDecimals ?? 18,
+        stakeTokenSymbol: config?.stakeTokenSymbol ?? '?',
     };
 }
 
@@ -113,4 +118,18 @@ export async function getProviderStorageBalance(providerId: string, accountId: s
 export function withdrawStorage(providerId: string, amount: string) {
     const provider = getProviderById(providerId);
     provider?.withdrawStorage(amount);
+}
+
+export async function getTokenInfo(providerId: string, contractId: string): Promise<TokenViewModel> {
+    return cache(`tokeninfo_${providerId}_${contractId}`, async () => {
+        const provider = getProviderById(providerId);
+        const token = await provider?.getTokenInfo(contractId);
+
+        return {
+            decimals: token?.decimals ?? 18,
+            name: token?.name ?? contractId,
+            symbol: token?.symbol ?? contractId,
+            contractId,
+        };
+    });
 }

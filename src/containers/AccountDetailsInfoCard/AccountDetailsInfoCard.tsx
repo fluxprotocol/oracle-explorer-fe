@@ -30,19 +30,19 @@ export default function AccountDetailsInfoCard({
                     rows={[
                         {
                             label: trans('accountDetailsInfoCard.label.balance'),
-                            value: <span>{formatToken(account?.balance ?? '0')} {trans('global.token.symbol')}</span>,
+                            value: <span>{formatToken(account?.balance ?? '0', appConfig.stakeTokenDecimals)} {appConfig.stakeTokenSymbol}</span>,
                         },
                         {
                             label: trans('accountDetailsInfoCard.label.activeStaking'),
-                            value: <span>{formatToken(accountInfo.activeStaking)} {trans('global.token.symbol')}</span>,
+                            value: <span>{formatToken(accountInfo.activeStaking, appConfig.stakeTokenDecimals)} {appConfig.stakeTokenSymbol}</span>,
                         },
                         {
                             label: trans('accountDetailsInfoCard.label.totalStaked'),
-                            value: <span>{formatToken(accountInfo.totalStaked)} {trans('global.token.symbol')}</span>,
+                            value: <span>{formatToken(accountInfo.totalStaked, appConfig.stakeTokenDecimals)} {appConfig.stakeTokenSymbol}</span>,
                         },
                         {
                             label: trans('accountDetailsInfoCard.label.totalClaimed'),
-                            value: <span>{formatToken(accountInfo.totalClaimed)} {trans('global.token.symbol')}</span>,
+                            value: <span>{formatToken(accountInfo.totalClaimed, appConfig.stakeTokenDecimals)} {appConfig.stakeTokenSymbol}</span>,
                         },
                         {
                             label: trans('accountDetailsInfoCard.label.storageUsed'),

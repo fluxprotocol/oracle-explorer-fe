@@ -14,13 +14,16 @@ import s from './StakerReport.module.scss';
 import { OutcomeType } from '../../../../models/DataRequestOutcome';
 import { Link } from 'react-router-dom';
 import { routePaths } from '../../../../routes';
+import { TokenViewModel } from '../../../../models/Token';
 
 export interface Props {
+    stakeToken: TokenViewModel;
     userStakes: ResolutionWindow['userStakes'];
 }
 
 export default function StakerReport({
-    userStakes
+    userStakes,
+    stakeToken,
 }: Props) {
     return (
         <div className={s.stakerReport}>
@@ -52,7 +55,7 @@ export default function StakerReport({
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {formatToken(outcomeInfo.stake, 18)} {trans('global.token.symbol')}
+                                        {formatToken(outcomeInfo.stake, stakeToken.decimals)} {stakeToken.symbol}
                                     </TableCell>
                                 </TableRow>
                             );

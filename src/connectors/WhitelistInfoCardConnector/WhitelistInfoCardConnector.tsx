@@ -6,12 +6,16 @@ import { Reducers } from '../../redux/reducers';
 
 export default function WhitelistInfoCardConnector() {
     const whitelist = useSelector((store: Reducers) => store.account.accountDetail.info.whitelistItem);
+    const appConfig = useSelector((store: Reducers) => store.appconfig.appConfig);
 
     if (!whitelist) {
         return null;
     }
 
     return (
-        <WhitelistInfoCard whitelist={whitelist} />
+        <WhitelistInfoCard
+            whitelist={whitelist}
+            appConfig={appConfig}
+        />
     );
 }

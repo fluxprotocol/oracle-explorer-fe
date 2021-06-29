@@ -10,6 +10,7 @@ import { Reducers } from '../../redux/reducers';
 export default function MenuConnector() {
     const dispatch = useDispatch();
     const account = useSelector((store: Reducers) => store.account.account);
+    const appConfig = useSelector((store: Reducers) => store.appconfig.appConfig);
 
     const handleLoginClick = useCallback(() => {
         dispatch(loginAccount());
@@ -34,6 +35,7 @@ export default function MenuConnector() {
         <Menu
             onLoginClick={handleLoginClick}
             account={account}
+            appConfig={appConfig}
             onLogoutClick={handleLogoutClick}
             onStorageManagerClick={handleStorageManagerClick}
         />

@@ -32,6 +32,7 @@ export default function ResolutionWindowInfoCard({
                                 resolutionWindow={resolutionWindow}
                                 defaultExpanded={index === 0}
                                 key={resolutionWindow.round}
+                                stakeToken={dataRequest.stakeToken}
                             />
                         );
                     })}

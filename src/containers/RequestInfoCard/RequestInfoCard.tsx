@@ -49,10 +49,10 @@ export default function RequestInfoCard({
                         value: <span>{dataRequest.finalArbitratorTriggered + ''}</span>,
                     }, {
                         label: trans('requestInfo.label.feeReward'),
-                        value: <span>{formatToken(dataRequest.fee)} {trans('global.token.symbol')}</span>,
+                        value: <span>{formatToken(dataRequest.fee, dataRequest.stakeToken.decimals)} {dataRequest.stakeToken.symbol}</span>,
                     }, {
                         label: trans('requestInfo.label.totalStaked'),
-                        value: <span>{`${formatToken(dataRequest.totalStaked)} ${trans('global.token.symbol')}`}</span>,
+                        value: <span>{`${formatToken(dataRequest.totalStaked, dataRequest.stakeToken.decimals)} ${dataRequest.stakeToken.symbol}`}</span>,
                     }, {
                         label: trans('requestInfo.label.tags'),
                         value: <span>{dataRequest.tags.length ? dataRequest.tags.map(t => `"${t}"`).join(', ') : trans('requestInfo.label.noTags')}</span>

@@ -1,5 +1,6 @@
 import Big from "big.js";
 import { Outcome, OutcomeType } from "./DataRequestOutcome";
+import { TokenViewModel } from "./Token";
 
 export interface OutcomeStake {
     outcome: Outcome;
@@ -9,6 +10,7 @@ export interface OutcomeStake {
     accountId?: string;
     finalizedOutcome?: Outcome;
     claimPayout?: string;
+    stakeToken: TokenViewModel;
 }
 
 export function combineOutcomeStakes(outcomeStakes: OutcomeStake[] = []): OutcomeStake[] {

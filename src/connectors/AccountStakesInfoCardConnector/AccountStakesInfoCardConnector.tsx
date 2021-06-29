@@ -9,6 +9,8 @@ export default function AccountStakesInfoCardConnector() {
     const claim = useSelector((store: Reducers) => store.dataRequest.dataRequestDetail?.claimInfo);
     const finalizedOutcome = useSelector((store: Reducers) => store.dataRequest.dataRequestDetail?.finalized_outcome);
     const resolutionWindows = useSelector((store: Reducers) => store.dataRequest.dataRequestDetail?.resolutionWindows) ?? [];
+    const stakeToken = useSelector((store: Reducers) => store.dataRequest.dataRequestDetail?.stakeToken);
+
     let finalizedRound: number | undefined = undefined;
 
     if (finalizedOutcome) {
@@ -16,12 +18,15 @@ export default function AccountStakesInfoCardConnector() {
         finalizedRound = resolutionWindows[resolutionWindows.length - 2].round;
     }
 
+    if (!stakeToken) return null;
+
     return (
         <AccountStakesInfoCard
             accountStakes={accountStakes}
             claim={claim}
             finalizedOutcome={finalizedOutcome}
             finalizedRound={finalizedRound}
+            stakeToken={stakeToken}
         />
     );
 }

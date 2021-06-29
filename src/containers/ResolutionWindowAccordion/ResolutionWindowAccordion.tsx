@@ -17,8 +17,10 @@ import s from './ResolutionWindowAccordion.module.scss';
 import { transfromOutcomeToString } from '../../models/DataRequestOutcome';
 import Countdown from '../../compositions/Countdown';
 import { useState } from 'react';
+import { TokenViewModel } from '../../models/Token';
 
 interface Props {
+    stakeToken: TokenViewModel;
     resolutionWindow: ResolutionWindow;
     defaultExpanded?: boolean;
 }
@@ -26,6 +28,7 @@ interface Props {
 export default function ResolutionWindowAccordion({
     resolutionWindow,
     defaultExpanded,
+    stakeToken,
 }: Props) {
     const now = new Date();
     const [isWindowClosed, setWindowClosed] = useState(resolutionWindow.endTime.getTime() <= now.getTime());
@@ -56,11 +59,11 @@ export default function ResolutionWindowAccordion({
                         },
                         {
                             label: trans('resolutionWindowAccordion.label.bondSize'),
-                            value: <span>{`${formatToken(resolutionWindow.bondSize)} ${trans('global.token.symbol')}`}</span>,
+                            value: <span>{`${formatToken(resolutionWindow.bondSize, stakeToken.decimals)} ${stakeToken.symbol}`}</span>,
                         },
                         {
                             label: trans('resolutionWindowAccordion.label.totalStaked'),
-                            value: <span>{`${formatToken(resolutionWindow.totalStaked)} ${trans('global.token.symbol')}`}</span>,
+                            value: <span>{`${formatToken(resolutionWindow.totalStaked, stakeToken.decimals)} ${stakeToken.symbol}`}</span>,
                         },
                         {
                             label: trans('resolutionWindowAccordion.label.percentageFilled'),
@@ -77,9 +80,12 @@ export default function ResolutionWindowAccordion({
                     ]}
                 />
                 <h3>{trans('resolutionWindowAccordion.outcomeStakes.title')}</h3>
-                <OutcomeStakeInfo outcomeStakes={resolutionWindow.outcomeStakes} />
+                <OutcomeStakeInfo stakeToken={stakeToken} outcomeStakes={resolutionWindow.outcomeStakes} />
                 <h3>{trans('resolutionWindowAccordion.stakerReports.title')}</h3>
-                <StakerReport userStakes={resolutionWindow.userStakes} />
+                <StakerReport
+                    userStakes={resolutionWindow.userStakes}
+                    stakeToken={stakeToken}
+                />
             </AccordionDetails>
         </Accordion>
     );

@@ -11,6 +11,8 @@ const initialState: AppConfigState = {
     appConfig: {
         nativeTokenDecimals: 18,
         nativeTokenSymbol: '?',
+        stakeTokenDecimals: 18,
+        stakeTokenSymbol: '?',
     }
 };
 

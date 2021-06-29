@@ -35,16 +35,16 @@ export default function OracleConfigInfoCard({
                         value: <span>{oracleConfig.gov}</span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.bondToken'),
-                        value: <span>{oracleConfig.bondToken}</span>
+                        value: <span>{oracleConfig.bondToken.contractId}</span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.stakeToken'),
-                        value: <span>{oracleConfig.stakeToken}</span>
+                        value: <span>{oracleConfig.stakeToken.contractId}</span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.finalArbitrator'),
                         value: <span>{oracleConfig.finalArbitrator}</span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.finalArbitratorInvokeAmount'),
-                        value: <span>{formatToken(oracleConfig.finalArbitratorInvokeAmount, 18, 2)} {trans('global.token.symbol')}</span>
+                        value: <span>{formatToken(oracleConfig.finalArbitratorInvokeAmount, oracleConfig.stakeToken.decimals, 2)} {oracleConfig.stakeToken.symbol}</span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.resolutionFeePercentage'),
                         value: <span>{oracleConfig.resolutionFeePercentage / 100}%</span>
@@ -73,7 +73,7 @@ export default function OracleConfigInfoCard({
                         </span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.validityBond'),
-                        value: <span>{formatToken(oracleConfig.validityBond, 18, 2)} {trans('global.token.symbol')}</span>
+                        value: <span>{formatToken(oracleConfig.validityBond, oracleConfig.bondToken.decimals, 2)} {oracleConfig.bondToken.symbol}</span>
                     },]}
                 />
             </CardContent>

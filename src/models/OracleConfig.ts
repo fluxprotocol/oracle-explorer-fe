@@ -1,6 +1,8 @@
+import { getTokenInfo } from "../services/providers/ProviderRegistry";
+import { TokenViewModel } from "./Token";
+
 export interface OracleConfig {
     blockHeight: string;
-    bondToken: string;
     date: Date;
     defaultChallengeWindowDuration: string;
     finalArbitrator: string;
@@ -10,8 +12,9 @@ export interface OracleConfig {
     maxOutcomes: number;
     minInitialChallengeWindowDuration: string;
     resolutionFeePercentage: number;
-    stakeToken: string;
     validityBond: string;
+    stakeToken: TokenViewModel;
+    bondToken: TokenViewModel;
 }
 
 export interface OracleConfigGraphData {
@@ -30,10 +33,13 @@ export interface OracleConfigGraphData {
     validity_bond: string;
 }
 
-export function transformToOracleConfig(data: OracleConfigGraphData): OracleConfig {
+export async function transformToOracleConfig(data: OracleConfigGraphData): Promise<OracleConfig> {
+    const stakeToken = await getTokenInfo('near', data.stake_token);
+    const bondToken = await getTokenInfo('near', data.bond_token);
+
     return {
         blockHeight: data.block_height,
-        bondToken: data.bond_token,
+        bondToken: bondToken,
         date: new Date(Number(data.date)),
         defaultChallengeWindowDuration: data.default_challenge_window_duration,
         finalArbitrator: data.final_arbitrator,
@@ -43,7 +49,7 @@ export function transformToOracleConfig(data: OracleConfigGraphData): OracleConf
         maxOutcomes: data.max_outcomes,
         minInitialChallengeWindowDuration: data.min_initial_challenge_window_duration,
         resolutionFeePercentage: data.resolution_fee_percentage,
-        stakeToken: data.stake_token,
+        stakeToken: stakeToken,
         validityBond: data.validity_bond,
     };
 }

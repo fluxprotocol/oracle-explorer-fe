@@ -10,12 +10,14 @@ import s from './AccountStakesInfoCard.module.scss';
 import { ClaimViewModel } from '../../models/Claim';
 import { formatToken } from '../../utils/tokenUtils';
 import { Outcome } from '../../models/DataRequestOutcome';
+import { TokenViewModel } from '../../models/Token';
 
 interface Props {
     claim?: ClaimViewModel;
     accountStakes: OutcomeStake[];
     finalizedOutcome?: Outcome;
     finalizedRound?: number;
+    stakeToken: TokenViewModel;
 }
 
 function EmptyDiv(props: PropsWithChildren<{}>) {
@@ -27,6 +29,7 @@ export default function AccountStakesInfoCard({
     accountStakes,
     finalizedRound,
     finalizedOutcome,
+    stakeToken,
 }: Props) {
     return (
         <Card className={s.card}>
@@ -38,9 +41,9 @@ export default function AccountStakesInfoCard({
                 {claim && (
                     <div className={s.claim}>
                         {trans('dataRequestDetail.label.claimed', {
-                            payout: formatToken(claim.payout),
-                            userCorrectStake: formatToken(claim.userCorrectStake),
-                            tokenSymbol: trans('global.token.symbol'),
+                            payout: formatToken(claim.payout, stakeToken.decimals),
+                            userCorrectStake: formatToken(claim.userCorrectStake, stakeToken.decimals),
+                            tokenSymbol: stakeToken.symbol,
                         })}
                     </div>
                 )}
@@ -51,6 +54,7 @@ export default function AccountStakesInfoCard({
                         tableComponent={EmptyDiv}
                         finalizedOutcome={finalizedOutcome}
                         finalizedRound={finalizedRound}
+                        stakeToken={stakeToken}
                     />
                 )}
 

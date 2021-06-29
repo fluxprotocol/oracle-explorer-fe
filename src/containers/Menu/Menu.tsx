@@ -13,8 +13,11 @@ import { formatToken } from '../../utils/tokenUtils';
 
 import s from './Menu.module.scss';
 import StorageManagerDialogConnector from '../../connectors/StorageManagerDialogConnector';
+import { AppConfig } from '../../models/AppConfig';
+
 interface Props {
     account?: Account;
+    appConfig: AppConfig;
     onLoginClick: () => void;
     onLogoutClick: () => void;
     onStorageManagerClick: () => void;
@@ -22,6 +25,7 @@ interface Props {
 
 export default function Menu({
     account,
+    appConfig,
     onLoginClick,
     onLogoutClick,
     onStorageManagerClick,
@@ -97,7 +101,7 @@ export default function Menu({
                                         <Link className={s.link} to={routePaths.account(account.providerId, account.accountId)}>{account.accountId}</Link>
                                     </li>
                                     <li className={s.menuItem}>
-                                        {formatToken(account.balance)} {trans('global.token.symbol')}
+                                        {formatToken(account.balance, appConfig.stakeTokenDecimals)} {appConfig.stakeTokenSymbol}
                                     </li>
                                 </>
                             )}
@@ -116,7 +120,7 @@ export default function Menu({
                                     </IconButton>
                                     <MuiMenu anchorEl={menuAnchorEl} keepMounted open={Boolean(menuAnchorEl)} onClose={handleMenuClose}>
                                         <MuiMenuItem className={s.mobileOnly} onClick={handleAccountClick}>{account.accountId}</MuiMenuItem>
-                                        <MuiMenuItem className={s.mobileOnly} disabled>{formatToken(account.balance)} {trans('global.token.symbol')}</MuiMenuItem>
+                                        <MuiMenuItem className={s.mobileOnly} disabled>{formatToken(account.balance, appConfig.stakeTokenDecimals)} {appConfig.stakeTokenSymbol}</MuiMenuItem>
                                         <MuiMenuItem onClick={handleStorageManagerClick}>{trans('menu.label.storageManager')}</MuiMenuItem>
                                         <MuiMenuItem onClick={handleLogoutClick}>{trans('menu.label.logout')}</MuiMenuItem>
                                     </MuiMenu>

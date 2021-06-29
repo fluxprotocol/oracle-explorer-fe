@@ -37,7 +37,7 @@ export default function UnstakeDialog({
     function handleStakeChange(amount: string) {
         setFormValues({
             ...formValues,
-            amount: amount ? toToken(amount) : '0',
+            amount: amount ? toToken(amount, dataRequest.stakeToken.decimals) : '0',
             amountFormatted: amount ? amount : '',
         });
     }
@@ -48,7 +48,7 @@ export default function UnstakeDialog({
         setFormValues({
             ...formValues,
             amount: selectedOutcomeStake.stake,
-            amountFormatted: formatToken(selectedOutcomeStake.stake),
+            amountFormatted: formatToken(selectedOutcomeStake.stake, dataRequest.stakeToken.decimals),
         });
     }
 
@@ -87,13 +87,13 @@ export default function UnstakeDialog({
                 </div>
                 <div className={s.formItem}>
                     {trans('unstakeDialog.label.staked', {
-                        stake: formatToken(roundStakes[formValues.outcomeIndex].stake),
-                        tokenSymbol: trans('global.token.symbol'),
+                        stake: formatToken(roundStakes[formValues.outcomeIndex].stake, dataRequest.stakeToken.decimals),
+                        tokenSymbol: dataRequest.stakeToken.symbol,
                     })}
                 </div>
                 <div className={s.formItem}>
                     <NumberInput
-                        label={trans('unstakeDialog.label.stakeAmount', { tokenSymbol: trans('global.token.symbol') })}
+                        label={trans('unstakeDialog.label.stakeAmount', { tokenSymbol: dataRequest.stakeToken.symbol })}
                         className={s.formInput}
                         value={formValues.amountFormatted}
                         onChange={handleStakeChange}

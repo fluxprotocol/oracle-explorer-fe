@@ -9,13 +9,16 @@ import { WhitelistItemViewModel } from '../../models/WhitelistItem';
 import { InformationRow } from '../InformationRows/InformationRows';
 import { formatToken } from '../../utils/tokenUtils';
 import ExternalLink from '../../components/ExternalLink';
+import { AppConfig } from '../../models/AppConfig';
 
 interface Props {
     whitelist: WhitelistItemViewModel;
+    appConfig: AppConfig;
 }
 
 export default function WhitelistInfoCard({
     whitelist,
+    appConfig,
 }: Props) {
     const rows: InformationRow[] = [
         {
@@ -36,7 +39,7 @@ export default function WhitelistInfoCard({
         if (whitelist.customFee.type === 'fixed') {
             rows.push({
                 label: trans('whitelistInfoCard.label.fixedFee'),
-                value: <span>{formatToken(whitelist.customFee.fee)} {trans('global.token.symbol')}</span>
+                value: <span>{formatToken(whitelist.customFee.fee, appConfig.stakeTokenDecimals)} {appConfig.stakeTokenSymbol}</span>
             });
         } else if (whitelist.customFee.type === 'multiplier') {
             rows.push({

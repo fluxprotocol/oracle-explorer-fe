@@ -16,6 +16,11 @@ async function getUserStakesByRequestIdAndAccountId(requestId: string, accountId
                             outcome
                             round
                             total_stake
+                            data_request {
+                                config {
+                                    stake_token
+                                }
+                            }
                         }
                     }
                 `,
@@ -49,6 +54,11 @@ export async function getUserStakesByRequestId(requestId: string, accountId?: st
                             outcome
                             round
                             total_stake
+                            data_request {
+                                config {
+                                    stake_token
+                                }
+                            }
                         }
                     }
                 `,
@@ -85,6 +95,9 @@ export async function getUserStakesByAccountId(accountId: string, filters: UserS
                                 total_stake
                                 data_request {
                                     finalized_outcome
+                                    config {
+                                        stake_token
+                                    }
                                 }
                             }
                             total
@@ -98,7 +111,7 @@ export async function getUserStakesByAccountId(accountId: string, filters: UserS
             }
         });
 
-        const items = transformToUserStakes(response.data.stakes.items);
+        const items = await transformToUserStakes(response.data.stakes.items);
 
         return {
             items: items[accountId],
@@ -128,6 +141,9 @@ export async function getUnclaimedStakesByAccountId(accountId: string): Promise<
                             total_stake
                             data_request {
                                 finalized_outcome
+                                config {
+                                    stake_token
+                                }
                             }
                         }
                     }
@@ -137,7 +153,7 @@ export async function getUnclaimedStakesByAccountId(accountId: string): Promise<
             }
         });
 
-        const items = transformToUserStakes(response.data.stakes);
+        const items = await transformToUserStakes(response.data.stakes);
         return combineOutcomeStakes(items[accountId]);
     } catch (error) {
         console.error('[getUnclaimedStakesByAccountId]', error);

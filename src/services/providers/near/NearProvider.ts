@@ -3,10 +3,13 @@ import { NEAR_MAX_GAS, NEAR_NULL_CONTRACT, NEAR_ORACLE_CONTRACT_ID, STORAGE_BASE
 import { Outcome, OutcomeType } from "../../../models/DataRequestOutcome";
 import { DataRequestViewModel } from "../../../models/DataRequest";
 import Big from "big.js";
-import { batchSendTransactions, createNearOutcome, getTokenBalance, TransactionOption } from "./NearService";
+import { batchSendTransactions, createNearOutcome, getLatestOracleConfig, getTokenBalance, TransactionOption } from "./NearService";
 import { connectWallet } from "./NearConnectService";
 import { createStorageTransaction } from "./StorageManagerService";
 import { Account } from "../../../models/Account";
+import { TokenViewModel } from "../../../models/Token";
+import { AppConfig } from "../../../models/AppConfig";
+
 export default class NearProvider implements IProvider {
     id = 'near';
     nativeTokenSymbol = 'NEAR';
@@ -75,7 +78,7 @@ export default class NearProvider implements IProvider {
         }
 
         transactions.push({
-            receiverId: dataRequest.config.stakeToken,
+            receiverId: dataRequest.config.stakeToken.contractId,
             transactionOptions: [{
                 amount: '1',
                 gas: NEAR_MAX_GAS,
@@ -187,5 +190,31 @@ export default class NearProvider implements IProvider {
         }, NEAR_MAX_GAS, '1');
 
         return true;
+    }
+
+    async getTokenInfo(contractId: string): Promise<TokenViewModel | undefined> {
+        try {
+            const wallet = await connectWallet();
+            const account = wallet.account();
+            const result = await account.viewFunction(contractId, 'ft_metadata', {});
+
+            return result;
+        } catch (error) {
+            console.error('[NearProvider-getTokenInfo]', error);
+            return undefined;
+        }
+    }
+
+    async getAppConfig(): Promise<AppConfig> {
+        const wallet = await connectWallet();
+        const config = await getLatestOracleConfig(wallet);
+        const token = await this.getTokenInfo(config.stake_token);
+
+        return {
+            nativeTokenDecimals: this.nativeTokenDecimals,
+            nativeTokenSymbol: this.nativeTokenSymbol,
+            stakeTokenDecimals: token?.decimals ?? 18,
+            stakeTokenSymbol: token?.symbol ?? config.stake_token,
+        };
     }
 }

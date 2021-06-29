@@ -13,12 +13,14 @@ import s from './OutcomeStakeInfo.module.scss';
 import trans from '../../../../translation/trans';
 import { formatToken } from '../../../../utils/tokenUtils';
 import { isSameOutcome, Outcome, OutcomeType } from '../../../../models/DataRequestOutcome';
+import { TokenViewModel } from '../../../../models/Token';
 
 export interface Props {
     outcomeStakes: OutcomeStake[];
     tableComponent?: any;
     finalizedOutcome?: Outcome;
     finalizedRound?: number;
+    stakeToken: TokenViewModel;
 }
 
 export default function OutcomeStakeInfo({
@@ -26,6 +28,7 @@ export default function OutcomeStakeInfo({
     tableComponent = Paper,
     finalizedOutcome,
     finalizedRound,
+    stakeToken,
 }: Props) {
     return (
         <div>
@@ -52,7 +55,7 @@ export default function OutcomeStakeInfo({
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {formatToken(outcomeInfo.stake, 18)} {trans('global.token.symbol')}
+                                        {formatToken(outcomeInfo.stake, stakeToken.decimals)} {stakeToken.symbol}
                                     </TableCell>
 
                                     {finalizedOutcome && typeof finalizedRound !== 'undefined' && (

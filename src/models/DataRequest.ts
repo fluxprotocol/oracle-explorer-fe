@@ -1,4 +1,5 @@
 import Big from "big.js";
+import { getTokenInfo } from "../services/providers/ProviderRegistry";
 import trans from "../translation/trans";
 import { nsToMs } from "../utils/dateUtils";
 import { parseJson } from "../utils/jsonUtils";
@@ -6,6 +7,7 @@ import { ClaimGraphData, ClaimViewModel, transformToClaimViewModel } from "./Cla
 import { Outcome, transformToOutcome } from "./DataRequestOutcome";
 import { OracleConfig, OracleConfigGraphData, transformToOracleConfig } from "./OracleConfig";
 import { ResolutionWindow, ResolutionWindowGraphData, transformToResolutionWindow } from "./ResolutionWindow";
+import { TokenViewModel } from "./Token";
 
 export interface DataRequestSource {
     endPoint: string;
@@ -38,6 +40,8 @@ export interface DataRequestViewModel extends DataRequestListItem {
     finalArbitratorTriggered: boolean;
     settlementTime: Date;
     tags: string[];
+    stakeToken: TokenViewModel;
+    bondToken: TokenViewModel;
     number_multiplier?: string;
     data_type: 'String' | 'Number';
 }
@@ -87,17 +91,21 @@ export function transformToDataRequestListItem(data: DataRequestGraphData): Data
     };
 }
 
-export function transformToDataRequestViewModel(data: DataRequestGraphData): DataRequestViewModel {
-    const resolutionWindows = data.resolution_windows.map(rw => transformToResolutionWindow(rw));
+export async function transformToDataRequestViewModel(data: DataRequestGraphData): Promise<DataRequestViewModel> {
+    const stakeToken = await getTokenInfo('near', data.config.stake_token);
+    const bondToken = await getTokenInfo('near', data.config.bond_token);
+
+    const resolutionWindows = await Promise.all(data.resolution_windows.map(rw => transformToResolutionWindow(rw, stakeToken)));
     const totalStaked = resolutionWindows.reduce((prev, curr) => prev.add(curr.totalStaked), new Big(0));
     const parsedDataType = parseJson<NumberDataType>(data.data_type);
+
 
     return {
         ...transformToDataRequestListItem(data),
         claimInfo: data.claim ? transformToClaimViewModel(data.claim) : undefined,
-        config: transformToOracleConfig(data.config),
+        config: await transformToOracleConfig(data.config),
         settlementTime: new Date(nsToMs(Number(data.settlement_time))),
-        resolutionWindows,
+        resolutionWindows: resolutionWindows,
         description: data.description ?? undefined,
         sources: data.sources.map((s) => ({
             endPoint: s.end_point,
@@ -112,6 +120,8 @@ export function transformToDataRequestViewModel(data: DataRequestGraphData): Dat
         tags: data.tags ?? [],
         data_type: parsedDataType ? "Number" : "String",
         number_multiplier: parsedDataType ? parsedDataType.Number : undefined,
+        stakeToken,
+        bondToken,
     };
 }
 

@@ -63,7 +63,7 @@ export default function OutcomeStakesOverview({
                                     {stake.finalizedOutcome ? transfromOutcomeToString(stake.finalizedOutcome) : null}
                                 </TableCell>
                                 <TableCell>
-                                    {formatToken(stake.stake)} {trans('global.token.symbol')}
+                                    {formatToken(stake.stake, stake.stakeToken.decimals)} {stake.stakeToken.symbol}
                                 </TableCell>
                             </TableRow>
                         ))}
