@@ -1,5 +1,5 @@
 import { IProvider } from "../IProvider";
-import { NEAR_FLUX_TOKEN_ID, NEAR_MAX_GAS, NEAR_NULL_CONTRACT, NEAR_ORACLE_CONTRACT_ID, STORAGE_BASE } from "../../../config";
+import { NEAR_MAX_GAS, NEAR_NULL_CONTRACT, NEAR_ORACLE_CONTRACT_ID, STORAGE_BASE } from "../../../config";
 import { Outcome, OutcomeType } from "../../../models/DataRequestOutcome";
 import { DataRequestViewModel } from "../../../models/DataRequest";
 import Big from "big.js";
@@ -75,7 +75,7 @@ export default class NearProvider implements IProvider {
         }
 
         transactions.push({
-            receiverId: NEAR_FLUX_TOKEN_ID,
+            receiverId: dataRequest.config.stakeToken,
             transactionOptions: [{
                 amount: '1',
                 gas: NEAR_MAX_GAS,

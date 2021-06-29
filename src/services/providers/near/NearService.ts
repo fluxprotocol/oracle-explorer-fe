@@ -1,9 +1,11 @@
 import { WalletConnection, utils, transactions } from "near-api-js";
 import BN from 'bn.js';
-import { NEAR_FLUX_TOKEN_ID } from "../../../config";
+import { NEAR_ORACLE_CONTRACT_ID } from "../../../config";
 import { OutcomeType } from "../../../models/DataRequestOutcome";
 import { DataRequestViewModel } from "../../../models/DataRequest";
 import Big from "big.js";
+import { OracleConfigGraphData } from "../../../models/OracleConfig";
+import cache from "../../../utils/cache";
 
 export interface TransactionViewOptions {
     methodName: string;
@@ -43,9 +45,19 @@ export async function batchSendTransactions(walletConnection: WalletConnection, 
     return walletConnection.requestSignTransactions(resultTxs, callbackUrl);
 }
 
+export async function getLatestOracleConfig(walletConnection: WalletConnection): Promise<OracleConfigGraphData> {
+    const account = walletConnection.account();
+
+    return cache('near_latest_oracle_config', async () => {
+        return account.viewFunction(NEAR_ORACLE_CONTRACT_ID, 'get_config', {});
+    });
+}
+
 export async function getTokenBalance(walletConnection: WalletConnection, accountId: string): Promise<string> {
     const account = walletConnection.account();
-    return account.viewFunction(NEAR_FLUX_TOKEN_ID, 'ft_balance_of', {
+    const config = await getLatestOracleConfig(walletConnection);
+
+    return account.viewFunction(config.stake_token, 'ft_balance_of', {
         account_id: accountId,
     });
 }
