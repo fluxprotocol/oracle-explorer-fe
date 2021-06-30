@@ -38,27 +38,29 @@ export default function StakerReport({
                     </TableHead>
                     <TableBody>
                         {Object.keys(userStakes).map((accountId, index) => {
-                            const outcomeInfo = userStakes[accountId][0];
+                            const outcomeInfos = userStakes[accountId];
 
-                            return (
-                                <TableRow key={index}>
-                                    <TableCell>
-                                        <Link className={s.link} to={routePaths.account('near', accountId)}>{accountId}</Link>
-                                    </TableCell>
-                                    <TableCell>
-                                        {outcomeInfo.outcome.type === OutcomeType.Answer && (
-                                            <span>"{outcomeInfo.outcome.answer}"</span>
-                                        )}
+                            return outcomeInfos.map((outcomeInfo) => {
+                                return (
+                                    <TableRow key={`${accountId}_${JSON.stringify(outcomeInfo.outcome)}`}>
+                                        <TableCell>
+                                            <Link className={s.link} to={routePaths.account('near', accountId)}>{accountId}</Link>
+                                        </TableCell>
+                                        <TableCell>
+                                            {outcomeInfo.outcome.type === OutcomeType.Answer && (
+                                                <span>"{outcomeInfo.outcome.answer}"</span>
+                                            )}
 
-                                        {outcomeInfo.outcome.type === OutcomeType.Invalid && (
-                                            <span>{trans('stakerReport.label.invalid')}</span>
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        {formatToken(outcomeInfo.stake, stakeToken.decimals)} {stakeToken.symbol}
-                                    </TableCell>
-                                </TableRow>
-                            );
+                                            {outcomeInfo.outcome.type === OutcomeType.Invalid && (
+                                                <span>{trans('stakerReport.label.invalid')}</span>
+                                            )}
+                                        </TableCell>
+                                        <TableCell>
+                                            {formatToken(outcomeInfo.stake, stakeToken.decimals)} {stakeToken.symbol}
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            });
                         })}
                     </TableBody>
                 </Table>
