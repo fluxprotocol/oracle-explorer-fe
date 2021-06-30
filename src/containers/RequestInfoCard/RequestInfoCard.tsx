@@ -54,6 +54,26 @@ export default function RequestInfoCard({
                         label: trans('requestInfo.label.totalStaked'),
                         value: <span>{`${formatToken(dataRequest.totalStaked, dataRequest.stakeToken.decimals)} ${dataRequest.stakeToken.symbol}`}</span>,
                     }, {
+                        label: trans('requestInfo.label.totalCorrectStaked'),
+                        value: (
+                            <span>
+                                {dataRequest.totalCorrectStaked ?
+                                    `${formatToken(dataRequest.totalCorrectStaked, dataRequest.stakeToken.decimals)} ${dataRequest.stakeToken.symbol}` :
+                                    trans('global.na')
+                                }
+                            </span>
+                        )
+                    }, {
+                        label: trans('requestInfo.label.totalIncorrectStaked'),
+                        value: (
+                            <span>
+                                {dataRequest.totalIncorrectStaked ?
+                                    `${formatToken(dataRequest.totalIncorrectStaked, dataRequest.stakeToken.decimals)} ${dataRequest.stakeToken.symbol}` :
+                                    trans('global.na')
+                                }
+                            </span>
+                        )
+                    }, {
                         label: trans('requestInfo.label.tags'),
                         value: <span>{dataRequest.tags.length ? dataRequest.tags.map(t => `"${t}"`).join(', ') : trans('requestInfo.label.noTags')}</span>
                     }, {

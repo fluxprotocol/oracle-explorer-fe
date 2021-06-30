@@ -4,6 +4,7 @@
     "global.action.submit": "Submit",
     "global.yes": "Yes",
     "global.no": "No",
+    "global.na": "N/A",
 
     "global.status.ongoing": "On going",
     "global.status.completed": "Completed",
@@ -113,6 +114,8 @@
     "requestInfo.label.noTags": "No tags available",
     "requestInfo.label.config": "Config ID",
     "requestInfo.label.feeReward": "Reward",
+    "requestInfo.label.totalCorrectStaked": "Total correct staked",
+    "requestInfo.label.totalIncorrectStaked": "Total incorrect staked",
 
     "stakeReport.table.label.outcome": "Outcome",
     "stakeReport.table.label.stake": "Staked",

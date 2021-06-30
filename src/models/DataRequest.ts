@@ -42,6 +42,8 @@ export interface DataRequestViewModel extends DataRequestListItem {
     tags: string[];
     stakeToken: TokenViewModel;
     bondToken: TokenViewModel;
+    totalCorrectStaked?: string;
+    totalIncorrectStaked?: string;
     number_multiplier?: string;
     data_type: 'String' | 'Number';
 }
@@ -57,6 +59,8 @@ export interface DataRequestGraphData {
     final_arbitrator_triggered: boolean;
     global_config_id: string;
     initial_challenge_period: string;
+    total_correct_bonded_staked?: string;
+    total_incorrect_staked?: string;
     outcomes: string[];
     requestor: string;
     target_contract: string;
@@ -99,7 +103,6 @@ export async function transformToDataRequestViewModel(data: DataRequestGraphData
     const totalStaked = resolutionWindows.reduce((prev, curr) => prev.add(curr.totalStaked), new Big(0));
     const parsedDataType = parseJson<NumberDataType>(data.data_type);
 
-
     return {
         ...transformToDataRequestListItem(data),
         claimInfo: data.claim ? transformToClaimViewModel(data.claim) : undefined,
@@ -122,6 +125,8 @@ export async function transformToDataRequestViewModel(data: DataRequestGraphData
         number_multiplier: parsedDataType ? parsedDataType.Number : undefined,
         stakeToken,
         bondToken,
+        totalCorrectStaked: data.total_correct_bonded_staked,
+        totalIncorrectStaked: data.total_incorrect_staked,
     };
 }
 

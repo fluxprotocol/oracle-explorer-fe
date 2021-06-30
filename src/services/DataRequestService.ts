@@ -74,6 +74,8 @@ export async function getDataRequestById(id: string, accountId?: string) {
                         date
                         final_arbitrator_triggered
                         global_config_id
+                        total_incorrect_staked
+                        total_correct_bonded_staked
                         id
                         claim(accountId: $accountId) {
                             payout
