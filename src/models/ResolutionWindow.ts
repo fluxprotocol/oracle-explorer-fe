@@ -1,5 +1,5 @@
 import Big from "big.js";
-import { Outcome, transformToOutcome } from "./DataRequestOutcome";
+import { isSameOutcome, Outcome, transformToOutcome } from "./DataRequestOutcome";
 import { OutcomeStake } from "./OutcomeStake";
 import { TokenViewModel } from "./Token";
 import { transformToUserStakes, UserStakeGraphData, UserStakes } from "./UserStakes";
@@ -39,15 +39,18 @@ export interface ResolutionWindowGraphData {
 export async function transformToResolutionWindow(data: ResolutionWindowGraphData, stakeToken?: TokenViewModel): Promise<ResolutionWindow> {
     let totalStaked = new Big(0);
     let highestOutcomeStake: OutcomeStake | undefined;
+    const bondedOutcome = data.bonded_outcome ? transformToOutcome(data.bonded_outcome) : undefined;
 
     const outcomeStakes: OutcomeStake[] = data.outcome_stakes.map((os) => {
         totalStaked = totalStaked.add(os.total_stake);
+        const outcome = transformToOutcome(os.outcome);
 
         const outcomeStake: OutcomeStake = {
-            outcome: transformToOutcome(os.outcome),
+            outcome,
             stake: os.total_stake,
             dataRequestId: os.data_request_id,
             round: os.round,
+            bonded: bondedOutcome ? isSameOutcome(outcome, bondedOutcome) : false,
             stakeToken: stakeToken ?? {
                 contractId: '',
                 decimals: 18,
@@ -78,7 +81,7 @@ export async function transformToResolutionWindow(data: ResolutionWindowGraphDat
         totalStaked: totalStaked.toString(),
         round: data.round,
         userStakes: await transformToUserStakes(data.user_stakes, stakeToken),
-        bondedOutcome: data.bonded_outcome ? transformToOutcome(data.bonded_outcome) : undefined,
+        bondedOutcome,
         winningOutcomeStake: highestOutcomeStake,
     };
 }

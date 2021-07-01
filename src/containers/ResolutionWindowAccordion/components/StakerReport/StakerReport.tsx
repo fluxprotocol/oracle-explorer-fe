@@ -15,6 +15,7 @@ import { OutcomeType } from '../../../../models/DataRequestOutcome';
 import { Link } from 'react-router-dom';
 import { routePaths } from '../../../../routes';
 import { TokenViewModel } from '../../../../models/Token';
+import Big from 'big.js';
 
 export interface Props {
     stakeToken: TokenViewModel;
@@ -41,6 +42,10 @@ export default function StakerReport({
                             const outcomeInfos = userStakes[accountId];
 
                             return outcomeInfos.map((outcomeInfo) => {
+                                if (new Big(outcomeInfo.stake).lte(0)) {
+                                    return null;
+                                }
+
                                 return (
                                     <TableRow key={`${accountId}_${JSON.stringify(outcomeInfo.outcome)}`}>
                                         <TableCell>

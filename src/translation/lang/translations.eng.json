@@ -63,6 +63,8 @@
     "outcomeStakesOverview.table.label.outcome": "Outcome",
     "outcomeStakesOverview.table.label.stake": "Stake",
     "outcomeStakesOverview.table.label.finalizedOutcome": "Finalized outcome",
+
+    "outcomeStakeInfo.table.label.round": "Round",
     "outcomeStakeInfo.table.label.correcltyStaked": "Correct?",
     "outcomeStakeInfo.label.correct": "✅ Correct",
     "outcomeStakeInfo.label.incorrect": "❌ Incorrect",
@@ -175,7 +177,8 @@
     "accountPage.label.requests": "Requests",
 
     "dataRequestDetail.title": "Request #:id",
-    "dataRequestDetail.label.claimed": "Correctly bonded stake: :userCorrectStake :tokenSymbol + Fees earned: :payout :tokenSymbol. Any unbonded stake can be unstaked.",
+    "dataRequestDetail.label.claimed": "Correctly bonded stake: :userCorrectStake :tokenSymbol + Fees earned: :payout :tokenSymbol. Any unbonded stake is refunded.",
+    "dataRequestDetail.description.unclaimed": "Click \"Claim earnings\" in order to claim back any non-bonded stake + a reward if you have correctly staken.",
     "dataRequestDetail.label.stake": "Stake",
     "dataRequestDetail.label.unstake": "Unstake",
     "dataRequestDetail.label.claim": "Claim earnings",

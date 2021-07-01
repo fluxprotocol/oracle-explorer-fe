@@ -91,6 +91,13 @@ export async function getDataRequestById(id: string, accountId?: string) {
                         tags
                         data_type
                         fee
+                        account_stakes(accountId: $accountId) {
+                            outcome
+                            total_stake
+                            round
+                            account_id
+                            data_request_id
+                        }
                         whitelist_item {
                             active
                             code_base_url

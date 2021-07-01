@@ -88,7 +88,6 @@ export function claimDataRequest(accountId: string, dataRequest: DataRequestView
     }
 }
 
-//request_id: U64, resolution_round: u16, outcome: Outcome, amount: Balance
 export function unstakeDataRequest(amount: string, dataRequest: DataRequestViewModel, outcome: Outcome) {
     return async (dispatch: Function) => {
         const currentResolutionWindow: ResolutionWindow | undefined = dataRequest.resolutionWindows[dataRequest.resolutionWindows.length - 1] ?? undefined;

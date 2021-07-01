@@ -6,6 +6,7 @@ export interface OutcomeStake {
     outcome: Outcome;
     stake: string;
     round: number;
+    bonded: boolean;
     dataRequestId: string;
     accountId?: string;
     finalizedOutcome?: Outcome;

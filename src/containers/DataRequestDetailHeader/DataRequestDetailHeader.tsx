@@ -36,7 +36,7 @@ export default function DataRequestDetailHeader({
     const isFinalized = typeof dataRequest.finalized_outcome !== 'undefined';
     const canFinalize = canDataRequestBeFinalized(dataRequest);
 
-    const hasClaimed = Boolean(dataRequest.claimInfo?.payout);
+    const hasClaimed = Boolean(dataRequest.loggedInAccountClaim?.payout);
     const roundStakes = accountStakes.filter(stake => stake.round === currentResolutionWindow?.round);
     const stakedOnRound = sumBigs(roundStakes.map(roundStake => new Big(roundStake.stake)));
 

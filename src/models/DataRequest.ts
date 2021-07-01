@@ -8,6 +8,7 @@ import { Outcome, transformToOutcome } from "./DataRequestOutcome";
 import { OracleConfig, OracleConfigGraphData, transformToOracleConfig } from "./OracleConfig";
 import { ResolutionWindow, ResolutionWindowGraphData, transformToResolutionWindow } from "./ResolutionWindow";
 import { TokenViewModel } from "./Token";
+import { transformToUserStakesViewModel, UserStakeGraphData, UserStakeViewModel } from "./UserStakes";
 
 export interface DataRequestSource {
     endPoint: string;
@@ -27,12 +28,13 @@ export interface DataRequestListItem {
 }
 
 export interface DataRequestViewModel extends DataRequestListItem {
+    loggedInAccountStakes: UserStakeViewModel[];
+    loggedInAccountClaim?: ClaimViewModel;
     description?: string;
     config: OracleConfig;
     sources: DataRequestSource[];
     outcomes?: string[];
     resolutionWindows: ResolutionWindow[];
-    claimInfo?: ClaimViewModel;
     totalStaked: string;
     fee: string;
     finalized_outcome?: Outcome;
@@ -49,6 +51,7 @@ export interface DataRequestViewModel extends DataRequestListItem {
 }
 
 export interface DataRequestGraphData {
+    account_stakes: UserStakeGraphData[];
     id: string;
     fee: string;
     claim: ClaimGraphData | null;
@@ -105,7 +108,6 @@ export async function transformToDataRequestViewModel(data: DataRequestGraphData
 
     return {
         ...transformToDataRequestListItem(data),
-        claimInfo: data.claim ? transformToClaimViewModel(data.claim) : undefined,
         config: await transformToOracleConfig(data.config),
         settlementTime: new Date(nsToMs(Number(data.settlement_time))),
         resolutionWindows: resolutionWindows,
@@ -127,6 +129,9 @@ export async function transformToDataRequestViewModel(data: DataRequestGraphData
         bondToken,
         totalCorrectStaked: data.total_correct_bonded_staked,
         totalIncorrectStaked: data.total_incorrect_staked,
+
+        loggedInAccountClaim: data.claim ? transformToClaimViewModel(data.claim) : undefined,
+        loggedInAccountStakes: data.account_stakes.map(ac => transformToUserStakesViewModel(ac, resolutionWindows)),
     };
 }
 
@@ -138,7 +143,6 @@ export function canDataRequestBeFinalized(dataRequest: DataRequestViewModel): bo
 
     const currentResolutionWindow = dataRequest.resolutionWindows[dataRequest.resolutionWindows.length - 1];
     if (!currentResolutionWindow) return false;
-
 
     const now = new Date().getTime();
 

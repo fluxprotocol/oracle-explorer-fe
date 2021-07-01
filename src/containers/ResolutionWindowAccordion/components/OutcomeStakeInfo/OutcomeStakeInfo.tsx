@@ -14,6 +14,7 @@ import trans from '../../../../translation/trans';
 import { formatToken } from '../../../../utils/tokenUtils';
 import { isSameOutcome, Outcome, OutcomeType } from '../../../../models/DataRequestOutcome';
 import { TokenViewModel } from '../../../../models/Token';
+import Big from 'big.js';
 
 export interface Props {
     outcomeStakes: OutcomeStake[];
@@ -43,6 +44,10 @@ export default function OutcomeStakeInfo({
                     </TableHead>
                     <TableBody>
                         {outcomeStakes.map((outcomeInfo, index) => {
+                            if (new Big(outcomeInfo.stake).lte(0)) {
+                                return null;
+                            }
+
                             return (
                                 <TableRow key={index}>
                                     <TableCell>

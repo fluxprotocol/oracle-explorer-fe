@@ -5,11 +5,9 @@ import { Reducers } from '../../redux/reducers';
 
 
 export default function AccountStakesInfoCardConnector() {
-    const accountStakes = useSelector((store: Reducers) => store.dataRequest.accountStakes);
-    const claim = useSelector((store: Reducers) => store.dataRequest.dataRequestDetail?.claimInfo);
+    const dataRequest = useSelector((store: Reducers) => store.dataRequest.dataRequestDetail);
     const finalizedOutcome = useSelector((store: Reducers) => store.dataRequest.dataRequestDetail?.finalized_outcome);
     const resolutionWindows = useSelector((store: Reducers) => store.dataRequest.dataRequestDetail?.resolutionWindows) ?? [];
-    const stakeToken = useSelector((store: Reducers) => store.dataRequest.dataRequestDetail?.stakeToken);
 
     let finalizedRound: number | undefined = undefined;
 
@@ -18,15 +16,15 @@ export default function AccountStakesInfoCardConnector() {
         finalizedRound = resolutionWindows[resolutionWindows.length - 2].round;
     }
 
-    if (!stakeToken) return null;
+    if (!dataRequest) return null;
 
     return (
         <AccountStakesInfoCard
-            accountStakes={accountStakes}
-            claim={claim}
+            accountStakes={dataRequest.loggedInAccountStakes}
+            claim={dataRequest.loggedInAccountClaim}
             finalizedOutcome={finalizedOutcome}
             finalizedRound={finalizedRound}
-            stakeToken={stakeToken}
+            stakeToken={dataRequest.stakeToken}
         />
     );
 }

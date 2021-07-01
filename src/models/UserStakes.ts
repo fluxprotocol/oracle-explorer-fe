@@ -1,10 +1,21 @@
 import { getTokenInfo } from "../services/providers/ProviderRegistry";
-import { transformToOutcome } from "./DataRequestOutcome";
+import { isSameOutcome, Outcome, transformToOutcome } from "./DataRequestOutcome";
 import { OutcomeStake } from "./OutcomeStake";
+import { ResolutionWindow } from "./ResolutionWindow";
 import { TokenViewModel } from "./Token";
 
+/** @deprecated */
 export interface UserStakes {
     [accountId: string]: OutcomeStake[];
+}
+
+export interface UserStakeViewModel {
+    outcome: Outcome;
+    accountId: string;
+    dataRequestId: string;
+    round: number;
+    totalStake: string;
+    bonded: boolean;
 }
 
 export interface UserStakeGraphData {
@@ -25,7 +36,27 @@ export interface UserStakeGraphData {
     }
 }
 
+export function transformToUserStakesViewModel(userStake: UserStakeGraphData, resolutionWindows: ResolutionWindow[] = []): UserStakeViewModel {
+    let bonded = false;
+    const stakedResolutionWindow = resolutionWindows[userStake.round];
+    const stakedOutcome = transformToOutcome(userStake.outcome);
+
+    if (stakedResolutionWindow && isSameOutcome(stakedResolutionWindow.bondedOutcome, stakedOutcome)) {
+        bonded = true;
+    }
+
+    return {
+        outcome: stakedOutcome,
+        accountId: userStake.account_id,
+        dataRequestId: userStake.data_request_id,
+        totalStake: userStake.total_stake,
+        round: userStake.round,
+        bonded,
+    }
+}
+
 export async function transformToUserStakes(userStakes: UserStakeGraphData[], stakeToken?: TokenViewModel) {
+    // TODO: Investigate if this is still needed
     const result: UserStakes = {};
 
     for await (const userStake of userStakes) {
@@ -41,6 +72,7 @@ export async function transformToUserStakes(userStakes: UserStakeGraphData[], st
             finalizedOutcome: userStake.data_request?.finalized_outcome ? transformToOutcome(userStake.data_request.finalized_outcome) : undefined,
             claimPayout: userStake.claim?.payout,
             stakeToken: finalStakeToken,
+            bonded: false,
         });
 
         result[userStake.account_id] = currentOutcomeStakes;
