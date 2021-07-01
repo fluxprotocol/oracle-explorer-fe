@@ -3,7 +3,6 @@ import { StakeFormValues } from '../../containers/StakeDialog/services/createDef
 import { DataRequestViewModel } from '../../models/DataRequest';
 import { Outcome, OutcomeType } from '../../models/DataRequestOutcome';
 import { combineOutcomeStakes, OutcomeStake } from '../../models/OutcomeStake';
-import { ResolutionWindow } from '../../models/ResolutionWindow';
 import { UserStakeViewModel } from '../../models/UserStakes';
 import { getAllDataRequests, getDataRequestById } from '../../services/DataRequestService';
 import { claimWithProvider, finalizeWithProvider, getLoggedInAccountId, stakeWithProvider, unstakeWithProvider } from '../../services/providers/ProviderRegistry';

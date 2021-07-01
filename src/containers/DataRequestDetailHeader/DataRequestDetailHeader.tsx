@@ -5,9 +5,7 @@ import Countdown from '../../compositions/Countdown';
 import { Account } from '../../models/Account';
 import { canDataRequestBeFinalized, DataRequestViewModel } from '../../models/DataRequest';
 import { OutcomeStake } from '../../models/OutcomeStake';
-import { ResolutionWindow } from '../../models/ResolutionWindow';
 import trans from '../../translation/trans';
-import { sumBigs } from '../../utils/bigUtils';
 
 import s from './DataRequestDetailHeader.module.scss';
 
