@@ -1,19 +1,17 @@
-import { Outcome, OutcomeType } from "../../../models/DataRequestOutcome";
+import { UserStakeViewModel } from "../../../models/UserStakes";
 
 export interface UnstakeFormValues {
-    outcome: Outcome;
-    outcomeIndex: number;
+    selectedStakedOutcome?: UserStakeViewModel;
+    stakeIndex: number;
     amount: string;
     amountFormatted: string;
 }
 
 export function createDefaultUnstakeFormValues(): UnstakeFormValues {
     return {
-        outcome: {
-            type: OutcomeType.Invalid,
-        },
+        selectedStakedOutcome: undefined,
         amount: '',
         amountFormatted: '',
-        outcomeIndex: 0,
+        stakeIndex: 0,
     };
 }

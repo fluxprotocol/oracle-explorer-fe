@@ -115,7 +115,7 @@ export default class NearProvider implements IProvider {
             amount,
 
             // @ts-ignore
-        }, NEAR_MAX_GAS, STORAGE_BASE);
+        }, NEAR_MAX_GAS, '1');
 
         return true;
     }

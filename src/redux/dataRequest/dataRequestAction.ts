@@ -4,6 +4,7 @@ import { DataRequestViewModel } from '../../models/DataRequest';
 import { Outcome, OutcomeType } from '../../models/DataRequestOutcome';
 import { combineOutcomeStakes, OutcomeStake } from '../../models/OutcomeStake';
 import { ResolutionWindow } from '../../models/ResolutionWindow';
+import { UserStakeViewModel } from '../../models/UserStakes';
 import { getAllDataRequests, getDataRequestById } from '../../services/DataRequestService';
 import { claimWithProvider, finalizeWithProvider, getLoggedInAccountId, stakeWithProvider, unstakeWithProvider } from '../../services/providers/ProviderRegistry';
 import { getUserStakesByRequestId } from '../../services/UserStakeService';
@@ -88,11 +89,8 @@ export function claimDataRequest(accountId: string, dataRequest: DataRequestView
     }
 }
 
-export function unstakeDataRequest(amount: string, dataRequest: DataRequestViewModel, outcome: Outcome) {
+export function unstakeDataRequest(amount: string, dataRequest: DataRequestViewModel, stakedOutcome: UserStakeViewModel) {
     return async (dispatch: Function) => {
-        const currentResolutionWindow: ResolutionWindow | undefined = dataRequest.resolutionWindows[dataRequest.resolutionWindows.length - 1] ?? undefined;
-        if (!currentResolutionWindow) return;
-
-        await unstakeWithProvider('near', amount, currentResolutionWindow.round, dataRequest, outcome);
+        await unstakeWithProvider('near', amount, stakedOutcome.round, dataRequest, stakedOutcome.outcome);
     }
 }

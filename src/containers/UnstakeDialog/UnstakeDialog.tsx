@@ -1,11 +1,10 @@
+import Big from 'big.js';
 import React, { useState } from 'react';
 import Select from '../../components/Select';
 import Dialog from '../../compositions/Dialog';
 import NumberInput from '../../compositions/NumberInput';
 import { DataRequestViewModel } from '../../models/DataRequest';
 import { transfromOutcomeToString } from '../../models/DataRequestOutcome';
-import { OutcomeStake } from '../../models/OutcomeStake';
-import { ResolutionWindow } from '../../models/ResolutionWindow';
 import trans from '../../translation/trans';
 import { formatToken, toToken } from '../../utils/tokenUtils';
 import { UnstakeFormValues, createDefaultUnstakeFormValues } from './services/createDefaultUnstakeFormValues';
@@ -17,22 +16,18 @@ interface Props {
     onRequestClose: () => void;
     onSubmit: (formValues: UnstakeFormValues) => void;
     open: boolean;
-    accountStakes: OutcomeStake[];
     dataRequest: DataRequestViewModel;
 }
 
 
 export default function UnstakeDialog({
-    accountStakes,
     dataRequest,
     onRequestClose,
     onSubmit,
     open,
 }: Props) {
-    const currentResolutionWindow: ResolutionWindow | undefined = dataRequest.resolutionWindows[dataRequest.resolutionWindows.length - 1] ?? undefined;
-    const roundStakes = accountStakes.filter(stake => stake.round === currentResolutionWindow.round);
-
     const [formValues, setFormValues] = useState(createDefaultUnstakeFormValues());
+    const unbondedStakes = dataRequest.loggedInAccountStakes.filter(stake => !stake.bonded && new Big(stake.totalStake).gt(0));
 
     function handleStakeChange(amount: string) {
         setFormValues({
@@ -43,23 +38,24 @@ export default function UnstakeDialog({
     }
 
     function handleMaxClick() {
-        const selectedOutcomeStake = roundStakes[formValues.outcomeIndex];
+        const selectedOutcomeStake = unbondedStakes[formValues.stakeIndex];
 
         setFormValues({
             ...formValues,
-            amount: selectedOutcomeStake.stake,
-            amountFormatted: formatToken(selectedOutcomeStake.stake, dataRequest.stakeToken.decimals),
+            amount: selectedOutcomeStake.totalStake,
+            amountFormatted: formatToken(selectedOutcomeStake.totalStake, dataRequest.stakeToken.decimals),
         });
     }
 
     function handleOutcomeChange(outcomeIndex: string) {
         setFormValues({
             ...formValues,
-            outcomeIndex: Number(outcomeIndex),
+            stakeIndex: Number(outcomeIndex),
+            selectedStakedOutcome: unbondedStakes[Number(outcomeIndex)],
         });
     }
 
-    const errors = validateUnstakeFormValues(formValues, roundStakes);
+    const errors = validateUnstakeFormValues(formValues, unbondedStakes);
 
     return (
         <Dialog
@@ -67,7 +63,7 @@ export default function UnstakeDialog({
             onRequestClose={onRequestClose}
             onSubmitClick={() => onSubmit({
                 ...formValues,
-                outcome: roundStakes[formValues.outcomeIndex].outcome,
+                selectedStakedOutcome: unbondedStakes[formValues.stakeIndex],
             })}
             title={trans('unstakeDialog.title')}
             canSubmit={errors.canSubmit}
@@ -76,18 +72,18 @@ export default function UnstakeDialog({
                 <div className={s.formItem}>
                     <Select
                         id="unstake_dialog_outcome"
-                        value={formValues.outcomeIndex.toString()}
+                        value={formValues.stakeIndex.toString()}
                         label={trans('unstakeDialog.label.answer')}
                         onChange={handleOutcomeChange}
-                        items={roundStakes.map((stake, index) => ({
-                            name: transfromOutcomeToString(stake.outcome),
+                        items={unbondedStakes.map((stake, index) => ({
+                            name: `Round ${stake.round} - ${transfromOutcomeToString(stake.outcome)}`,
                             value: index.toString(),
                         }))}
                     />
                 </div>
                 <div className={s.formItem}>
                     {trans('unstakeDialog.label.staked', {
-                        stake: formatToken(roundStakes[formValues.outcomeIndex].stake, dataRequest.stakeToken.decimals),
+                        stake: formatToken(unbondedStakes[formValues.stakeIndex].totalStake, dataRequest.stakeToken.decimals),
                         tokenSymbol: dataRequest.stakeToken.symbol,
                     })}
                 </div>

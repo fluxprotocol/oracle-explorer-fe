@@ -32,13 +32,10 @@ export default function DataRequestDetailHeader({
 }: Props) {
     const now = new Date();
     const [canInteract, setInteract] = useState(dataRequest.settlementTime.getTime() <= now.getTime());
-    const currentResolutionWindow: ResolutionWindow | undefined = dataRequest.resolutionWindows[dataRequest.resolutionWindows.length - 1] ?? undefined;
     const isFinalized = typeof dataRequest.finalized_outcome !== 'undefined';
     const canFinalize = canDataRequestBeFinalized(dataRequest);
-
     const hasClaimed = Boolean(dataRequest.loggedInAccountClaim?.payout);
-    const roundStakes = accountStakes.filter(stake => stake.round === currentResolutionWindow?.round);
-    const stakedOnRound = sumBigs(roundStakes.map(roundStake => new Big(roundStake.stake)));
+    const canUnstake = dataRequest.loggedInAccountStakes.some(stake => !stake.bonded && new Big(stake.totalStake).gt(0));
 
     const onCountdownComplete = useCallback(() => {
         setInteract(true);
@@ -64,7 +61,7 @@ export default function DataRequestDetailHeader({
                     </Button>
                 )}
 
-                {canInteract && account && stakedOnRound.gt(0) && (
+                {canInteract && account && canUnstake && (
                     <Button className={s.button} onClick={onUnstakeClick}>
                         {trans('dataRequestDetail.label.unstake')}
                     </Button>

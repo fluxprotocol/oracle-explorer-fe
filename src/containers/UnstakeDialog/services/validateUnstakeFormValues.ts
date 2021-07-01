@@ -1,5 +1,5 @@
 import Big from "big.js";
-import { OutcomeStake } from "../../../models/OutcomeStake";
+import { UserStakeViewModel } from "../../../models/UserStakes";
 import trans from "../../../translation/trans";
 import { UnstakeFormValues } from "./createDefaultUnstakeFormValues";
 
@@ -8,13 +8,18 @@ interface UnstakeFormErrors {
     amount: string;
 }
 
-export default function validateUnstakeFormValues(formValues: UnstakeFormValues, roundStakes: OutcomeStake[]): UnstakeFormErrors {
+export default function validateUnstakeFormValues(formValues: UnstakeFormValues, unbondedStakes: UserStakeViewModel[]): UnstakeFormErrors {
     const errors: UnstakeFormErrors = {
         canSubmit: true,
         amount: '',
     };
 
-    const roundStake = roundStakes[formValues.outcomeIndex];
+    const selectedStakedOutcome = unbondedStakes[formValues.stakeIndex];
+
+    if (!selectedStakedOutcome) {
+        errors.canSubmit = false;
+        return errors;
+    }
 
     if (formValues.amount) {
         const amount = new Big(formValues.amount);
@@ -23,7 +28,7 @@ export default function validateUnstakeFormValues(formValues: UnstakeFormValues,
             errors.canSubmit = false;
         }
 
-        if (amount.gt(roundStake.stake)) {
+        if (amount.gt(selectedStakedOutcome.totalStake)) {
             errors.canSubmit = false;
             errors.amount = trans('unstakeDialog.errors.notEnoughStaked');
         }

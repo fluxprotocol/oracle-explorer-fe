@@ -10,7 +10,7 @@ import { Reducers } from '../../redux/reducers';
 export default function UnstakeDialogConnector() {
     const dispatch = useDispatch();
     const open = useSelector((store: Reducers) => store.dialogs.unstakeDialog.open);
-    const accountStakes = useSelector((store: Reducers) => store.dataRequest.accountStakes);
+    // const accountStakes = useSelector((store: Reducers) => store.dataRequest.accountStakes);
     const dataRequest = useSelector((store: Reducers) => store.dialogs.unstakeDialog.dataRequest);
 
     const handleRequestClose = useCallback(() => {
@@ -21,9 +21,9 @@ export default function UnstakeDialogConnector() {
     }, [dispatch]);
 
     const handleSubmit = useCallback((formValues: UnstakeFormValues) => {
-        if (!dataRequest) return;
+        if (!dataRequest || !formValues.selectedStakedOutcome) return;
 
-        dispatch(unstakeDataRequest(formValues.amount, dataRequest, formValues.outcome));
+        dispatch(unstakeDataRequest(formValues.amount, dataRequest, formValues.selectedStakedOutcome));
     }, [dispatch, dataRequest]);
 
     if (!dataRequest) return null;
@@ -33,7 +33,6 @@ export default function UnstakeDialogConnector() {
             onRequestClose={handleRequestClose}
             open={open}
             dataRequest={dataRequest}
-            accountStakes={accountStakes}
             onSubmit={handleSubmit}
         />
     );
