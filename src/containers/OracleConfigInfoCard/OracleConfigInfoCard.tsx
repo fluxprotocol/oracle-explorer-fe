@@ -47,7 +47,13 @@ export default function OracleConfigInfoCard({
                         value: <span>{formatToken(oracleConfig.finalArbitratorInvokeAmount, oracleConfig.stakeToken.decimals, 2)} {oracleConfig.stakeToken.symbol}</span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.resolutionFeePercentage'),
-                        value: <span>{oracleConfig.resolutionFeePercentage / 100}%</span>
+                        value: <span>{oracleConfig.resolutionFeePercentage / 1000}%</span>
+                    }, {
+                        label: trans('oracleConfigInfoCard.label.fluxMarketCap'),
+                        value: <span>${formatToken(oracleConfig.fluxMarketCap, 2, 2)}</span>
+                    }, {
+                        label: trans('oracleConfigInfoCard.label.totalValueStaked'),
+                        value: <span>{oracleConfig.totalValueStaked}</span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.maxOutcomes'),
                         value: <span>{oracleConfig.maxOutcomes}</span>

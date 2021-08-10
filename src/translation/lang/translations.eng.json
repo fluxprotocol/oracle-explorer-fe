@@ -95,6 +95,8 @@
     "oracleConfigInfoCard.label.minInitialChallengeWindowDuration": "Minimum initial challenge window duration",
     "oracleConfigInfoCard.label.defaultChallengeWindowDuration": "Default challenge window duration",
     "oracleConfigInfoCard.label.validityBond": "Validity bond",
+    "oracleConfigInfoCard.label.totalValueStaked": "Total value staked",
+    "oracleConfigInfoCard.label.fluxMarketCap": "Market cap",
 
     "whitelistInfoCard.title": "Registry info",
     "whitelistInfoCard.label.interfaceName": "Interface name",

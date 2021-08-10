@@ -15,6 +15,8 @@ export interface OracleConfig {
     validityBond: string;
     stakeToken: TokenViewModel;
     bondToken: TokenViewModel;
+    fluxMarketCap: string;
+    totalValueStaked: string;
 }
 
 export interface OracleConfigGraphData {
@@ -31,6 +33,11 @@ export interface OracleConfigGraphData {
     resolution_fee_percentage: number;
     stake_token: string;
     validity_bond: string;
+    fee: {
+        flux_market_cap: string;
+        total_value_staked: string;
+        resolution_fee_percentage: number;
+    };
 }
 
 export async function transformToOracleConfig(data: OracleConfigGraphData): Promise<OracleConfig> {
@@ -48,8 +55,10 @@ export async function transformToOracleConfig(data: OracleConfigGraphData): Prom
         id: data.id,
         maxOutcomes: data.max_outcomes,
         minInitialChallengeWindowDuration: data.min_initial_challenge_window_duration,
-        resolutionFeePercentage: data.resolution_fee_percentage,
+        resolutionFeePercentage: data.resolution_fee_percentage ?? data.fee.resolution_fee_percentage,
         stakeToken: stakeToken,
         validityBond: data.validity_bond,
+        fluxMarketCap: data.fee.flux_market_cap,
+        totalValueStaked: data.fee.total_value_staked,
     };
 }

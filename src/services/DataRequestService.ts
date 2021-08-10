@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 import { DataRequestGraphData, DataRequestListItem, transformToDataRequestListItem, transformToDataRequestViewModel } from "../models/DataRequest";
 import { Pagination } from "../models/Pagination";
 import { graphqlClient } from "./GraphQLService";
+
 export interface DataRequestFilters {
     onlyArbitratorRequests: boolean;
     requestor?: string;
@@ -123,6 +124,11 @@ export async function getDataRequestById(id: string, accountId?: string) {
                             resolution_fee_percentage
                             stake_token
                             validity_bond
+                            fee {
+                                flux_market_cap
+                                resolution_fee_percentage
+                                total_value_staked
+                            }
                         }
                         resolution_windows {
                             block_height

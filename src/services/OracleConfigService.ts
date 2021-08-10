@@ -21,6 +21,11 @@ export async function getOracleConfigById(id: string): Promise<OracleConfig | un
                         resolution_fee_percentage
                         stake_token
                         validity_bond
+                        fee {
+                            flux_market_cap
+                            resolution_fee_percentage
+                            total_value_staked
+                        }
                     }
                 }
             `,

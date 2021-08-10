@@ -125,10 +125,33 @@ export default class NearProvider implements IProvider {
         const account = wallet.account();
         if (!account) return false;
 
-        await account.functionCall(NEAR_ORACLE_CONTRACT_ID, 'dr_finalize', {
-            request_id: dataRequest.id,
-            // @ts-ignore
-        }, NEAR_MAX_GAS, STORAGE_BASE);
+        const transactions: TransactionOption[] = [];
+
+        transactions.push({
+            receiverId: NEAR_ORACLE_CONTRACT_ID,
+            transactionOptions: [{
+                amount: '1',
+                gas: NEAR_MAX_GAS,
+                methodName: 'dr_claim_fee',
+                args: {
+                    request_id: dataRequest.id,
+                }
+            }],
+        });
+
+        transactions.push({
+            receiverId: NEAR_ORACLE_CONTRACT_ID,
+            transactionOptions: [{
+                amount: '1',
+                gas: NEAR_MAX_GAS,
+                methodName: 'dr_finalize',
+                args: {
+                    request_id: dataRequest.id,
+                }
+            }],
+        });
+
+        await batchSendTransactions(wallet, transactions);
 
         return true;
     }
