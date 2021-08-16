@@ -39,9 +39,6 @@ export default function RequestInfoCard({
                         label: trans('requestInfo.label.dateCreated'),
                         value: <span>{prettyFormatDate(dataRequest.date)}</span>,
                     }, {
-                        label: trans('requestInfo.label.settlementTime'),
-                        value: <span>{prettyFormatDate(dataRequest.settlementTime)}</span>,
-                    }, {
                         label: trans('requestInfo.label.config'),
                         value: <Link className={s.link} to={routePaths.config('near', dataRequest.config.id)}>{dataRequest.config.id}</Link>,
                     }, {

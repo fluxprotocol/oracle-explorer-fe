@@ -37,6 +37,7 @@ export interface DataRequestViewModel extends DataRequestListItem {
     resolutionWindows: ResolutionWindow[];
     totalStaked: string;
     fee: string;
+    paidFee?: string;
     finalized_outcome?: Outcome;
     targetContract: string;
     finalArbitratorTriggered: boolean;
@@ -69,6 +70,7 @@ export interface DataRequestGraphData {
     target_contract: string;
     finalized_outcome: string | null;
     tags: string[] | null;
+    paid_fee: string | null;
     data_type: string;
     whitelist_item: {
         active: boolean;
@@ -129,7 +131,7 @@ export async function transformToDataRequestViewModel(data: DataRequestGraphData
         bondToken,
         totalCorrectStaked: data.total_correct_bonded_staked,
         totalIncorrectStaked: data.total_incorrect_staked,
-
+        paidFee: data.paid_fee ?? undefined,
         loggedInAccountClaim: data.claim ? transformToClaimViewModel(data.claim) : undefined,
         loggedInAccountStakes: data.account_stakes.map(ac => transformToUserStakesViewModel(ac, resolutionWindows)),
     };

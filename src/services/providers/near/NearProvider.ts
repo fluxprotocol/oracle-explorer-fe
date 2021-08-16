@@ -130,19 +130,7 @@ export default class NearProvider implements IProvider {
         transactions.push({
             receiverId: NEAR_ORACLE_CONTRACT_ID,
             transactionOptions: [{
-                amount: '1',
-                gas: NEAR_MAX_GAS,
-                methodName: 'dr_claim_fee',
-                args: {
-                    request_id: dataRequest.id,
-                }
-            }],
-        });
-
-        transactions.push({
-            receiverId: NEAR_ORACLE_CONTRACT_ID,
-            transactionOptions: [{
-                amount: '1',
+                amount: '0',
                 gas: NEAR_MAX_GAS,
                 methodName: 'dr_finalize',
                 args: {

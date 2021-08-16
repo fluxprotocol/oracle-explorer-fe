@@ -87,6 +87,7 @@ export async function getDataRequestById(id: string, accountId?: string) {
                         requestor
                         target_contract
                         finalized_outcome
+                        paid_fee
                         description
                         settlement_time
                         tags
