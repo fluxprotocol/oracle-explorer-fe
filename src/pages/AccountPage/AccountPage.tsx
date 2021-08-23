@@ -1,6 +1,6 @@
 import CardContent from '@material-ui/core/CardContent';
 import React, { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useHistory, useLocation, useParams } from 'react-router';
 import Card from '../../components/Card';
 import TabBar from '../../compositions/TabBar';
@@ -16,6 +16,7 @@ import AccountRequestsPage from './sub-pages/AccountRequestsPage';
 import s from './AccountPage.module.scss';
 import AccountUnclaimedPage from './sub-pages/AccountUnclaimedPage';
 import WhitelistInfoCardConnector from '../../connectors/WhitelistInfoCardConnector';
+import { Reducers } from '../../redux/reducers';
 
 interface Params {
     provider: string;
@@ -27,6 +28,7 @@ export default function AccountPage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
+    const whitelistInfo = useSelector((store: Reducers) => store.account.accountDetail.info.whitelistItem);
 
     useEffect(() => {
         dispatch(loadAccount(params.provider, params.accountId));
@@ -60,7 +62,7 @@ export default function AccountPage() {
                         }, {
                             id: routePaths.accountRequests(params.provider, params.accountId),
                             label: trans('accountPage.label.requests'),
-                            show: true,
+                            show: Boolean(whitelistInfo),
                         }]}
                     />
                     <Switch>
