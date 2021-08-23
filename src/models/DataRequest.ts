@@ -102,7 +102,7 @@ export function transformToDataRequestListItem(data: DataRequestGraphData): Data
 
 export async function transformToDataRequestViewModel(data: DataRequestGraphData): Promise<DataRequestViewModel> {
     const stakeToken = await getTokenInfo('near', data.config.stake_token);
-    const bondToken = await getTokenInfo('near', data.config.bond_token);
+    const bondToken = await getTokenInfo('near', data.config.payment_token);
 
     const resolutionWindows = await Promise.all(data.resolution_windows.map(rw => transformToResolutionWindow(rw, stakeToken)));
     const totalStaked = resolutionWindows.reduce((prev, curr) => prev.add(curr.totalStaked), new Big(0));

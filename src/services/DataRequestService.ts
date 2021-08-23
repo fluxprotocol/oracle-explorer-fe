@@ -113,7 +113,7 @@ export async function getDataRequestById(id: string, accountId?: string) {
                         }
                         config {
                             block_height
-                            bond_token
+                            payment_token
                             date
                             default_challenge_window_duration
                             final_arbitrator

@@ -21,7 +21,7 @@ export interface OracleConfig {
 
 export interface OracleConfigGraphData {
     block_height: string;
-    bond_token: string;
+    payment_token: string;
     date: string;
     default_challenge_window_duration: string;
     final_arbitrator: string;
@@ -42,7 +42,7 @@ export interface OracleConfigGraphData {
 
 export async function transformToOracleConfig(data: OracleConfigGraphData): Promise<OracleConfig> {
     const stakeToken = await getTokenInfo('near', data.stake_token);
-    const bondToken = await getTokenInfo('near', data.bond_token);
+    const bondToken = await getTokenInfo('near', data.payment_token);
 
     return {
         blockHeight: data.block_height,

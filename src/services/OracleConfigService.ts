@@ -9,7 +9,7 @@ export async function getOracleConfigById(id: string): Promise<OracleConfig | un
                 query GetOracleConfig($id: String!) {
                     config: getOracleConfig(id: $id) {
                         block_height
-                        bond_token
+                        payment_token
                         date
                         default_challenge_window_duration
                         final_arbitrator
