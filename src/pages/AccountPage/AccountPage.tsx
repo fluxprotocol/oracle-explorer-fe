@@ -38,6 +38,8 @@ export default function AccountPage() {
         history.push(item.id);
     }, [history]);
 
+    const isRequestInterface = Boolean(whitelistInfo);
+
     return (
         <Page>
             <div>
@@ -62,7 +64,7 @@ export default function AccountPage() {
                         }, {
                             id: routePaths.accountRequests(params.provider, params.accountId),
                             label: trans('accountPage.label.requests'),
-                            show: Boolean(whitelistInfo),
+                            show: isRequestInterface,
                         }]}
                     />
                     <Switch>

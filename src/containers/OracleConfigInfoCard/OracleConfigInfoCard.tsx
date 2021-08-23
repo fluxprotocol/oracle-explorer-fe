@@ -9,6 +9,7 @@ import InformationRows from '../InformationRows';
 import { OracleConfig } from '../../models/OracleConfig';
 import { formatTimeToReadable, prettyFormatDate } from '../../utils/dateUtils';
 import { formatToken } from '../../utils/tokenUtils';
+import { prettyFormatNumber } from '../../utils/prettyFormatNumber';
 
 interface Props {
     oracleConfig: OracleConfig;
@@ -50,7 +51,7 @@ export default function OracleConfigInfoCard({
                         value: <span>{oracleConfig.resolutionFeePercentage / 1000}%</span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.fluxMarketCap'),
-                        value: <span>${formatToken(oracleConfig.fluxMarketCap, 2, 2)}</span>
+                        value: <span>${prettyFormatNumber(formatToken(oracleConfig.fluxMarketCap, 2, 2))}</span>
                     }, {
                         label: trans('oracleConfigInfoCard.label.totalValueStaked'),
                         value: <span>{oracleConfig.totalValueStaked}</span>
