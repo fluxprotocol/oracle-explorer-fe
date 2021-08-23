@@ -34,7 +34,7 @@ export default function RequestInfoCard({
                         value: <Link className={s.link} to={routePaths.account('near', dataRequest.requestor)}>{dataRequest.requestor}</Link>,
                     }, {
                         label: trans('requestInfo.label.targetContract'),
-                        value: <Link className={s.link} to={routePaths.account('near', dataRequest.targetContract)}>{dataRequest.requestor}</Link>,
+                        value: <Link className={s.link} to={routePaths.account('near', dataRequest.targetContract)}>{dataRequest.targetContract}</Link>,
                     }, {
                         label: trans('requestInfo.label.dateCreated'),
                         value: <span>{prettyFormatDate(dataRequest.date)}</span>,
