@@ -85,7 +85,6 @@ export async function getDataRequestById(id: string, accountId?: string) {
                         initial_challenge_period
                         outcomes
                         requestor
-                        target_contract
                         finalized_outcome
                         paid_fee
                         description
@@ -103,7 +102,6 @@ export async function getDataRequestById(id: string, accountId?: string) {
                         whitelist_item {
                             active
                             code_base_url
-                            contract_entry
                             custom_fee
                             interface_name
                         }

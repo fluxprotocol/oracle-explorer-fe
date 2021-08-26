@@ -17,7 +17,6 @@ export async function getAccountInfo(accountId: string, providerId: string = 'ne
                             whitelist_item {
                                 active
                                 code_base_url
-                                contract_entry
                                 custom_fee
                                 interface_name
                             }

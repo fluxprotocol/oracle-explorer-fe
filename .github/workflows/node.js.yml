@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: false
-      REACT_APP_NEAR_ORACLE_CONTRACT_ID: 05.oracle.flux-dev
+      REACT_APP_NEAR_ORACLE_CONTRACT_ID: 06.oracle.flux-dev
 
     strategy:
       matrix:

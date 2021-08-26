@@ -39,7 +39,6 @@ export interface DataRequestViewModel extends DataRequestListItem {
     fee: string;
     paidFee?: string;
     finalized_outcome?: Outcome;
-    targetContract: string;
     finalArbitratorTriggered: boolean;
     settlementTime: Date;
     tags: string[];
@@ -67,7 +66,6 @@ export interface DataRequestGraphData {
     total_incorrect_staked?: string;
     outcomes: string[];
     requestor: string;
-    target_contract: string;
     finalized_outcome: string | null;
     tags: string[] | null;
     paid_fee: string | null;
@@ -122,7 +120,6 @@ export async function transformToDataRequestViewModel(data: DataRequestGraphData
         outcomes: data.outcomes,
         totalStaked: totalStaked.toString(),
         finalized_outcome: data.finalized_outcome ? transformToOutcome(data.finalized_outcome) : undefined,
-        targetContract: data.target_contract,
         finalArbitratorTriggered: data.final_arbitrator_triggered,
         tags: data.tags ?? [],
         data_type: parsedDataType ? "Number" : "String",

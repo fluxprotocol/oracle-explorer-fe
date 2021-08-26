@@ -20,7 +20,7 @@ interface FixedCustomFeeGraphData {
 
 export interface WhitelistItemGraphData {
     interface_name: string;
-    contract_entry: string;
+    account_id: string;
     custom_fee: string;
     code_base_url: string;
     active: boolean;
@@ -28,7 +28,7 @@ export interface WhitelistItemGraphData {
 
 export interface WhitelistItemViewModel {
     interfaceName: string;
-    contractEntry: string;
+    accountId: string;
     codeBaseUrl: string;
     active: boolean;
     customFee?: FixedCustomFee | MultiplierCustomFee;
@@ -55,7 +55,7 @@ export function transformToWhitelistItemViewModel(data: WhitelistItemGraphData):
     return {
         active: data.active,
         codeBaseUrl: data.code_base_url,
-        contractEntry: data.contract_entry,
+        accountId: data.account_id,
         customFee,
         interfaceName: data.interface_name,
     }
