@@ -30,7 +30,7 @@ export async function getAllDataRequests({
                         items {
                             id
                             date
-                            requestor
+                            requestor_account_id
                             finalized_outcome
                             sources {
                                 end_point
@@ -84,7 +84,7 @@ export async function getDataRequestById(id: string, accountId?: string) {
                         }
                         initial_challenge_period
                         outcomes
-                        requestor
+                        requestor_account_id
                         finalized_outcome
                         paid_fee
                         description
