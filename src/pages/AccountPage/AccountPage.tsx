@@ -28,7 +28,7 @@ export default function AccountPage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
-    const whitelistInfo = useSelector((store: Reducers) => store.account.accountDetail.info.whitelistItem);
+    const accountDetailInfo = useSelector((store: Reducers) => store.account.accountDetail.info);
 
     useEffect(() => {
         dispatch(loadAccount(params.provider, params.accountId));
@@ -37,8 +37,6 @@ export default function AccountPage() {
     const onTabClick = useCallback((item: TabBarItem) => {
         history.push(item.id);
     }, [history]);
-
-    const isRequestInterface = Boolean(whitelistInfo);
 
     return (
         <Page>
@@ -60,11 +58,11 @@ export default function AccountPage() {
                         }, {
                             id: routePaths.accountUnclaimed(params.provider, params.accountId),
                             label: trans('accountPage.label.unclaimed'),
-                            show: true,
+                            show: accountDetailInfo.hasStakes,
                         }, {
                             id: routePaths.accountRequests(params.provider, params.accountId),
                             label: trans('accountPage.label.requests'),
-                            show: isRequestInterface,
+                            show: accountDetailInfo.hasRequests,
                         }]}
                     />
                     <Switch>

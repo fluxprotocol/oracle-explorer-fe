@@ -7,6 +7,8 @@ export interface AccountInfo {
     storageAvailable: string;
     storageTotal: string;
     storageUsed: string;
+    hasStakes: boolean;
+    hasRequests: boolean;
     whitelistItem?: WhitelistItemViewModel;
 }
 

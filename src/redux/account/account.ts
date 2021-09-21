@@ -31,6 +31,8 @@ const initialState: AccountState = {
             storageAvailable: '0',
             storageTotal: '0',
             storageUsed: '0',
+            hasRequests: false,
+            hasStakes: false,
         },
         accountStakes: [],
         accountStakesTotal: 0,

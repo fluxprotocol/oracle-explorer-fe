@@ -14,6 +14,8 @@ export async function getAccountInfo(accountId: string, providerId: string = 'ne
                             active_staking
                             total_staked
                             total_claimed
+                            has_requests
+                            has_stakes
                             whitelist_item {
                                 active
                                 code_base_url
@@ -39,6 +41,8 @@ export async function getAccountInfo(accountId: string, providerId: string = 'ne
             storageTotal: storageBalance.total,
             storageUsed: storageBalance.used,
             whitelistItem: data.whitelist_item ? transformToWhitelistItemViewModel(data.whitelist_item) : undefined,
+            hasRequests: data.has_requests,
+            hasStakes: data.has_stakes,
         }
     } catch (error) {
         console.error('[getAccountInfo]', error);
@@ -50,6 +54,8 @@ export async function getAccountInfo(accountId: string, providerId: string = 'ne
             storageAvailable: '0',
             storageTotal: '0',
             storageUsed: '0',
+            hasStakes: false,
+            hasRequests: false,
         }
     }
 }
