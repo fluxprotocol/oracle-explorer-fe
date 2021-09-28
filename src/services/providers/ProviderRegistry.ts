@@ -87,6 +87,8 @@ export async function getAppConfigForProvider(providerId: string): Promise<AppCo
         nativeTokenSymbol: config?.nativeTokenSymbol ?? '?',
         stakeTokenDecimals: config?.stakeTokenDecimals ?? 18,
         stakeTokenSymbol: config?.stakeTokenSymbol ?? '?',
+        bondTokenDecimals: config?.bondTokenDecimals ?? 18,
+        bondTokenSymbol: config?.bondTokenSymbol ?? '?',
     };
 }
 

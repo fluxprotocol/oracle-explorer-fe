@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Account, AccountInfo } from '../../models/Account';
+import { AnalyticsPoint } from '../../models/AnalyticsPoint';
 import { DataRequestListItem } from '../../models/DataRequest';
 import { OutcomeStake } from '../../models/OutcomeStake';
 
@@ -12,6 +13,16 @@ export type AccountState = Readonly<{
 
         accountRequests: DataRequestListItem[];
         accountRequestsTotal: number;
+
+        payoutAnalytics: {
+            data: AnalyticsPoint[];
+            loading: boolean;
+        }
+
+        invalidRequestsAnalytics: {
+            data: AnalyticsPoint[];
+            loading: boolean;
+        }
 
         accountStakes: OutcomeStake[];
         accountStakesTotal: number;
@@ -28,11 +39,22 @@ const initialState: AccountState = {
             activeStaking: '0',
             totalStaked: '0',
             totalClaimed: '0',
+            totalDisputes: '0',
             storageAvailable: '0',
             storageTotal: '0',
             storageUsed: '0',
+            timesSlashed: '0',
+            totalSlashed: '0',
             hasRequests: false,
             hasStakes: false,
+        },
+        payoutAnalytics: {
+            loading: false,
+            data: [],
+        },
+        invalidRequestsAnalytics: {
+            loading: false,
+            data: [],
         },
         accountStakes: [],
         accountStakesTotal: 0,
@@ -127,6 +149,54 @@ const accountSlice = createSlice({
                 },
             });
         },
+        setAccountPayoutAnalyticsLoading(state: AccountState, action: PayloadAction<boolean>): AccountState {
+            return ({
+                ...state,
+                accountDetail: {
+                    ...state.accountDetail,
+                    payoutAnalytics: {
+                        ...state.accountDetail.payoutAnalytics,
+                        loading: action.payload,
+                    },
+                },
+            });
+        },
+        setAccountPayoutAnalyticsData(state: AccountState, action: PayloadAction<AnalyticsPoint[]>): AccountState {
+            return ({
+                ...state,
+                accountDetail: {
+                    ...state.accountDetail,
+                    payoutAnalytics: {
+                        ...state.accountDetail.payoutAnalytics,
+                        data: action.payload,
+                    },
+                },
+            });
+        },
+        setRequestorInvalidAnalyticsLoading(state: AccountState, action: PayloadAction<boolean>): AccountState {
+            return ({
+                ...state,
+                accountDetail: {
+                    ...state.accountDetail,
+                    invalidRequestsAnalytics: {
+                        ...state.accountDetail.invalidRequestsAnalytics,
+                        loading: action.payload,
+                    },
+                },
+            });
+        },
+        setRequestorInvalidAnalyticsData(state: AccountState, action: PayloadAction<AnalyticsPoint[]>): AccountState {
+            return ({
+                ...state,
+                accountDetail: {
+                    ...state.accountDetail,
+                    invalidRequestsAnalytics: {
+                        ...state.accountDetail.invalidRequestsAnalytics,
+                        data: action.payload,
+                    },
+                },
+            });
+        },
     },
 });
 
@@ -141,6 +211,10 @@ export const {
     setAccountUnclaimedStakes,
     setAccountRequests,
     setAccountRequestsTotal,
+    setAccountPayoutAnalyticsData,
+    setAccountPayoutAnalyticsLoading,
+    setRequestorInvalidAnalyticsData,
+    setRequestorInvalidAnalyticsLoading,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

@@ -257,13 +257,16 @@ export default class NearProvider implements IProvider {
     async getAppConfig(): Promise<AppConfig> {
         const wallet = await connectWallet();
         const config = await getLatestOracleConfig(wallet);
-        const token = await this.getTokenInfo(config.stake_token);
+        const stakeToken = await this.getTokenInfo(config.stake_token);
+        const bondToken = await this.getTokenInfo(config.payment_token);
 
         return {
             nativeTokenDecimals: this.nativeTokenDecimals,
             nativeTokenSymbol: this.nativeTokenSymbol,
-            stakeTokenDecimals: token?.decimals ?? 18,
-            stakeTokenSymbol: token?.symbol ?? config.stake_token,
+            stakeTokenDecimals: stakeToken?.decimals ?? 18,
+            stakeTokenSymbol: stakeToken?.symbol ?? config.stake_token,
+            bondTokenDecimals: bondToken?.decimals ?? 18,
+            bondTokenSymbol: bondToken?.symbol ?? config.payment_token,
         };
     }
 }

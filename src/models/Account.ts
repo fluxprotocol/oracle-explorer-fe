@@ -4,6 +4,9 @@ export interface AccountInfo {
     activeStaking: string;
     totalStaked: string;
     totalClaimed: string;
+    totalDisputes: string;
+    totalSlashed: string;
+    timesSlashed: string;
     storageAvailable: string;
     storageTotal: string;
     storageUsed: string;

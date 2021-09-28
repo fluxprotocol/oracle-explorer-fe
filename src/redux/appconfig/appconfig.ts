@@ -13,6 +13,8 @@ const initialState: AppConfigState = {
         nativeTokenSymbol: '?',
         stakeTokenDecimals: 18,
         stakeTokenSymbol: '?',
+        bondTokenDecimals: 18,
+        bondTokenSymbol: '?',
     }
 };
 

@@ -80,6 +80,9 @@
     "accountDetailsInfoCard.info.storageUsed": "The amount of :nativeToken that is used for storing data inside the oracle contract.",
     "accountDetailsInfoCard.label.storageUnused": "Unused storage",
     "accountDetailsInfoCard.info.storageUnused": "The amount of :nativeToken that is unused. This can be withdrawn back into your account. However, when interacting with the oracle it's possible that the explorer ask you to re-deposit :nativeToken in order for the transaction to complete.",
+    "accountDetailsInfoCard.label.totalDisputes": "Amount of disputes",
+    "accountDetailsInfoCard.label.timesSlashed": "Times slashed",
+    "accountDetailsInfoCard.label.totalSlashed": "Amount slashed",
 
     "oracleConfig.title": "Config #:id",
 
@@ -177,6 +180,20 @@
     "accountPage.label.transactions": "Transactions",
     "accountPage.label.unclaimed": "Unclaimed",
     "accountPage.label.requests": "Requests",
+    "accountPage.label.analytics": "Analytics",
+    "accountPage.label.requestorAnalytics": "Analytics",
+
+    "accountAnalytics.labels.stakePayout": "Stake earnings",
+    "accountAnalytics.labels.feePayout": "Fee earnings",
+
+    "requestorAnalytics.labels.invalidRequests": "Invalid requests",
+
+    "lineChart.labels.1d": "1D",
+    "lineChart.labels.1w": "1W",
+    "lineChart.labels.3w": "3W",
+    "lineChart.labels.1m": "1M",
+    "lineChart.labels.1y": "1Y",
+    "lineChart.labels.all": "ALL",
 
     "dataRequestDetail.title": "Request #:id",
     "dataRequestDetail.label.claimed": "Correctly bonded stake: :userCorrectStake :tokenSymbol + Fees earned: :payout :tokenSymbol. Any unbonded stake is refunded.",

@@ -17,6 +17,8 @@ import s from './AccountPage.module.scss';
 import AccountUnclaimedPage from './sub-pages/AccountUnclaimedPage';
 import WhitelistInfoCardConnector from '../../connectors/WhitelistInfoCardConnector';
 import { Reducers } from '../../redux/reducers';
+import AccountAnalyticsPage from './sub-pages/AccountAnalyticsPage';
+import AccountRequestorAnalyticsPage from './sub-pages/AccountRequestorAnalyticsPage';
 
 interface Params {
     provider: string;
@@ -63,12 +65,22 @@ export default function AccountPage() {
                             id: routePaths.accountRequests(params.provider, params.accountId),
                             label: trans('accountPage.label.requests'),
                             show: accountDetailInfo.hasRequests,
+                        }, {
+                            id: routePaths.accountAnalytics(params.provider, params.accountId),
+                            label: trans('accountPage.label.analytics'),
+                            show: accountDetailInfo.hasStakes,
+                        }, {
+                            id: routePaths.accountRequestorAnalytics(params.provider, params.accountId),
+                            label: trans('accountPage.label.requestorAnalytics'),
+                            show: accountDetailInfo.hasRequests,
                         }]}
                     />
                     <Switch>
                         <Route exact path={routePaths.account()} component={AccountStakesPage} />
                         <Route exact path={routePaths.accountRequests()} component={AccountRequestsPage} />
                         <Route exact path={routePaths.accountUnclaimed()} component={AccountUnclaimedPage} />
+                        <Route exact path={routePaths.accountAnalytics()} component={AccountAnalyticsPage} />
+                        <Route exact path={routePaths.accountRequestorAnalytics()} component={AccountRequestorAnalyticsPage} />
                     </Switch>
                 </CardContent>
             </Card>

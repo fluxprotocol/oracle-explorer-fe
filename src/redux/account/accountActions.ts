@@ -1,9 +1,10 @@
 import { DEFAULT_PAGINATION_LIMIT } from "../../config";
 import { getAccountInfo } from "../../services/AccountService";
+import { getAccountAnalytics, getRequestorInvalidRequestsAnalytics, Period } from "../../services/AnalyticsService";
 import { getAllDataRequests } from "../../services/DataRequestService";
 import { getAccountInfoWithProvider, getLoggedInAccount, loginWithProvider, logoutWithProvider } from "../../services/providers/ProviderRegistry";
 import { getUnclaimedStakesByAccountId, getUserStakesByAccountId } from "../../services/UserStakeService";
-import { setAccount, setAccountDetail, setAccountInfo, setAccountLoading, setAccountRequests, setAccountRequestsTotal, setAccountStakes, setAccountStakesTotal, setAccountUnclaimedStakes } from "./account";
+import { setAccount, setAccountDetail, setAccountInfo, setAccountLoading, setAccountPayoutAnalyticsData, setAccountPayoutAnalyticsLoading, setAccountRequests, setAccountRequestsTotal, setAccountStakes, setAccountStakesTotal, setAccountUnclaimedStakes, setRequestorInvalidAnalyticsData, setRequestorInvalidAnalyticsLoading } from "./account";
 
 export function loadLoggedInAccount() {
     return async (dispatch: Function) => {
@@ -72,10 +73,29 @@ export function loginAccount() {
     };
 }
 
-
 export function logoutAccount() {
     return async (dispatch: Function) => {
         await logoutWithProvider('near');
         dispatch(setAccount(undefined));
     };
+}
+
+export function loadAccountAnalytics(accountId: string, period: Period) {
+    return async (dispatch: Function) => {
+        dispatch(setAccountPayoutAnalyticsLoading(true));
+        const points = await getAccountAnalytics(accountId, period);
+
+        dispatch(setAccountPayoutAnalyticsData(points));
+        dispatch(setAccountPayoutAnalyticsLoading(false));
+    }
+}
+
+export function loadRequestorInvalidAnalytics(accountId: string, period: Period) {
+    return async (dispatch: Function) => {
+        dispatch(setRequestorInvalidAnalyticsLoading(true));
+        const points = await getRequestorInvalidRequestsAnalytics(accountId, period);
+
+        dispatch(setRequestorInvalidAnalyticsData(points));
+        dispatch(setRequestorInvalidAnalyticsLoading(false));
+    }
 }

@@ -14,6 +14,9 @@ export async function getAccountInfo(accountId: string, providerId: string = 'ne
                             active_staking
                             total_staked
                             total_claimed
+                            total_amount_slashed
+                            times_slashed
+                            total_disputes
                             has_requests
                             has_stakes
                             whitelist_item {
@@ -37,12 +40,15 @@ export async function getAccountInfo(accountId: string, providerId: string = 'ne
             activeStaking: data.active_staking,
             totalStaked: data.total_staked,
             totalClaimed: data.total_claimed,
+            totalDisputes: data.total_disputes,
             storageAvailable: storageBalance.available,
             storageTotal: storageBalance.total,
             storageUsed: storageBalance.used,
             whitelistItem: data.whitelist_item ? transformToWhitelistItemViewModel(data.whitelist_item) : undefined,
             hasRequests: data.has_requests,
             hasStakes: data.has_stakes,
+            timesSlashed: data.times_slashed,
+            totalSlashed: data.total_amount_slashed,
         }
     } catch (error) {
         console.error('[getAccountInfo]', error);
@@ -51,11 +57,14 @@ export async function getAccountInfo(accountId: string, providerId: string = 'ne
             activeStaking: '0',
             totalStaked: '0',
             totalClaimed: '0',
+            totalDisputes: '0',
             storageAvailable: '0',
             storageTotal: '0',
             storageUsed: '0',
             hasStakes: false,
             hasRequests: false,
+            timesSlashed: '0',
+            totalSlashed: '0',
         }
     }
 }

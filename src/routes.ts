@@ -24,6 +24,8 @@ export const routePaths = {
     account: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}`,
     accountRequests: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}/requests`,
     accountUnclaimed: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}/unclaimed`,
+    accountAnalytics: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}/analytics`,
+    accountRequestorAnalytics: (provider = ':provider', accountId = ':accountId') => `/account/${provider}/${accountId}/requestor-analytics`,
 
     config: (provider = ':provider', id = ':id') => `/config/${provider}/${id}`,
 
