@@ -71,6 +71,12 @@ export default function OutcomeStakesOverview({
                 </Table>
             </TableContainer>
 
+            {outcomeStakes.length === 0 && (
+                <div className={s.empty}>
+                    {trans('global.empty.entries')}
+                </div>
+            )}
+
             {showPagination && (
                 <Pagination
                     className={s.pagination}

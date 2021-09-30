@@ -10,6 +10,7 @@
     "global.status.completed": "Completed",
 
     "global.empty.noRequests": "No requests found",
+    "global.empty.entries": "No entries found",
 
     "global.date.smallFormat": ":days d :hours h :minutes m :seconds s",
 

@@ -1,5 +1,5 @@
 import { Chart } from 'chart.js';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import ToggleButtons from '../../components/ToggleButtons';
 import { Period } from '../../services/AnalyticsService';
 import trans from '../../translation/trans';
