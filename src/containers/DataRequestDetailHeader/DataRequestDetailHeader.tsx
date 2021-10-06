@@ -53,7 +53,7 @@ export default function DataRequestDetailHeader({
                     </span>
                 )}
 
-                {canInteract && account && !isFinalized && (
+                {canInteract && !dataRequest.finalArbitratorTriggered && account && !isFinalized && (
                     <Button className={s.button} onClick={onStakeClick}>
                         {trans('dataRequestDetail.label.stake')}
                     </Button>
@@ -75,6 +75,10 @@ export default function DataRequestDetailHeader({
                     <Button className={s.button} onClick={onClaimClick}>
                         {trans('dataRequestDetail.label.claim')}
                     </Button>
+                )}
+
+                {!isFinalized && dataRequest.finalArbitratorTriggered && (
+                    <span>{trans('dataRequestDetail.label.finalArbitratorTriggered')}</span>
                 )}
             </div>
         </header>

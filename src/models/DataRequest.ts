@@ -140,6 +140,10 @@ export function canDataRequestBeFinalized(dataRequest: DataRequestViewModel): bo
         return false;
     }
 
+    if (dataRequest.finalArbitratorTriggered) {
+        return false;
+    }
+
     const currentResolutionWindow = dataRequest.resolutionWindows[dataRequest.resolutionWindows.length - 1];
     if (!currentResolutionWindow) return false;
 

@@ -3,7 +3,7 @@ import CardContent from '@material-ui/core/CardContent';
 
 import Card from '../../components/Card';
 import { DataRequestViewModel } from '../../models/DataRequest';
-import trans from '../../translation/trans';
+import trans, { booleanToYesNo } from '../../translation/trans';
 
 import s from './RequestInfoCard.module.scss';
 import InformationRows from '../InformationRows';
@@ -40,7 +40,7 @@ export default function RequestInfoCard({
                         value: <Link className={s.link} to={routePaths.config('near', dataRequest.config.id)}>{dataRequest.config.id}</Link>,
                     }, {
                         label: trans('requestInfo.label.finalArbitratorTriggered'),
-                        value: <span>{dataRequest.finalArbitratorTriggered + ''}</span>,
+                        value: <span>{booleanToYesNo(dataRequest.finalArbitratorTriggered)}</span>,
                     }, {
                         label: trans('requestInfo.label.feeReward'),
                         value: <span>{formatToken(dataRequest.fee, dataRequest.stakeToken.decimals)} {dataRequest.stakeToken.symbol}</span>,
