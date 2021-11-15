@@ -267,6 +267,7 @@ export default class NearProvider implements IProvider {
             stakeTokenSymbol: stakeToken?.symbol ?? config.stake_token,
             bondTokenDecimals: bondToken?.decimals ?? 18,
             bondTokenSymbol: bondToken?.symbol ?? config.payment_token,
+            importantMessages: [],
         };
     }
 }

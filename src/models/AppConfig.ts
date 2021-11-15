@@ -1,3 +1,9 @@
+export interface ImportantMessage {
+    key: string;
+    type: 'success' | 'info' | 'warning' | 'error';
+    message: string;
+}
+
 export interface AppConfig {
     stakeTokenSymbol: string;
     stakeTokenDecimals: number;
@@ -5,4 +11,6 @@ export interface AppConfig {
     bondTokenDecimals: number;
     nativeTokenSymbol: string;
     nativeTokenDecimals: number;
+
+    importantMessages: ImportantMessage[];
 }

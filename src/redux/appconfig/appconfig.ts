@@ -15,6 +15,7 @@ const initialState: AppConfigState = {
         stakeTokenSymbol: '?',
         bondTokenDecimals: 18,
         bondTokenSymbol: '?',
+        importantMessages: [],
     }
 };
 

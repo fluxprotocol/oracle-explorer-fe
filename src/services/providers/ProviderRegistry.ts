@@ -4,6 +4,7 @@ import { DataRequestViewModel } from "../../models/DataRequest";
 import { Outcome } from "../../models/DataRequestOutcome";
 import { TokenViewModel } from "../../models/Token";
 import cache from "../../utils/cache";
+import { getDefaultAppConfig } from "../AppConfigService";
 import { IProvider } from "./IProvider";
 import NearProvider from "./near/NearProvider";
 
@@ -82,7 +83,11 @@ export async function getAppConfigForProvider(providerId: string): Promise<AppCo
     const provider = getProviderById(providerId);
     const config = await provider?.getAppConfig();
 
+    const defaultConfig = await getDefaultAppConfig();
+
+
     return {
+        ...defaultConfig,
         nativeTokenDecimals: config?.nativeTokenDecimals ?? 18,
         nativeTokenSymbol: config?.nativeTokenSymbol ?? '?',
         stakeTokenDecimals: config?.stakeTokenDecimals ?? 18,
