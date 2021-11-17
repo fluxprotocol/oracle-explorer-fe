@@ -1,4 +1,4 @@
-import { APP_CONFIG_URL } from "../config";
+import { APP_CONFIG_URL, NEAR_NETWORK } from "../config";
 import { AppConfig, ImportantMessage } from "../models/AppConfig";
 import csvtojson from 'csvtojson';
 
@@ -10,6 +10,7 @@ export async function getDefaultAppConfig(): Promise<AppConfig> {
         const importantMessages: ImportantMessage[] = [];
 
         config.forEach((message) => {
+            if (message.net !== NEAR_NETWORK) return;
             if (message.activate !== '1') return;
 
             importantMessages.push({
