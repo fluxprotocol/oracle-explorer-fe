@@ -65,7 +65,7 @@ export interface DataRequestGraphData {
     total_correct_bonded_staked?: string;
     total_incorrect_staked?: string;
     outcomes: string[];
-    requestor_account_id: string;
+    requester_account_id: string;
     finalized_outcome: string | null;
     tags: string[] | null;
     paid_fee: string | null;
@@ -92,7 +92,7 @@ export function transformToDataRequestListItem(data: DataRequestGraphData): Data
     return {
         id: data.id,
         date: new Date(Number(data.date)),
-        requestor: data.requestor_account_id,
+        requestor: data.requester_account_id,
         finalized_outcome: data.finalized_outcome ? transformToOutcome(data.finalized_outcome) : undefined,
         type: data.sources.length ? DataRequestType.Api : DataRequestType.Arbitrator,
     };
