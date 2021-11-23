@@ -43,7 +43,7 @@ export default function RequestInfoCard({
                         value: <span>{booleanToYesNo(dataRequest.finalArbitratorTriggered)}</span>,
                     }, {
                         label: trans('requestInfo.label.feeReward'),
-                        value: <span>{formatToken(dataRequest.fee, dataRequest.stakeToken.decimals)} {dataRequest.stakeToken.symbol}</span>,
+                        value: <span>{formatToken(dataRequest.paidFee ?? '0', dataRequest.stakeToken.decimals)} {dataRequest.stakeToken.symbol}</span>,
                     }, {
                         label: trans('requestInfo.label.totalStaked'),
                         value: <span>{`${formatToken(dataRequest.totalStaked, dataRequest.stakeToken.decimals)} ${dataRequest.stakeToken.symbol}`}</span>,
