@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/fluxprotocol/oracle-explorer-fe/compare/v0.1.1...v0.1.2) (2021-11-25)
+
+
+### Features
+
+* **account:** Add support for analytics ([16ee6d9](https://github.com/fluxprotocol/oracle-explorer-fe/commit/16ee6d92142dbaea7e4483d80579f3c09c9f7e66))
+* **config:** Add testnet and mainnet configs ([b628008](https://github.com/fluxprotocol/oracle-explorer-fe/commit/b628008d225057851a23391832201099729f64eb))
+* **page:** Add announcement messages ([3466c7e](https://github.com/fluxprotocol/oracle-explorer-fe/commit/3466c7e86d3b6b40e70d3d04a9c7d3d7b4fee269))
+* **requestDetail:** Disable staking and finalizing when final arbitrator has been triggered ([a50a17a](https://github.com/fluxprotocol/oracle-explorer-fe/commit/a50a17ae31e84bc7989ea60d68c0dc6e4e72e52d))
+* **stakes:** Show no entries message when there are no entries ([0a42179](https://github.com/fluxprotocol/oracle-explorer-fe/commit/0a42179886978a0d018f5deeebf44e0eb1aabbed))
+
+
+### Bug Fixes
+
+* **account:** Fix issue where requestor could not be found ([7677b17](https://github.com/fluxprotocol/oracle-explorer-fe/commit/7677b17a1f279b8a646a1e9229dc069389b151ba))
+* **build:** Fix issue where CNAME was not included ([1b83130](https://github.com/fluxprotocol/oracle-explorer-fe/commit/1b83130aa5e5a5bd3a14e684078a89e5a31a0116))
+* **reward:** Fix issue where reward was always 0 ([5070878](https://github.com/fluxprotocol/oracle-explorer-fe/commit/507087889a027a57a55f566ed0cd1bbb0520dd16))
+
 ### 0.1.1 (2021-09-21)
 
 
