@@ -21,7 +21,7 @@ export default class NearProvider implements IProvider {
 
     async login() {
         const wallet = await connectWallet();
-        wallet.requestSignIn(NEAR_NULL_CONTRACT, 'oracle');
+        wallet.requestSignIn(NEAR_NULL_CONTRACT, 'oracle', process.env.REACT_APP_ROOT_URL, process.env.REACT_APP_ROOT_URL);
         return true;
     }
 
