@@ -1,0 +1,15 @@
+.root {
+    width: 100%;
+    min-height: 1.5rem;
+    padding: 0.2rem 0 0.2rem;
+    background-color: var(--c-active-link);
+    color: var(--c-white);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.disclaimer {
+    text-align: center;
+}

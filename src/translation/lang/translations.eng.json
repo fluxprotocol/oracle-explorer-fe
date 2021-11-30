@@ -5,6 +5,7 @@
     "global.yes": "Yes",
     "global.no": "No",
     "global.na": "N/A",
+    "global.disclaimer": "Always make sure your browser is on fluxprotocol.org or flux.xyz before interacting with Flux!",
 
     "global.status.ongoing": "On going",
     "global.status.completed": "Completed",
