@@ -19,7 +19,13 @@ export default function OracleStats({
     tokenPrice,
     appConfig,
 }: Props) {
-    const marketCapFormatted = millify(tokenMarketCap);
+    let marketCapFormatted = millify(tokenMarketCap);
+
+    if (marketCapFormatted === '0') {
+        marketCapFormatted = 'N/A';
+    } else {
+        marketCapFormatted = `$${marketCapFormatted}`;
+    }
 
     return (
         <div className={s.root}>
@@ -33,7 +39,7 @@ export default function OracleStats({
             />
             <StatCard
                 label={trans('oracleStats.label.tokenMarketCap')}
-                value={`$${marketCapFormatted}`}
+                value={`${marketCapFormatted}`}
             />
         </div>
     );

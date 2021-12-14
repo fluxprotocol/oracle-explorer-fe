@@ -3,7 +3,7 @@ import Big from 'big.js';
 export const API_URL = process.env.REACT_APP_API_URL ?? '';
 export const COINGECKO_API_URL = process.env.REACT_APP_COINGECKO_API_URL || '';
 export const DEFAULT_PAGINATION_LIMIT = 10;
-export const COINGECKO_TOKEN_TICKER = 'near';
+export const COINGECKO_TOKEN_TICKER = 'flux-token';
 
 export const NEAR_NETWORK = process.env.REACT_APP_NEAR_NETWORK as any ?? 'testnet';
 export const NEAR_NULL_CONTRACT = process.env.REACT_APP_NEAR_NULL_CONTRACT ?? 'null_address.near';
